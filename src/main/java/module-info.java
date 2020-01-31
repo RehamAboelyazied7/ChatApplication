@@ -6,6 +6,8 @@ module com.jets {
     requires java.naming;
 
     opens com.jets to javafx.fxml;
-    exports com.chat.db;
+    exports com.iti.chat.dbservice;
     exports com.jets;
+    exports com.iti.chat.exception;
+    exports com.iti.chat.model;
 }

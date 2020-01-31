@@ -1,9 +1,10 @@
-package com.chat.db;
+package com.iti.chat.dbservice;
 
-import com.chat.dao.UserDAO;
-import com.chat.factory.UserFactory;
-import com.chat.model.User;
-import com.chat.model.UserStatus;
+import com.iti.chat.dao.UserDAO;
+import com.iti.chat.exception.DuplicatePhoneException;
+import com.iti.chat.util.adapter.UserAdapter;
+import com.iti.chat.model.User;
+import com.iti.chat.model.UserStatus;
 
 import java.sql.*;
 import java.util.List;
@@ -15,7 +16,7 @@ public class UserDBService extends DBService implements UserDAO {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         resultSet.first();
-        User user = UserFactory.createUser(resultSet);
+        User user = UserAdapter.createUser(resultSet);
         if(user != null) {
             setFriends(user, connection);
         }
@@ -23,10 +24,27 @@ public class UserDBService extends DBService implements UserDAO {
         return user;
     }
 
-    @Override
-    public User login(String phone, String password) {
-        return null;
+    public User findUserByPhone(String phone) {
+        try {
+            Connection connection = getConnection();
+            String query = "select * from users where phone = " + phone;
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            resultSet.first();
+            User user = UserAdapter.createUser(resultSet);
+            if(user != null) {
+                setFriends(user, connection);
+            }
+            closeConnection(connection);
+            return user;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
+
 
     private void setFriends(User user, Connection connection) throws SQLException {
         String query1 = "select u2.* from friend_requests fr, users u1, users u2 where " +
@@ -38,18 +56,18 @@ public class UserDBService extends DBService implements UserDAO {
         String query = query1 + " union " + query2;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
-        List<User> friends = UserFactory.createUsers(resultSet);
+        List<User> friends = UserAdapter.createUsers(resultSet);
         user.setFriends(friends);
     }
 
-    public User logIn(String phone, String password) throws SQLException {
+    public User login(String phone, String password) throws SQLException {
         String query = "select * from users where phone = " + phone +
                 " and password = " + password;
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         resultSet.first();
-        User user = UserFactory.createUser(resultSet);
+        User user = UserAdapter.createUser(resultSet);
         updateUserStatus(user, UserStatus.ONLINE);
         if(user != null) {
             setFriends(user, connection);
@@ -63,24 +81,37 @@ public class UserDBService extends DBService implements UserDAO {
         updateUserStatus(user, UserStatus.OFFLINE);
     }
 
-    public User register(String firstName, String lastName, String phone, String password, String email) throws SQLException {
-        String query = "insert into users (first_name, last_name, user_status, email, password, phone)" +
-                " values (?, ?, ?, ?, ?, ?)";
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setString(1, firstName);
-        preparedStatement.setString(2, lastName);
-        preparedStatement.setInt(3, UserStatus.ONLINE);
-        preparedStatement.setString(4, email);
-        preparedStatement.setString(5, password);
-        preparedStatement.setString(6, phone);
-        preparedStatement.executeUpdate();
-        ResultSet tableKeys = preparedStatement.getGeneratedKeys();
-        tableKeys.next();
-        User user = new User(firstName, lastName, phone, email, UserStatus.ONLINE);
-        user.setId(tableKeys.getInt(1));
-        closeConnection(connection);
-        return user;
+    public User register(String firstName, String lastName, String phone, String password, String email) throws DuplicatePhoneException {
+        User user = findUserByPhone(phone);
+        if(user == null) {
+            String query = "insert into users (first_name, last_name, user_status, email, password, phone)" +
+                    " values (?, ?, ?, ?, ?, ?)";
+            try {
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setString(1, firstName);
+                preparedStatement.setString(2, lastName);
+                preparedStatement.setInt(3, UserStatus.ONLINE);
+                preparedStatement.setString(4, email);
+                preparedStatement.setString(5, password);
+                preparedStatement.setString(6, phone);
+                preparedStatement.executeUpdate();
+                ResultSet tableKeys = preparedStatement.getGeneratedKeys();
+                tableKeys.next();
+                user = new User(firstName, lastName, phone, email, UserStatus.ONLINE);
+                user.setId(tableKeys.getInt(1));
+                closeConnection(connection);
+                return user;
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        else {
+            throw new DuplicatePhoneException("phone is already used");
+        }
+
     }
 
     public List<User> findAllUsers() throws SQLException {
@@ -88,7 +119,7 @@ public class UserDBService extends DBService implements UserDAO {
         String query = "select * from users";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
-        List<User> users = UserFactory.createUsers(resultSet);
+        List<User> users = UserAdapter.createUsers(resultSet);
         closeConnection(connection);
         return users;
     }

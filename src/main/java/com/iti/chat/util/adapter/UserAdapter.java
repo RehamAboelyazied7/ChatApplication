@@ -1,13 +1,13 @@
-package com.chat.factory;
+package com.iti.chat.util.adapter;
 
-import com.chat.model.User;
+import com.iti.chat.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserFactory {
+public class UserAdapter {
     public static User createUser(ResultSet resultSet) throws SQLException {
         String firstName = resultSet.getString("first_name");
         String lastName = resultSet.getString("last_name");

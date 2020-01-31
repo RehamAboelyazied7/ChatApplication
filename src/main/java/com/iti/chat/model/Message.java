@@ -1,4 +1,4 @@
-package com.chat.model;
+package com.iti.chat.model;
 
 public class Message {
     private String content;
