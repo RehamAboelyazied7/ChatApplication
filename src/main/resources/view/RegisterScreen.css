@@ -17,7 +17,9 @@
 }
 
 .warningMsg {
-    -fx-text-fill:  #fc0303;
+    
+    -fx-fill :  #fc0303;
+    -fx-font-color:  #fc0303;
     -fx-font: 20px "Calibri";
     -fx-text-alignment: left;
 
@@ -34,9 +36,23 @@
     -fx-background-radius: 8,7,6;
 }
 
+
 .button:hover
 {
     -fx-background-color:#3158ad;
     
 }
 
+.hyperlink
+{
+    -fx-underline : true;
+    -fx-font: 15px "Calibri";
+    -fx-text-fill : #00278e;
+    
+}
+
+.button:hover
+{
+    -fx-background-color:#3158ad;
+    
+}
