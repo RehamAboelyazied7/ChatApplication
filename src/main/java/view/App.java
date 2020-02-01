@@ -18,7 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("FXMLDocument"));
+        scene = new Scene(loadFXML("ChatPage"));
         stage.setMinWidth(100);
         stage.setScene(scene);
         stage.show();
