@@ -1,4 +1,4 @@
-package com.chat.Validator;
+package com.iti.chat.validator;
 
 import javafx.scene.layout.VBox;
 
