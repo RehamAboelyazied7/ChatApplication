@@ -2,6 +2,7 @@ package com.iti.chat.dbservice;
 
 import com.iti.chat.dao.UserDAO;
 import com.iti.chat.exception.DuplicatePhoneException;
+import com.iti.chat.model.Gender;
 import com.iti.chat.util.adapter.UserAdapter;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
@@ -98,7 +99,7 @@ public class UserDBService extends DBService implements UserDAO {
                 preparedStatement.executeUpdate();
                 ResultSet tableKeys = preparedStatement.getGeneratedKeys();
                 tableKeys.next();
-                user = new User(firstName, lastName, phone, email, UserStatus.ONLINE);
+                user = new User(firstName, lastName, phone, email, UserStatus.ONLINE, Gender.MALE);
                 user.setId(tableKeys.getInt(1));
                 closeConnection(connection);
                 return user;
