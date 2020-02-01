@@ -1,4 +1,4 @@
-package com.chat.model;
+package com.iti.chat.model;
 
 import java.util.List;
 
@@ -10,17 +10,28 @@ public class User {
     private String phone;
     private List<User> friends;
     private int status;
+    private int gender;
 
-    public User (String firstName, String lastName, String phone, String email, int status) {
+    public User (String firstName, String lastName, String phone, String email, int status, int gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
         this.status = status;
+        this.gender = gender;
     }
 
     public User() {
+        gender = Gender.MALE;
+        status = UserStatus.ONLINE;
+    }
 
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getStatus() {

@@ -1,4 +1,4 @@
-package com.chat.model;
+package com.iti.chat.model;
 
 public class UserStatus {
     public static final int OFFLINE = 0;

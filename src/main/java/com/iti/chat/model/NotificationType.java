@@ -1,4 +1,4 @@
-package com.chat.model;
+package com.iti.chat.model;
 
 public class NotificationType {
     static final int FRIENDSHIP_ACCEPTED = 1;

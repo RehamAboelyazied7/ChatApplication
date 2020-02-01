@@ -1,4 +1,4 @@
-package com.chat.db;
+package com.iti.chat.dbservice;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 

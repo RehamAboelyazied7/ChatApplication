@@ -1,6 +1,6 @@
-package com.chat.dao;
+package com.iti.chat.dao;
 
-import com.chat.model.User;
+import com.iti.chat.model.User;
 
 import java.sql.SQLException;
 

@@ -1,4 +1,4 @@
-package com.chat.model;
+package com.iti.chat.model;
 
 public class MessageType {
     static final int TEXT_MESSAGE = 1;
