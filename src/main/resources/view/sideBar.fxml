@@ -14,7 +14,7 @@
             <Circle fill="#00000024" radius="20.0" stroke="#bf202000" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="TOP_CENTER" />
             <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <image>
-                  <Image url="@../../../../../../../../../Downloads/user.png" />
+                  <Image url="@../../../../../../../../Downloads/user.png" />
                </image>
             </ImageView>
          </children>
@@ -25,22 +25,22 @@
                <children>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
                      <image>
-                        <Image url="@../../../../../../../../../Downloads/user.png" />
+                        <Image url="@../../../../../../../../Downloads/user.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../Downloads/user.png" />
+                        <Image url="@../../../../../../../../Downloads/user.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../Downloads/user.png" />
+                        <Image url="@../../../../../../../../Downloads/user.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../Downloads/user.png" />
+                        <Image url="@../../../../../../../../Downloads/user.png" />
                      </image>
                   </ImageView>
                </children>

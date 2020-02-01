@@ -1,4 +1,4 @@
-package com.jets;
+package com.iti.chat.controller;
 
 public class SideBarController {
 }
