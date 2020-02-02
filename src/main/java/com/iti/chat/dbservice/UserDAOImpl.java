@@ -10,9 +10,9 @@ import com.iti.chat.model.UserStatus;
 import java.sql.*;
 import java.util.List;
 
-public class UserDBService extends DBService implements UserDAO {
+public class UserDAOImpl implements UserDAO {
     public User findUserById(int id) throws SQLException {
-        Connection connection = getConnection();
+        Connection connection = DBConnection.getInstance().getConnection();
         String query = "select * from users where user_id = " + id;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
@@ -21,13 +21,13 @@ public class UserDBService extends DBService implements UserDAO {
         if(user != null) {
             setFriends(user, connection);
         }
-        closeConnection(connection);
+        DBConnection.getInstance().closeConnection(connection);
         return user;
     }
 
     public User findUserByPhone(String phone) {
         try {
-            Connection connection = getConnection();
+            Connection connection = DBConnection.getInstance().getConnection();
             String query = "select * from users where phone = " + phone;
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -36,7 +36,7 @@ public class UserDBService extends DBService implements UserDAO {
             if(user != null) {
                 setFriends(user, connection);
             }
-            closeConnection(connection);
+            DBConnection.getInstance().closeConnection(connection);
             return user;
         }
         catch (SQLException e) {
@@ -64,7 +64,7 @@ public class UserDBService extends DBService implements UserDAO {
     public User login(String phone, String password) throws SQLException {
         String query = "select * from users where phone = " + phone +
                 " and password = " + password;
-        Connection connection = getConnection();
+        Connection connection = DBConnection.getInstance().getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         resultSet.first();
@@ -73,7 +73,7 @@ public class UserDBService extends DBService implements UserDAO {
         if(user != null) {
             setFriends(user, connection);
         }
-        closeConnection(connection);
+        DBConnection.getInstance().closeConnection(connection);
         return user;
     }
 
@@ -88,7 +88,7 @@ public class UserDBService extends DBService implements UserDAO {
             String query = "insert into users (first_name, last_name, user_status, email, password, phone)" +
                     " values (?, ?, ?, ?, ?, ?)";
             try {
-                Connection connection = getConnection();
+                Connection connection = DBConnection.getInstance().getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, firstName);
                 preparedStatement.setString(2, lastName);
@@ -101,7 +101,7 @@ public class UserDBService extends DBService implements UserDAO {
                 tableKeys.next();
                 user = new User(firstName, lastName, phone, email, UserStatus.ONLINE, Gender.MALE);
                 user.setId(tableKeys.getInt(1));
-                closeConnection(connection);
+                DBConnection.getInstance().closeConnection(connection);
                 return user;
             }
             catch (SQLException e) {
@@ -116,30 +116,29 @@ public class UserDBService extends DBService implements UserDAO {
     }
 
     public List<User> findAllUsers() throws SQLException {
-        Connection connection = getConnection();
+        Connection connection = DBConnection.getInstance().getConnection();
         String query = "select * from users";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         List<User> users = UserAdapter.createUsers(resultSet);
-        closeConnection(connection);
+        DBConnection.getInstance().closeConnection(connection);
         return users;
     }
 
     private boolean updateUserStatus(User user, int userStatus) throws SQLException {
-        Connection connection = getConnection();
+        Connection connection = DBConnection.getInstance().getConnection();
         String query = "update users set user_status = " + userStatus + " where user_id = " + user.getId();
         Statement statement = connection.createStatement();
         boolean success = statement.execute(query);
         user.setStatus(userStatus);
-        closeConnection(connection);
+        DBConnection.getInstance().closeConnection(connection);
         return success;
     }
 
     public static void main(String[] args) {
-        UserDBService service = new UserDBService();
+        UserDAOImpl service = new UserDAOImpl();
         try {
-            User user = service.register("Khaled", "Elhossiny", "974834792", "pass", "khaled@gmail.com");
-            System.out.println(user);
+            System.out.println(service.findAllUsers());
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -5,17 +5,25 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DBService {
-    protected final String user = "root";
-    protected final String password = "password";
-    protected final String url = "jdbc:mysql://localhost:3306/chatty";
-    protected MysqlDataSource dataSource;
+public class DBConnection {
+    private static final String user = "root";
+    private static final String password = "password";
+    private static final String url = "jdbc:mysql://localhost:3306/chatty";
+    private MysqlDataSource dataSource;
+    private static DBConnection dbConnection;
 
-    public DBService() {
+    private DBConnection() {
         dataSource = new MysqlDataSource();
         dataSource.setPassword(password);
         dataSource.setUser(user);
         dataSource.setURL(url);
+    }
+
+    public static DBConnection getInstance() {
+        if(dbConnection == null) {
+            dbConnection = new DBConnection();
+        }
+        return dbConnection;
     }
 
     protected Connection getConnection() throws SQLException {
