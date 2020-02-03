@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="chatBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefWidth="600.0" style="-fx-background-color: #FAFAFC;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.ChatPageController">
+   <center>
+      <VBox fx:id="chatVBox" prefWidth="100.0" style="-fx-background-color: #FAFAFC;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox fx:id="chatHBox" prefWidth="580.0" style="-fx-background-color: #fafafc;" stylesheets="@../com/jets/messageStyle.css">
+               <children>
+                  <StackPane fx:id="ImageStackPane" alignment="TOP_LEFT" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: #FAFAFC;">
+                     <children>
+                        <Circle fx:id="CircleImageView" fill="WHITE" radius="20.0" stroke="#4c84ff" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="2.0" />
+                        <ImageView fx:id="userImage" fitHeight="34.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="circle_image" StackPane.alignment="TOP_LEFT">
+                           <image>
+                              <Image url="@../../../../../Downloads/sender.png" />
+                           </image>
+                           <StackPane.margin>
+                              <Insets left="2.0" />
+                           </StackPane.margin>
+                        </ImageView>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="3.0" />
+                     </padding>
+                  </StackPane>
+                  <VBox fx:id="messageVbox" maxWidth="500.0" minWidth="180.0"  prefWidth="403.0" style="-fx-border-color: #f7f7f7; -fx-background-color: #FFFFFF;" styleClass="speech-bubble" HBox.hgrow="NEVER">
+                     <children>
+                        <Label fx:id="userNameLabel" maxWidth="180.0" text="Shimaa">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Label>
+                        <Label ellipsisString="" graphicTextGap="0.0"  style="-fx-background-radius: 20%;" text="Hi,jdhhhhhjhdjdhhjdjhdhjkjfkfkjjfjkfkjkkjfjkjhkjkkkjjkjjjjkjjjkjjkjkhbbjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhhhhhhhhhhhhhhhhhhhhh;;;;;;;;;;;;;;;;;;;;;;;;;;;;;hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhShimaafkfjjfkkfkjfkjfffffffffffffffffffffffffffffffffShimaajhhhjhhjhjhjhjhjjhjhjhhhjjhfjjhfjfjhfjfjjhfjjfjfjjhadjjdjdjjdj" wrapText="true" VBox.vgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </VBox.margin></Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+
+
+</BorderPane>
