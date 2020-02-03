@@ -1,8 +1,7 @@
 package com.iti.chat.validator;
 
-import javafx.scene.layout.VBox;
-
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterValidation {
 

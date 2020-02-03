@@ -26,11 +26,11 @@ public class DBConnection {
         return dbConnection;
     }
 
-    protected Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
 
-    protected void closeConnection(Connection connection) throws SQLException {
+    public void closeConnection(Connection connection) throws SQLException {
         if(connection != null) {
             connection.close();
         }

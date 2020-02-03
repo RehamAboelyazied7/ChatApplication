@@ -1,6 +1,6 @@
-package com.iti.chat.dbservice;
+package com.iti.chat.dao;
 
-import com.iti.chat.dao.UserDAO;
+import com.iti.chat.dbservice.DBConnection;
 import com.iti.chat.exception.DuplicatePhoneException;
 import com.iti.chat.model.Gender;
 import com.iti.chat.util.adapter.UserAdapter;
@@ -16,7 +16,6 @@ public class UserDAOImpl implements UserDAO {
         String query = "select * from users where user_id = " + id;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
-        resultSet.first();
         User user = UserAdapter.createUser(resultSet);
         if(user != null) {
             setFriends(user, connection);
@@ -31,7 +30,6 @@ public class UserDAOImpl implements UserDAO {
             String query = "select * from users where phone = " + phone;
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
-            resultSet.first();
             User user = UserAdapter.createUser(resultSet);
             if(user != null) {
                 setFriends(user, connection);
@@ -67,9 +65,7 @@ public class UserDAOImpl implements UserDAO {
         Connection connection = DBConnection.getInstance().getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
-        resultSet.first();
         User user = UserAdapter.createUser(resultSet);
-        updateUserStatus(user, UserStatus.ONLINE);
         if(user != null) {
             setFriends(user, connection);
         }
