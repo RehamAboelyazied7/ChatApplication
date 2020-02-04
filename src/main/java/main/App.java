@@ -21,7 +21,8 @@ public class App extends Application {
 //        scene = new Scene(loadFXML("/view/home"));
 //        stage.setScene(scene);
 //        stage.show();
-        SceneTransition.goToLoginScreen(stage);
+        //SceneTransition.goToLoginScreen(stage);
+        SceneTransition.goToHomeScene(stage);
         stage.show();
     }
 
