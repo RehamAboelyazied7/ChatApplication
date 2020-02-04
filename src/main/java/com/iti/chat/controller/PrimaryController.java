@@ -2,7 +2,7 @@ package com.iti.chat.controller;
 
 import java.io.IOException;
 
-import view.App;
+import main.App;
 import javafx.fxml.FXML;
 
 public class PrimaryController {
