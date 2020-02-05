@@ -4,6 +4,7 @@ module com.jets {
     requires java.sql;
     requires mysql.connector.java;
     requires java.naming;
+    requires com.jfoenix;
 
     //opens view to javafx.fxml;
     opens com.iti.chat.controller to javafx.fxml;
