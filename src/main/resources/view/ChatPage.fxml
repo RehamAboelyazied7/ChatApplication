@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -15,14 +19,14 @@
    <center>
       <VBox fx:id="chatVBox" prefWidth="100.0" style="-fx-background-color: #FAFAFC;" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="chatHBox" prefWidth="580.0" style="-fx-background-color: #fafafc;" stylesheets="@../com/jets/messageStyle.css">
+            <HBox fx:id="leftHBox" prefWidth="580.0" style="-fx-background-color: #fafafc;">
                <children>
                   <StackPane fx:id="ImageStackPane" alignment="TOP_LEFT" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: #FAFAFC;">
                      <children>
                         <Circle fx:id="CircleImageView" fill="WHITE" radius="20.0" stroke="#4c84ff" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="2.0" />
                         <ImageView fx:id="userImage" fitHeight="34.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="circle_image" StackPane.alignment="TOP_LEFT">
                            <image>
-                              <Image url="@../../../../../Downloads/sender.png" />
+                              <Image url="@sender.png" />
                            </image>
                            <StackPane.margin>
                               <Insets left="2.0" />
@@ -36,12 +40,13 @@
                         <Insets left="3.0" />
                      </padding>
                   </StackPane>
-                  <VBox fx:id="messageVbox" maxWidth="500.0" minWidth="180.0"  prefWidth="403.0" style="-fx-border-color: #f7f7f7; -fx-background-color: #FFFFFF;" styleClass="speech-bubble" HBox.hgrow="NEVER">
+                  <VBox fx:id="leftMessageVbox" minWidth="180.0" prefWidth="403.0" style="-fx-border-color: #4c84ff; -fx-background-color: #FFFFFF; -fx-border-radius: 2%;" styleClass="speech-bubble" HBox.hgrow="NEVER">
                      <children>
-                        <Label fx:id="userNameLabel" maxWidth="180.0" text="Shimaa">
+                        <Label fx:id="recieverName" maxWidth="180.0" text="Shimaa">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Label>
+                        <Label fx:id="recieverMessage" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="0.0" maxHeight="500.0" maxWidth="200.0" prefHeight="0.0" prefWidth="119.0" style="-fx-background-radius: 20%;" text="Hi,How Are you today ?" wrapText="true" VBox.vgrow="ALWAYS"></Label>
                         <Label ellipsisString="" graphicTextGap="0.0"  style="-fx-background-radius: 20%;" text="Hi,jdhhhhhjhdjdhhjdjhdhjkjfkfkjjfjkfkjkkjfjkjhkjkkkjjkjjjjkjjjkjjkjkhbbjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhhhhhhhhhhhhhhhhhhhhh;;;;;;;;;;;;;;;;;;;;;;;;;;;;;hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhShimaafkfjjfkkfkjfkjfffffffffffffffffffffffffffffffffShimaajhhhjhhjhjhjhjhjjhjhjhhhjjhfjjhfjfjhfjfjjhfjjfjfjjhadjjdjdjjdj" wrapText="true" VBox.vgrow="ALWAYS">
                            <padding>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -55,16 +60,76 @@
                      </padding>
                   </VBox>
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="rightHBox" alignment="TOP_RIGHT" prefWidth="580.0">
+               <children>
+                  <VBox fx:id="rightMessagebox" alignment="TOP_RIGHT" maxWidth="500.0" minWidth="180.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="403.0" style="-fx-border-color: #4c84ff; -fx-background-color: #FFFFFF; -fx-border-radius: 2%;" styleClass="speech-bubble">
+                     <children>
+                        <Label fx:id="userName" alignment="TOP_RIGHT" maxWidth="180.0" text="Shimaa" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="usermessage" alignment="TOP_RIGHT" ellipsisString="" graphicTextGap="0.0" maxWidth="500.0" prefWidth="352.0" style="-fx-background-radius: 20%;" text="Hi,How Are you today ?" wrapText="true" VBox.vgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+               </children>
             </HBox>
          </children>
          <BorderPane.margin>
-            <Insets />
+            <Insets bottom="10.0" />
          </BorderPane.margin>
       </VBox>
    </center>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
+   <bottom>
+      <Pane prefHeight="25.0" styleClass="send_txt" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea layoutX="3.0" layoutY="-6.0" prefHeight="34.0" prefWidth="581.0" promptText="Type your Message" wrapText="true">
+               <effect>
+                  <ColorAdjust />
+               </effect>
+               <padding>
+                  <Insets left="20.0" right="30.0" />
+               </padding>
+            </TextArea>
+            <ImageView fx:id="sendImg" disable="true" fitHeight="20.0" fitWidth="31.0" focusTraversable="true" layoutX="560.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../Downloads/send-icon.png" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="0.26" contrast="0.19" hue="0.02" saturation="0.07" />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DISAPPEAR" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="20.0" fitWidth="100.0" layoutX="3.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../Downloads/icon-attach.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </bottom>
 
 
 </BorderPane>

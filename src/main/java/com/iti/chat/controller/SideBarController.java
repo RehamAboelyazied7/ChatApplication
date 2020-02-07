@@ -19,7 +19,6 @@ public class SideBarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("side bar initialize");
         friendsImageView.setOnMouseClicked(e -> {
             ImageTint.setWhiteTint(friendsImageView);
             ImageTint.removeTint(searchImageView);

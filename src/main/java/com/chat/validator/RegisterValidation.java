@@ -1,12 +1,13 @@
-package com.iti.chat.validator;
+package com.chat.validator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import javafx.scene.layout.VBox;
+
+import java.util.regex.*;
 
 public class RegisterValidation {
 
     String password = "";
-    static final int INVALID = -1, VALID = 1, EMPTY = 0;
+    static final int INVALID=-1,VALID=1,EMPTY=0;
 
     public int checkPhone(String phone) {
         if (phone.isEmpty()) {
@@ -37,21 +38,20 @@ public class RegisterValidation {
         return VALID;//match
     }
 
-    public int checkName(String name) {
+    public boolean checkName(String name) {
         if (name.isEmpty()) {
-            return 0;//empty name
-        } else if (!name.matches("([a-zA-Z]*)")) {
-            return -1;
-        } else {
-            return 1;
+            return false;
         }
+        return true;
     }
 
     public int checkPass(String pass) {
-
+        Pattern p = Pattern.compile("((?=.*[a-z])(?=.*\\\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})");
+        Matcher m = p.matcher(pass);
+        password = pass;
         if (pass.isEmpty()) {
             return EMPTY;//enter your pass
-        } else if (!pass.matches("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,30})")) {
+        } else if (!m.matches()) {
             return INVALID; //check pass more than 8 and contains characters,digits
         }
         return VALID;

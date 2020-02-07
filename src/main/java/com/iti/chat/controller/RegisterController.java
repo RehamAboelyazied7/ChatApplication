@@ -1,7 +1,5 @@
 package com.iti.chat.controller;
 
-import com.iti.chat.dao.UserDAO;
-import com.iti.chat.dbservice.UserDAOImpl;
 import com.iti.chat.validator.RegisterValidation;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -113,17 +111,17 @@ public class RegisterController implements Initializable {
 
         if (validateInputValues()) {
 
-            UserDAO userDAO = new UserDAOImpl();
-            try {
-
-                System.out.println("B register");
-                userDAO.register(firstNameTextField.getText(), lastNameTextField.getText(), phoneTextField.getText(),
-                        passwordTextField.getText(), "");
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            System.out.println("B register");
+//            UserDAO userDAO = new UserDAOImpl();
+//            try {
+//
+//                System.out.println("B register");
+////                userDAO.register(firstNameTextField.getText(), lastNameTextField.getText(), phoneTextField.getText(),
+////                        passwordTextField.getText(), "");
+//
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println("B register");
 
         }
     }

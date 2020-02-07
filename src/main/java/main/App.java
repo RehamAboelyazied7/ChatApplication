@@ -1,5 +1,6 @@
 package main;
 
+import com.iti.chat.util.SceneTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,8 +18,16 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("/view/home"));
-        stage.setScene(scene);
+
+//        scene = new Scene(loadFXML("/view/home"));
+//        stage.setScene(scene);
+//        stage.show();
+        SceneTransition.goToLoginScreen(stage);
+        //SceneTransition.goToHomeScene(stage);
+
+        stage.setResizable(false);
+        SceneTransition.goToRegisterScene(stage);
+
         stage.show();
     }
 
