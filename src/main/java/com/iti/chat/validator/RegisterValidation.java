@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class RegisterValidation {
 
     String password = "";
-    static final int INVALID=-1,VALID=1,EMPTY=0;
+    static final int INVALID = -1, VALID = 1, EMPTY = 0;
 
     public int checkPhone(String phone) {
         if (phone.isEmpty()) {
@@ -37,20 +37,21 @@ public class RegisterValidation {
         return VALID;//match
     }
 
-    public boolean checkName(String name) {
+    public int checkName(String name) {
         if (name.isEmpty()) {
-            return false;
+            return 0;//empty name
+        } else if (!name.matches("([a-zA-Z]*)")) {
+            return -1;
+        } else {
+            return 1;
         }
-        return true;
     }
 
     public int checkPass(String pass) {
-        Pattern p = Pattern.compile("((?=.*[a-z])(?=.*\\\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})");
-        Matcher m = p.matcher(pass);
-        password = pass;
+
         if (pass.isEmpty()) {
             return EMPTY;//enter your pass
-        } else if (!m.matches()) {
+        } else if (!pass.matches("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,30})")) {
             return INVALID; //check pass more than 8 and contains characters,digits
         }
         return VALID;

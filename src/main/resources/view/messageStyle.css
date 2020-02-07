@@ -1,0 +1,10 @@
+.circle_image {
+   -fx-width: 250px;
+    -fx-height: 250px;
+    -fx-background-image: url('C:\Users\pc\ChatApplication\src\main\resources\view\sender.png');
+    -fx-background-size: cover;
+    -fx-display: block;
+}
+
+
+

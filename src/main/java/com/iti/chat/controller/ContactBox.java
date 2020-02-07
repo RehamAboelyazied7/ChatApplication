@@ -26,8 +26,8 @@ public class ContactBox extends HBox {
         contactInfo = new Label();
         contactInfo.setId("contactInfoLabel");
         dataBox = new VBox(contactName, contactInfo);
-        this.getStylesheets().add("sample/stylesheet.css");
-
+        //this.getStylesheets().add("/view/ContactCellStyle.css");
+        this.getStylesheets().add(getClass().getResource("/view/ContactCellStyle.css").toExternalForm());
         this.getChildren().addAll(circleImage, dataBox);
 
     }

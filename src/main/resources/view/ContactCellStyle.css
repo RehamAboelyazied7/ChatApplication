@@ -1,0 +1,27 @@
+
+#contactNameLabel {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 2px 7px;
+
+}
+
+#contactInfoLabel {
+    -fx-text-fill: #a2a3ac;
+    -fx-padding: 2px 7px;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: #EEEEEE;
+    -fx-text-fill: white;
+}
+
+.list-cell:odd, .list-cell:filled:hover {
+    -fx-cell-hover-color: #0093ff;
+    -fx-background-color: white;
+}
+
+
+
+

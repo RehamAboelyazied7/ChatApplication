@@ -51,4 +51,19 @@ public class SceneTransition {
             e.printStackTrace();
         }
     }
+    public static void goToChatScene(Stage stage) {
+        stage.setTitle("Chat");
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SceneTransition.class.getResource("/view/ChatPage.fxml"));
+            Parent parent = loader.load();
+           // parent.autosize();
+            stage.setScene(new Scene(parent));
+            stage.setMinWidth(200);
+            stage.setMinHeight(100);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
