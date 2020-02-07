@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.ListView?>
+<?import java.net.URL?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.iti.chat.controller.HomeController"
@@ -17,5 +18,8 @@
             <fx:include source="ChatPage.fxml"></fx:include>
         </children>
     </VBox>
+    <stylesheets>
+        <URL value="@ContactCellStyle.css" />
+    </stylesheets>
 
 </AnchorPane>
