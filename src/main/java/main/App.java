@@ -27,8 +27,8 @@ public class App extends Application {
         //SceneTransition.goToHomeScene(stage);
 
         stage.setResizable(false);
-        SceneTransition.goToRegisterScene(stage);
-
+       // SceneTransition.goToRegisterScene(stage);
+        SceneTransition.goToChatScene(stage);
         stage.show();
     }
 
