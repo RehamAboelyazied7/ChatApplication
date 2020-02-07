@@ -8,9 +8,10 @@ public class User {
     private int id;
     private String email;
     private String phone;
-    private List<User> friends;
     private int status;
     private int gender;
+    private List<User> friends;
+    private List<ChatRoom> chatRooms;
 
     public User (String firstName, String lastName, String phone, String email, int status, int gender) {
         this.firstName = firstName;
@@ -27,14 +28,17 @@ public class User {
     }
 
     public int getGender() {
+
         return gender;
     }
 
     public void setGender(int gender) {
+
         this.gender = gender;
     }
 
-    public String getStatus() {
+
+    public String getStatusMessage() {
         String state = "";
         switch (status) {
             case UserStatus.AWAY:
@@ -50,6 +54,10 @@ public class User {
                 state = "Offline";
         }
         return state;
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     public void setStatus(int status) {
@@ -107,13 +115,33 @@ public class User {
     }
 
     public List<User> getFriends() {
-
         return friends;
     }
 
     public void setFriends(List<User> friends) {
-
         this.friends = friends;
+    }
+
+    public List<ChatRoom> getChatRooms() {
+        return chatRooms;
+    }
+
+    public void setChatRooms(List<ChatRoom> chatRooms) {
+        this.chatRooms = chatRooms;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof User) {
+            User user = (User) object;
+            return id == user.getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override

@@ -18,10 +18,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-//        scene = new Scene(loadFXML("/view/home"));
-//        stage.setScene(scene);
-//        stage.show();
-        SceneTransition.goToLoginScreen(stage);
+        stage.setResizable(false);
+        SceneTransition.goToRegisterScene(stage);
         stage.show();
     }
 
