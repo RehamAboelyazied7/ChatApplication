@@ -41,7 +41,7 @@ public class RegisterValidation {
     public int checkName(String name) {
         if (name.isEmpty()) {
             return 0;//empty name
-        } else if (!name.matches("([A-Z][a-zA-Z]*)")) {
+        } else if (!name.matches("([a-zA-Z]*)")) {
             return -1;
         } else {
             return 1;

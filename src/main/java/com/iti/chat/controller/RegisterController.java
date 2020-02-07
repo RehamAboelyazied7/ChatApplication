@@ -7,19 +7,38 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.PopupControl;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
+
+    @FXML
+    private Circle imageCircle;
+
+//    @FXML
+//    private ImageView userImageView;
+
+    @FXML
+    private ImageView tempImageView;
+
+    @FXML
+    private AnchorPane rootPane;
 
     @FXML
     private TextField firstNameTextField;
@@ -67,9 +86,6 @@ public class RegisterController implements Initializable {
     Tooltip nameTooltip = new Tooltip("Please enter only characters");
     Tooltip phoneTooltip = new Tooltip("Please enter a valid number");
 
-    //popup boxes
-    PopupControl passwordPopupControl = new PopupControl();
-
     //Validation variables 0 -> empty , 1 -> valid -1 -> invalid
     private int firstNameValidation;
     private int lastNameValidation;
@@ -81,6 +97,9 @@ public class RegisterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+//        imageCircle.setFill(new ImagePattern(new Image("userIcon.png")));
+        imageCircle.setFill(new ImagePattern(tempImageView.getImage()));
 
         firstNameTextField.setTooltip(nameTooltip);
         lastNameTextField.setTooltip(nameTooltip);
@@ -97,12 +116,14 @@ public class RegisterController implements Initializable {
             UserDAO userDAO = new UserDAOImpl();
             try {
 
+                System.out.println("B register");
                 userDAO.register(firstNameTextField.getText(), lastNameTextField.getText(), phoneTextField.getText(),
                         passwordTextField.getText(), "");
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            System.out.println("B register");
 
         }
     }
@@ -130,9 +151,10 @@ public class RegisterController implements Initializable {
                 break;
             case -1:
                 firstNameError.setFont(new Font(15));
+                firstNameError.setText("Invalid name!");
                 firstNameError.setVisible(true);
                 isValid = false;
-                firstNameError.setText("Invalid name!");
+                break;
             default:
                 firstNameError.setVisible(false);
         }
@@ -151,6 +173,7 @@ public class RegisterController implements Initializable {
                 lastNameError.setText("Invalid name");
                 lastNameError.setVisible(true);
                 isValid = false;
+                break;
             default:
                 lastNameError.setVisible(false);
 
@@ -220,6 +243,7 @@ public class RegisterController implements Initializable {
                 confirmPasswordError.setFont(new Font(15));
                 confirmPasswordError.setText("Passwords don't match");
                 confirmPasswordError.setVisible(true);
+                isValid = false;
 
             } else {
 
@@ -227,6 +251,7 @@ public class RegisterController implements Initializable {
 
             }
         }
+        System.out.println(isValid);
         return isValid;
     }
 
@@ -247,6 +272,36 @@ public class RegisterController implements Initializable {
         event.consume();
         maleRadioButton.selectedProperty().setValue(false);
         femaleRadioButton.selectedProperty().setValue(true);
+
+    }
+
+    @FXML
+    public void cancelButtonActionHandler(ActionEvent event) {
+
+        ((Stage) (rootPane.getScene().getWindow())).close();
+
+    }
+
+    @FXML
+    public void choosePictureButtonActionHandler(ActionEvent event) {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
+        File selectedFile = fileChooser.showOpenDialog(((Stage) (rootPane.getScene().getWindow())));
+        if (selectedFile != null) {
+
+            URI uri = selectedFile.toURI();
+//            imageCircle.setFill(new ImagePattern(new Image(selectedFile.getPath())));
+
+//            pictureImage.setImage(new Image());
+            System.out.println(selectedFile.toURI().toString());
+//            imageCircle.setFill(new ImagePattern(new Image(selectedFile.toURI().toString())));
+            imageCircle.setFill(new ImagePattern(new Image(selectedFile.toURI().toString())));
+
+//
+        }
 
     }
 
