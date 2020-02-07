@@ -16,7 +16,7 @@ public class ContactListCell extends ListCell<User> {
         super.updateItem(item, empty);
         if (item != null && !empty) { // <== test for null item and empty parameter
             contactCell.setName(item.getFirstName());
-            contactCell.setInfo(item.getStatus());
+            contactCell.setInfo(item.getStatusMessage());
             //friendImg = new Image("test.png");
             setGraphic(contactCell);
         } else {
