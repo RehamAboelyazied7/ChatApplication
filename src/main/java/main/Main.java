@@ -5,12 +5,14 @@
  */
 package main;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author Shaimaa Saied
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RemoteException {
         App.main(args);
     }
 }

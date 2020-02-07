@@ -23,12 +23,12 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<User> userList = FXCollections.observableArrayList();
-        ObservableList<ContactBox> data = FXCollections.observableArrayList();
-        userList.addAll(new User("Reham", "Mohamed","011" , "Reham@ga" , 1, 1),
-                new User("Khaled", "Mohamed","011" , "Reham@ga" , 2, 1));
-        listView.setItems(userList);
-        listView.setCellFactory(contactBoxListView -> new ContactListCell());
+//        ObservableList<User> userList = FXCollections.observableArrayList();
+//        ObservableList<ContactBox> data = FXCollections.observableArrayList();
+//        userList.addAll(new User("Reham", "Mohamed","011" , "Reham@ga" , 1, 1),
+//                new User("Khaled", "Mohamed","011" , "Reham@ga" , 2, 1));
+//        listView.setItems(userList);
+//        listView.setCellFactory(contactBoxListView -> new ContactListCell());
 
     }
 

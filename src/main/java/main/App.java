@@ -1,5 +1,7 @@
 package main;
 
+import com.iti.chat.service.ChatRoomService;
+import com.iti.chat.service.SessionService;
 import com.iti.chat.util.SceneTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +10,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 /**
  * JavaFX main.App
@@ -20,6 +25,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         stage.setResizable(false);
         SceneTransition.goToRegisterScene(stage);
+        //stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ChatPage2.fxml"))));
         stage.show();
     }
 

@@ -14,26 +14,14 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     }
 
-    public User getCurrentUser() {
-
+    @Override
+    public User getUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
-
-        this.currentUser = currentUser;
-    }
-
     @Override
-    public void logout() {
-        if(currentUser != null) {
-            currentUser = null;
-        }
-    }
-
-    @Override
-    public User login(String phone, String password) {
-        return null;
+    public void setUser(User user) {
+        currentUser = user;
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.iti.chat.util;
 
 import com.iti.chat.controller.HomeController;
 import com.iti.chat.controller.LoginController;
-import com.iti.chat.dao.UserDAOImpl;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,7 +33,7 @@ public class SceneTransition {
             Parent parent = loader.load();
             LoginController loginController = loader.getController();
             loginController.setStage(stage);
-            loginController.setUserDAO(new UserDAOImpl());
+            //loginController.setUserDAO(new UserDAOImpl());
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();
