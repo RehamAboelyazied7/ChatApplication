@@ -33,7 +33,7 @@
                                     <Insets left="3.0" />
                                 </padding>
                             </StackPane>
-                            <VBox fx:id="messageVbox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" HBox.hgrow="ALWAYS">
+                            <VBox id="message-view" fx:id="messageVbox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" styleClass="vbox_size" HBox.hgrow="ALWAYS">
                                 <children>
                                     <Label fx:id="recieverName" maxWidth="180.0" text="Shimaa" textFill="#f5f3f3">
                                         <font>
