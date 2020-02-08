@@ -5,6 +5,16 @@
     -fx-background-size: cover;
     -fx-display: block;
 }
+.vbox_size{
+-fx-padding: 5px;
+}
+.message-view
+{
+  -fx-text-fill:#000000;
+  -fx-border-color: #ffff;
+  -fx-background-radius:2em;
+  -fx-background-color: #DCDCDC ;
+}
 
 
 

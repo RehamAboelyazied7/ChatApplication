@@ -14,7 +14,7 @@
         <children>
             <VBox fx:id="chatVBox" style="-fx-background-color: #FFFF;" AnchorPane.leftAnchor="5" AnchorPane.topAnchor="5">
                 <children>
-                    <HBox fx:id="messageHBox" nodeOrientation="LEFT_TO_RIGHT"  style="-fx-background-color: #FFFF;" stylesheets="@messageStyle.css">
+                    <HBox fx:id="messageHBox" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #FFFF;" stylesheets="@messageStyle.css">
                         <children>
                             <StackPane fx:id="ImageStackPane" alignment="TOP_LEFT" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: #FFFF;">
                                 <children>
@@ -32,7 +32,7 @@
                                     <Insets left="3.0" />
                                 </padding>
                             </StackPane>
-                            <VBox fx:id="messageVbox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" HBox.hgrow="ALWAYS">
+                            <VBox id="message-view" fx:id="messageVbox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" styleClass="vbox_size" HBox.hgrow="ALWAYS">
                                 <children>
                                     <Label fx:id="recieverName" maxWidth="180.0" text="Shimaa" textFill="#f5f3f3">
                                         <font>
