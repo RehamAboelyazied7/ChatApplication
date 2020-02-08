@@ -24,10 +24,11 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        SceneTransition.goToChatScene(stage);
+        //SceneTransition.goToChatScene(stage);
         //SceneTransition.goToLoginScreen(stage);
         //stage.setResizable(false);
         //SceneTransition.goToChatScene(stage);
+        SceneTransition.goToChatScene(stage);
         stage.show();
     }
 

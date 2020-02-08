@@ -12,9 +12,9 @@
 <AnchorPane fx:id="anchorChatPage" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.ChatPageController">
 
         <children>
-            <VBox fx:id="chatVBox" minHeight="100.0" minWidth="100.0" style="-fx-background-color: #FFFF;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5">
+            <VBox fx:id="chatVBox" style="-fx-background-color: #FFFF;" AnchorPane.leftAnchor="5" AnchorPane.topAnchor="5">
                 <children>
-                    <HBox fx:id="messageHBox" minHeight="100.0" minWidth="100.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="1000.0" style="-fx-background-color: #FFFF;" stylesheets="@messageStyle.css">
+                    <HBox fx:id="messageHBox" nodeOrientation="LEFT_TO_RIGHT"  style="-fx-background-color: #FFFF;" stylesheets="@messageStyle.css">
                         <children>
                             <StackPane fx:id="ImageStackPane" alignment="TOP_LEFT" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: #FFFF;">
                                 <children>
@@ -32,7 +32,7 @@
                                     <Insets left="3.0" />
                                 </padding>
                             </StackPane>
-                            <VBox fx:id="messageVbox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" HBox.hgrow="NEVER">
+                            <VBox fx:id="messageVbox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" HBox.hgrow="ALWAYS">
                                 <children>
                                     <Label fx:id="recieverName" maxWidth="180.0" text="Shimaa" textFill="#f5f3f3">
                                         <font>
@@ -42,7 +42,7 @@
                               <Insets left="10.0" top="10.0" />
                            </VBox.margin>
                                     </Label>
-                                    <Label fx:id="recieverMessage" ellipsisString="" graphicTextGap="0.0" style="-fx-background-radius: 20%;" text="Hi Shimaa,How are you" textFill="#f2f0f0" wrapText="true" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="recieverMessage" ellipsisString="" graphicTextGap="0.0" style="-fx-background-radius: 20%;" text="Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you" textFill="#f2f0f0" wrapText="true" VBox.vgrow="ALWAYS">
                                         <padding>
                                             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                         </padding>

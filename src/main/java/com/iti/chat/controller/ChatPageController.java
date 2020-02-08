@@ -30,14 +30,24 @@ public class ChatPageController implements Initializable {
         CircleImageView.setFill(Color.TRANSPARENT);
         Image image = new Image(getClass().getResource("/view/sender.png").toExternalForm());
         CircleImageView.setFill(new ImagePattern(image));
-        chatVBox.setPrefWidth(300);
-        chatVBox.setPrefHeight(200);
-        chatVBox.setMinHeight(100);
-        messageHBox.setHgrow(messageVbox, Priority.ALWAYS);
-        messageHBox.prefHeightProperty().bind(chatVBox.heightProperty().divide(150));
-       messageVbox.prefWidthProperty().bind(chatVBox.widthProperty().divide(150));
-        Message message=new Message();
-        message.messageDirection(false,messageHBox,ImageStackPane,messageVbox,recieverMessage);
+        //chatVBox.setPrefWidth(300);
+        //chatVBox.setPrefHeight(200);
+        //chatVBox.setMinHeight(100);
+        //messageHBox.setHgrow(messageVbox, Priority.ALWAYS);
+        //messageHBox.prefHeightProperty().bind(chatVBox.heightProperty().divide(150));
+       //messageVbox.prefWidthProperty().bind(chatVBox.widthProperty().divide(150));
+        chatVBox.maxWidthProperty().bind(anchorChatPage.widthProperty().multiply(0.8));
+        displayOnRight();
+        anchorChatPage.requestLayout();
+        //Message message=new Message();
+        //message.messageDirection(true,messageHBox,ImageStackPane,messageVbox,recieverMessage);
 
+    }
+
+    public void displayOnRight() {
+        AnchorPane.clearConstraints(chatVBox);
+        AnchorPane.setRightAnchor(chatVBox, 10.0);
+        AnchorPane.setTopAnchor(chatVBox, 10.0);
+        messageHBox.getChildren().remove(ImageStackPane);
     }
 }
