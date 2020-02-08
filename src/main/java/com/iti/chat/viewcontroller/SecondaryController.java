@@ -1,4 +1,4 @@
-package com.iti.chat.controller;
+package com.iti.chat.viewcontroller;
 
 import java.io.IOException;
 

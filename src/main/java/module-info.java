@@ -10,9 +10,9 @@ module com.jets {
     requires chatter.bot.api;
 
     //opens view to javafx.fxml;
-    opens com.iti.chat.controller to javafx.fxml;
+    opens com.iti.chat.viewcontroller to javafx.fxml;
     exports com.iti.chat.service to java.rmi;
-    exports com.iti.chat.controller;
+    exports com.iti.chat.viewcontroller;
     exports main;
     exports com.iti.chat.exception;
     exports com.iti.chat.model;

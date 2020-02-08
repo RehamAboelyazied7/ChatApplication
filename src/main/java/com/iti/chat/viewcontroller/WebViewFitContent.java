@@ -1,4 +1,4 @@
-package com.iti.chat.controller;
+package com.iti.chat.viewcontroller;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

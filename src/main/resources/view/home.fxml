@@ -6,7 +6,7 @@
 <?import java.net.URL?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.iti.chat.controller.HomeController"
+            fx:controller="com.iti.chat.viewcontroller.HomeController"
             prefHeight="400.0" prefWidth="600.0">
     <fx:include source="sideBar.fxml" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"></fx:include>
     <ListView AnchorPane.topAnchor="0" AnchorPane.leftAnchor="60" prefWidth="200" AnchorPane.bottomAnchor="0" fx:id="listView">

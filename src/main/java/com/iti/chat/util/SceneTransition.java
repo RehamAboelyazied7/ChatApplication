@@ -1,13 +1,19 @@
 package com.iti.chat.util;
 
-import com.iti.chat.controller.HomeController;
-import com.iti.chat.controller.LoginController;
+import com.iti.chat.controller.ServiceProviderController;
+import com.iti.chat.viewcontroller.ChatPageController;
+import com.iti.chat.viewcontroller.HomeController;
+import com.iti.chat.viewcontroller.LoginController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SceneTransition {
     public static void goToHomeScene(Stage stage) {
@@ -57,6 +63,10 @@ public class SceneTransition {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/ChatPage.fxml"));
             Parent parent = loader.load();
+            ChatPageController chatPageView = loader.getController();
+            ServiceProviderController controller = new ServiceProviderController();
+            chatPageView.setController(controller);
+            controller.setView(chatPageView);
            // parent.autosize();
             stage.setScene(new Scene(parent));
             stage.setMinWidth(200);
@@ -64,6 +74,8 @@ public class SceneTransition {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NotBoundException ex) {
+            Logger.getLogger(SceneTransition.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

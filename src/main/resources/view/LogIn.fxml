@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="510.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.LoginController" fx:id="root">
+<AnchorPane prefHeight="510.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.LoginController" fx:id="root">
    <children>
       <Circle fx:id="logoImage" fill="#1f93ff00" layoutX="335.0" layoutY="120.0" radius="79.0" stroke="#4c84ff" strokeType="INSIDE" strokeWidth="10.0" />
       <TextField fx:id="phoneTextField" layoutX="185.0" layoutY="218.0" maxHeight="45.0" maxWidth="300.0" minHeight="45.0" minWidth="300.0" prefHeight="45.0" prefWidth="300.0" promptText="Phone number" styleClass="text-field" />
