@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 public interface ClientService extends Remote {
     User getUser() throws RemoteException;
     void setUser(User user) throws RemoteException;
-    void sendMessage(Message message, ChatRoom chatRoom) throws RemoteException;
-    void receiveMessage(Message message, ChatRoom chatRoom) throws RemoteException;
+    void sendMessage(Message message, ChatRoom room) throws RemoteException;
+    void receiveMessage(Message message) throws RemoteException;
     void receiveNotification(Notification notification) throws RemoteException;
 }

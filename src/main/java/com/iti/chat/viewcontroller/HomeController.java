@@ -1,34 +1,69 @@
 package com.iti.chat.viewcontroller;
 
-import com.iti.chat.dao.FriendRequestDAO;
-import com.iti.chat.dao.UserDAO;
+import com.iti.chat.model.ChatRoom;
+import com.iti.chat.model.Message;
+import com.iti.chat.model.Notification;
 import com.iti.chat.model.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.iti.chat.service.ClientServiceProvider;
+import com.iti.chat.util.Session;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
 
-    @FXML
-    ListView<User> listView;
+    @FXML ListView<Message> messagesListView;
+    @FXML MessageTextAreaController messageTextAreaController;
+    ClientServiceProvider model;
+    ChatRoom room;
 
-    FriendRequestDAO friendRequestDAO;
-    UserDAO userDAO;
+
+    public void setModel(ClientServiceProvider model) {
+        this.model = model;
+        try {
+            User khaled = model.login("01228130430", "password");
+            Session.getInstance().setUser(khaled);
+            room = new ChatRoom();
+            room.addUser(khaled);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        ObservableList<User> userList = FXCollections.observableArrayList();
-//        ObservableList<ContactBox> data = FXCollections.observableArrayList();
-//        userList.addAll(new User("Reham", "Mohamed","011" , "Reham@ga" , 1, 1),
-//                new User("Khaled", "Mohamed","011" , "Reham@ga" , 2, 1));
-//        listView.setItems(userList);
-//        listView.setCellFactory(contactBoxListView -> new ContactListCell());
+        messagesListView.setCellFactory(messageListView -> new MessageListCell());
+        messageTextAreaController.sendImageView.setOnMouseClicked(this::sendMessage);
+    }
+
+    public void receiveMessage(Message message) {
+        Platform.runLater(() -> {
+            messagesListView.getItems().add(message);
+        });
+    }
+
+
+    public void sendMessage(MouseEvent e) {
+        Message message = new Message(messageTextAreaController.getMessage(), Session.getInstance().getUser());
+        try {
+            model.sendMessage(message, room);
+            messageTextAreaController.clearText();
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void receiveNotification(Notification notification) {
 
     }
 

@@ -10,7 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class Message {
+public class Message2 {
     public void messageDirection(boolean userMessage,HBox messageHBox, StackPane ImageStackPane, VBox messageVbox, Label recieverMessage) {
         if (userMessage == true) //right
         {

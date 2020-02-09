@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class TestController implements Initializable {
 
     @FXML
-    public AnchorPane chatBorderPane;
+    public AnchorPane anchorChatPage;
     @FXML
     public VBox chatVBox;
     @FXML
@@ -48,9 +48,9 @@ public class TestController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        chatVBox.maxWidthProperty().bind(chatBorderPane.widthProperty().multiply(0.8));
+        chatVBox.maxWidthProperty().bind(anchorChatPage.widthProperty().multiply(0.7));
         //webView.maxHeightProperty().bind(chatVBox.heightProperty());
-        displayOnLeft();
+        //displayOnLeft();
         WebViewFitContent content = new WebViewFitContent("<h1 style=\"color: #5e9ca0;\">You can edit You can edit You can <span style=\"color: #2b2301;\">this demo</span> text!<strong>&nbsp;</strong></h1>\n" +
                 "<h1 style=\"color: #5e9ca0;\">You can edit <span style=\"color: #2b2301;\">this demo</span> text!<strong>&nbsp;</strong></h1>\n" +
                 "<h1 style=\"color: #5e9ca0;\">You can edit <span style=\"color: #2b2301;\">this demo</span> text!<strong>&nbsp;</strong></h1>\n" +
@@ -58,8 +58,9 @@ public class TestController implements Initializable {
                 "<p>&nbsp;</p>\n" +
                 "<p>&nbsp;</p>\n" +
                 "<p><strong>&nbsp;</strong></p>");
-        leftMessageVbox.getChildren().add(content);
-        chatVBox.minWidthProperty().bind(chatBorderPane.widthProperty().multiply(0.5));
+        webViewStackPane.getChildren().add(content);
+        //chatVBox.minWidthProperty().bind(chatVBox.prefWidthProperty());
+        chatVBox.minWidthProperty().bind(content.prefWidthProperty());
         //displayOnRight();
         ChatterBotFactory factory = new ChatterBotFactory();
         try {
@@ -75,7 +76,7 @@ public class TestController implements Initializable {
         AnchorPane.clearConstraints(chatVBox);
         AnchorPane.setLeftAnchor(chatVBox, 10.0);
         AnchorPane.setTopAnchor(chatVBox, 10.0);
-        chatBorderPane.requestLayout();
+        anchorChatPage.requestLayout();
     }
 
     public void displayOnRight() {
@@ -83,6 +84,6 @@ public class TestController implements Initializable {
         AnchorPane.setTopAnchor(chatVBox, 10.0);
         AnchorPane.setRightAnchor(chatVBox, 50.0);
         ImageStackPane.setVisible(false);
-        chatBorderPane.requestLayout();
+        anchorChatPage.requestLayout();
     }
 }

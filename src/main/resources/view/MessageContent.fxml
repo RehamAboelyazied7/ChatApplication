@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" >
+    <children>
+        <Label fx:id="recieverMessage" ellipsisString="" graphicTextGap="0.0" style="-fx-background-radius: 20%;" text="Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you" textFill="#f2f0f0" wrapText="true" VBox.vgrow="ALWAYS">
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+            <VBox.margin>
+                <Insets bottom="2.0" left="4.0" right="2.0" top="2.0" />
+            </VBox.margin>
+        </Label>
+    </children>
+
+</VBox>

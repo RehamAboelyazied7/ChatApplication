@@ -1,6 +1,7 @@
 package com.iti.chat.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatRoom implements Serializable{
@@ -12,6 +13,8 @@ public class ChatRoom implements Serializable{
 
     public ChatRoom() {
         id = counter++;
+        users = new ArrayList<>();
+        messages = new ArrayList<>();
     }
 
     public List<Message> getMessages() {
@@ -46,6 +49,11 @@ public class ChatRoom implements Serializable{
     public List<User> getUsers() {
 
         return users;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+        user.getChatRooms().add(this);
     }
 
     public void setUsers(List<User> users) {

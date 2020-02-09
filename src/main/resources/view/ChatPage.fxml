@@ -10,6 +10,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ListView?>
 <AnchorPane fx:id="anchorChatPage" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.ChatPageController">
 
         <children>
@@ -61,7 +62,6 @@
                             <Insets bottom="10.0" />
                         </VBox.margin>
                     </HBox>
-            <Button mnemonicParsing="false" onAction="#test" text="Button" />
                 </children>
             </VBox>
         </children>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorChatPage" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.TestController">
+
+    <children>
+        <VBox fx:id="chatVBox" style="-fx-background-color: #FFFF;" AnchorPane.leftAnchor="5" AnchorPane.topAnchor="5">
+            <children>
+                <HBox fx:id="messageHBox" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #FFFF;" stylesheets="@messageStyle.css">
+                    <children>
+                        <StackPane fx:id="ImageStackPane" alignment="TOP_LEFT" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: #FFFF;">
+                            <children>
+                                <Circle fx:id="CircleImageView" fill="WHITE" radius="27.0" stroke="#4c84ff" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="5.0">
+                                    <StackPane.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </StackPane.margin>
+                                </Circle>
+
+                            </children>
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                            <padding>
+                                <Insets left="3.0" />
+                            </padding>
+                        </StackPane>
+                        <VBox id="message-view" fx:id="messageVbox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" styleClass="vbox_size" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label fx:id="recieverName" maxWidth="180.0" text="Shimaa" textFill="#f5f3f3">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets left="10.0" top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <StackPane fx:id="webViewStackPane">
+
+                                </StackPane>
+                            </children>
+                            <HBox.margin>
+                                <Insets top="10.0" />
+                            </HBox.margin>
+                        </VBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+
+
+
+</AnchorPane>
