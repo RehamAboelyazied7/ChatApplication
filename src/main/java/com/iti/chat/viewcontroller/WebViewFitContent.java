@@ -65,7 +65,7 @@ public final class WebViewFitContent extends Region {
                     "window.getComputedStyle(document.body, null).getPropertyValue('height')");
             heightString = heightString.replaceFirst("px", "");
             double height = Double.valueOf(heightString);
-            webview.setPrefHeight(height - 50);
+            webview.setPrefHeight(height - 100);
         });
     }
 

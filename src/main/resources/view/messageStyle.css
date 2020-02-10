@@ -16,5 +16,14 @@
   -fx-background-color: #DCDCDC ;
 }
 
+.text-field-with-margin {
+    -fx-padding: 10 10 10 10;
+    -fx-border-insets: 10px;
+    -fx-background-insets: 10px;
+    -fx-border-color: #ffff;
+    -fx-background-radius: 2em;
+    -fx-background-color: #DCDCDC;
+}
+
 
 

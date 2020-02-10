@@ -1,7 +1,8 @@
 package com.iti.chat.viewcontroller;
 
-import com.iti.chat.controller.ServiceProviderController;
-import com.iti.chat.model.ChatRoom;
+
+import com.iti.chat.model.*;
+import com.iti.chat.util.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -10,8 +11,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import com.iti.chat.model.Message;
-import com.iti.chat.model.Notification;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,45 +30,26 @@ public class ChatPageController implements Initializable {
     @FXML
     public Label recieverName, recieverMessage;
 
-    ServiceProviderController controller;
 
-    @FXML
-    public void test()
-    {
-        System.out.println("hi");
-        controller.sendMessage(new Message(), new ChatRoom());
-    }
-    
-    public void setController(ServiceProviderController controller) {
-        this.controller = controller;
-    }
-    
+    private ChatRoom currentChatRoom = new ChatRoom();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CircleImageView.setFill(Color.TRANSPARENT);
         Image image = new Image(getClass().getResource("/view/sender.png").toExternalForm());
         CircleImageView.setFill(new ImagePattern(image));
-        //chatVBox.setPrefWidth(300);
-        //chatVBox.setPrefHeight(200);
-        //chatVBox.setMinHeight(100);
-        //messageHBox.setHgrow(messageVbox, Priority.ALWAYS);
-        //messageHBox.prefHeightProperty().bind(chatVBox.heightProperty().divide(150));
-        //messageVbox.prefWidthProperty().bind(chatVBox.widthProperty().divide(150));
         chatVBox.maxWidthProperty().bind(anchorChatPage.widthProperty().multiply(0.8));
-        displayOnRight();
-        anchorChatPage.requestLayout();
-        //Message message=new Message();
-        //message.messageDirection(true,messageHBox,ImageStackPane,messageVbox,recieverMessage);
-        
-        
-
+        currentChatRoom.addUser(Session.getInstance().getUser());
     }
 
-    
-    public void sendMessage(Message message, ChatRoom chatRoom) { //called in onSetAction of button send
-        controller.sendMessage(new Message(), new ChatRoom());
+    public ChatRoom getCurrentChatRoom() {
+        return currentChatRoom;
     }
+
+    public void setCurrentChatRoom(ChatRoom currentChatRoom) {
+        this.currentChatRoom = currentChatRoom;
+    }
+
     
     public void displayOnRight() {
         AnchorPane.clearConstraints(chatVBox);
@@ -82,7 +62,11 @@ public class ChatPageController implements Initializable {
     }
     
     public void displayMessage(Message message) { //add code to display msg in chats
-        
+        recieverName.setText(message.getSender().getFirstName());
+        recieverMessage.setText(message.getContent());
+        if(!Session.getInstance().getUser().equals(message.getSender())) {
+            displayOnRight();
+        }
     }
 
     public void displayNotification(Notification notification) { //add code to display notification in chats
