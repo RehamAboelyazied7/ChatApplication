@@ -4,14 +4,10 @@ package com.iti.chat.viewcontroller;
 import com.iti.chat.validator.RegisterValidation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -66,15 +62,12 @@ public class UserProfileController implements Initializable {
         validation = new RegisterValidation();
         setEditableFields();
         collectData();
-
-
     }
 
 
     @FXML
     public void edit() {
         setEditableFields();
-
     }
 
     @FXML
@@ -99,6 +92,8 @@ public class UserProfileController implements Initializable {
         if (validData) {
             // check phone no with database
         }
+        // update database
+        //update view
 
 
     }

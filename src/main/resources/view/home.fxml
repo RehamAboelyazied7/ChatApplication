@@ -3,20 +3,30 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.ScrollPane?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.iti.chat.viewcontroller.HomeController"
-            prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;">
+            prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;" fx:id="rootAnchorPane">
     <fx:include source="sideBar.fxml" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" prefWidth="60"></fx:include>
-    <ListView AnchorPane.topAnchor="0" AnchorPane.leftAnchor="60" prefWidth="250" AnchorPane.bottomAnchor="0" fx:id="listView">
+    <ListView AnchorPane.topAnchor="0" AnchorPane.leftAnchor="60" prefWidth="250" AnchorPane.bottomAnchor="0"
+              fx:id="listView">
     </ListView>
-    <ListView AnchorPane.leftAnchor="310" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="170" fx:id="messagesListView">
+    <ScrollPane AnchorPane.leftAnchor="310" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
+                AnchorPane.bottomAnchor="170" fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" fx:id="scrollPane">
+        <content>
+            <VBox fx:id="messagesVBox" fillWidth="true">
 
-    </ListView>
-    <fx:include source="MessageTextArea.fxml" VBox.vgrow="NEVER" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="310"
-    fx:id="messageTextArea"></fx:include>
+            </VBox>
+        </content>
+    </ScrollPane>
+    <fx:include source="MessageTextArea.fxml" VBox.vgrow="NEVER" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0"
+                AnchorPane.leftAnchor="310"
+                fx:id="messageTextArea"></fx:include>
     <stylesheets>
-        <URL value="@ContactCellStyle.css" />
+        <URL value="@ContactCellStyle.css"/>
+        <URL value="@messageStyle.css"></URL>
     </stylesheets>
 
 </AnchorPane>

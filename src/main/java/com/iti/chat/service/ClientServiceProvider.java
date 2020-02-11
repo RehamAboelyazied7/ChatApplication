@@ -38,6 +38,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     public void setController(HomeController controller) {
+
         this.controller = controller;
     }
 

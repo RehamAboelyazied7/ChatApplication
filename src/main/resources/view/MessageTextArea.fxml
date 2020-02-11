@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
-<?import javafx.scene.control.Button?>
-<?import com.iti.chat.viewcontroller.HomeController?>
-<HBox xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" maxHeight="180" fx:controller="com.iti.chat.viewcontroller.MessageTextAreaController" spacing="10" stylesheets="@messageStyle.css">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<HBox xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" maxHeight="180"
+      fx:controller="com.iti.chat.viewcontroller.MessageTextAreaController" spacing="10" stylesheets="@messageStyle.css"
+      fx:id="rootHBox" alignment="CENTER">
     <children>
         <JFXTextArea HBox.hgrow="ALWAYS" fx:id="messageTextArea" styleClass="text-field-with-margin">
             <padding>
-                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
             </padding>
             <HBox.margin>
-                <Insets bottom="2.0" left="4.0" right="2.0" top="2.0" />
+                <Insets bottom="2.0" left="4.0" right="2.0" top="2.0"/>
             </HBox.margin>
         </JFXTextArea>
-        <ImageView preserveRatio="true" fx:id="sendImageView">
-            <HBox.margin>
-                <Insets top="70" right="20"></Insets>
-            </HBox.margin>
-        </ImageView>
     </children>
 </HBox>
