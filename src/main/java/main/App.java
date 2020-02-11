@@ -30,7 +30,7 @@ public class App extends Application {
         //SceneTransition.goToChatScene(stage);
         stage.setMinHeight(700);
         stage.setMinWidth(900);
-        SceneTransition.goToHomeScene(stage);
+        SceneTransition.goToLoginScreen(stage);
         stage.show();
     }
 

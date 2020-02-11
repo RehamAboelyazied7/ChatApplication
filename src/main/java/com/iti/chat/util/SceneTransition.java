@@ -1,7 +1,6 @@
 package com.iti.chat.util;
 
-import com.iti.chat.model.Gender;
-import com.iti.chat.model.User;
+import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.viewcontroller.HomeController;
 import com.iti.chat.viewcontroller.LoginController;
@@ -11,19 +10,27 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 public class SceneTransition {
+    static ClientServiceProvider client;
+    static {
+        try {
+            client = new ClientServiceProvider();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
     public static void goToHomeScene(Stage stage) {
-        //stage.setMinWidth(500);
-        //stage.setMinHeight(300);
         stage.setTitle("Chat");
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/home.fxml"));
             Parent parent = loader.load();
             HomeController homeController = loader.getController();
-            ClientServiceProvider clientServiceProvider = new ClientServiceProvider(homeController);
-            homeController.setModel(clientServiceProvider);
+            homeController.setModel(client);
+            homeController.setStage(stage);
+            client.setController(homeController);
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();
@@ -37,8 +44,9 @@ public class SceneTransition {
             loader.setLocation(SceneTransition.class.getResource("/view/Login.fxml"));
             Parent parent = loader.load();
             LoginController loginController = loader.getController();
+            LoginDelegate delegate = new LoginDelegate(client, loginController);
+            loginController.setDelegate(delegate);
             loginController.setStage(stage);
-            //loginController.setUserDAO(new UserDAOImpl());
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();

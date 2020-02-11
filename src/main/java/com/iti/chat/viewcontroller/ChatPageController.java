@@ -43,10 +43,12 @@ public class ChatPageController implements Initializable {
     }
 
     public ChatRoom getCurrentChatRoom() {
+
         return currentChatRoom;
     }
 
     public void setCurrentChatRoom(ChatRoom currentChatRoom) {
+
         this.currentChatRoom = currentChatRoom;
     }
 
