@@ -64,6 +64,7 @@ public class SceneTransition {
             e.printStackTrace();
         }
     }
+
     public static void goToChatScene(Stage stage) {
         stage.setTitle("Chat");
         try {
@@ -74,11 +75,23 @@ public class SceneTransition {
             //ServiceProviderController controller = new ServiceProviderController();
             //chatPageView.setController(controller);
             //controller.setView(chatPageView);
-           // parent.autosize();
+            // parent.autosize();
             stage.setScene(new Scene(parent));
             //stage.setMinWidth(200);
             //stage.setMinHeight(100);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void goToUserProfilerScene(Stage stage) {
+        stage.setTitle("Profile");
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
+            Parent parent = loader.load();
+            stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();
         }

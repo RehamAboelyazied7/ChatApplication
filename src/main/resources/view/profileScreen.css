@@ -1,23 +1,22 @@
 
-.backGround{
-    -fx-background-color: white ;
+.backGround {
+    -fx-background-color: white;
 
 }
-.img_btn{
+
+.img_btn {
     -fx-graphic: url('icons/rsz_edit2.png');
     -fx-background-size: 18 18;
     -fx-background-repeat: no-repeat;
-    -fx-background-position:left;
+    -fx-background-position: left;
 }
-.red_btn {
-    -fx-background-color:
 
-
-
-            linear-gradient(#4c84ff, #4c84ff);
-    -fx-background-insets: 0,1,2,3;
-    -fx-background-radius: 3,2,2,2;
+.blue_btn {
+    -fx-background-color: linear-gradient(#4c84ff, #4c84ff);
+    -fx-background-insets: 0, 1, 2, 3;
+    -fx-background-radius: 3, 2, 2, 2;
     -fx-padding: 12 30 12 30;
     -fx-text-fill: white;
     -fx-font-size: 12px;
 }
+
