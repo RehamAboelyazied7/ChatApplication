@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<StackPane prefHeight="510.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/8.0.999-ea"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.LoginController"
+           alignment="CENTER" fx:id="root">
+    <children>
+        <VBox spacing="20" alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER">
+                    <children>
+                        <Circle fx:id="logoImage" fill="#1f93ff00" radius="79.0" stroke="#4c84ff" strokeType="INSIDE"
+                                strokeWidth="10.0"/>
+                    </children>
+                </HBox>
+                <TextField fx:id="phoneTextField" maxHeight="45.0" maxWidth="300.0" minHeight="45.0" minWidth="300.0"
+                           prefHeight="45.0" prefWidth="300.0" promptText="Phone number" styleClass="text-field"/>
+                <PasswordField fx:id="passwordField" maxHeight="45.0" maxWidth="300.0" minHeight="45.0" minWidth="300.0"
+                               prefHeight="45.0" prefWidth="300.0" promptText="Password" styleClass="text-field"/>
+                <Button fx:id="logInButton" layoutX="185.0" layoutY="347.0" maxHeight="45.0" maxWidth="300.0"
+                        minHeight="45.0" minWidth="300.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0"
+                        prefWidth="300.0" styleClass="main_button" text="Log in">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                </Button>
+                <HBox spacing="62" alignment="CENTER">
+                    <children>
+                        <CheckBox mnemonicParsing="false" text="Remember me"/>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg"/>
+                        <Label styleClass="hyperlink" text="Register?">
+                            <font>
+                                <Font name="System Bold" size="13.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
 
-<AnchorPane prefHeight="510.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.LoginController" fx:id="root">
-   <children>
-      <Circle fx:id="logoImage" fill="#1f93ff00" layoutX="335.0" layoutY="120.0" radius="79.0" stroke="#4c84ff" strokeType="INSIDE" strokeWidth="10.0" />
-      <TextField fx:id="phoneTextField" layoutX="185.0" layoutY="218.0" maxHeight="45.0" maxWidth="300.0" minHeight="45.0" minWidth="300.0" prefHeight="45.0" prefWidth="300.0" promptText="Phone number" styleClass="text-field" />
-      <HBox />
-      <PasswordField fx:id="passwordField" layoutX="185.0" layoutY="278.0" maxHeight="45.0" maxWidth="300.0" minHeight="45.0" minWidth="300.0" prefHeight="45.0" prefWidth="300.0" promptText="Password" styleClass="text-field" />
-      <HBox maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
-      <Button fx:id="logInButton" layoutX="185.0" layoutY="347.0" maxHeight="45.0" maxWidth="300.0" minHeight="45.0" minWidth="300.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0" prefWidth="300.0" styleClass="main_button" text="Log in">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
-      <Label layoutX="410.0" layoutY="398.0" styleClass="hyperlink" text="Register?">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <CheckBox layoutX="185.0" layoutY="403.0" mnemonicParsing="false" text="Remember me" />
-      <Text id="jjj" layoutX="497.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg" />
-      <Text layoutX="497.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg" />
-   </children>
-</AnchorPane>
+    </children>
+</StackPane>

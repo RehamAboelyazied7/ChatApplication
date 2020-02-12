@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
@@ -51,7 +52,9 @@ public class HomeController implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
         stage.widthProperty().addListener((observableValue, number, t1) -> {
+            scrollPane.requestLayout();
             messagesVBox.requestLayout();
+            rootAnchorPane.requestLayout();
         });
     }
 
@@ -63,14 +66,14 @@ public class HomeController implements Initializable {
         }
         messageTextAreaController.sendButton.setOnAction(this::sendMessage);
         scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
-        //messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
+        messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
     }
 
     public void receiveMessage(Message message) {
         Platform.runLater(() -> {
             Pane pane = createMessageNode(message);
             messagesVBox.getChildren().add(pane);
-            pane.maxWidthProperty().bind(scrollPane.widthProperty().subtract(20));
+            pane.maxWidthProperty().bind(messagesVBox.widthProperty());
         });
     }
 
@@ -80,7 +83,7 @@ public class HomeController implements Initializable {
         try {
             model.sendMessage(message, room);
             messageTextAreaController.clearText();
-        } catch (RemoteException ex) {
+        } catch (RemoteException | NotBoundException ex) {
             ex.printStackTrace();
         }
     }
