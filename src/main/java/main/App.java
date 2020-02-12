@@ -27,7 +27,7 @@ public class App extends Application {
         stage.setMinWidth(900);
         //SceneTransition.goToHomeScene(stage);
         //SceneTransition.goToUserProfilerScene(stage);
-        SceneTransition.goToLoginScreen(stage);
+        SceneTransition.goToRegisterScene(stage);
         //SceneTransition.goToHomeScene(stage);
         stage.show();
     }

@@ -26,7 +26,10 @@
 }
 
 .background {
-    -fx-background-color:  #ffffff;
+
+    -fx-background-image:url("blue-background.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
 }
 .secondaryBackgound {
     -fx-background-color:  #4c84ff;
