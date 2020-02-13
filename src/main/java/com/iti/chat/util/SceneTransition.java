@@ -89,7 +89,7 @@ public class SceneTransition {
         stage.setTitle("Profile");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/contactListTest.fxml"));
             Parent parent = loader.load();
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
