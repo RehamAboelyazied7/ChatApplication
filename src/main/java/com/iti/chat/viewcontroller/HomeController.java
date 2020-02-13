@@ -1,9 +1,6 @@
 package com.iti.chat.viewcontroller;
 
-import com.iti.chat.model.ChatRoom;
-import com.iti.chat.model.Message;
-import com.iti.chat.model.Notification;
-import com.iti.chat.model.User;
+import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
@@ -16,8 +13,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -64,7 +64,8 @@ public class HomeController implements Initializable {
         for (int i = 0; i < 3; i++) {
             listView.getItems().add(Session.getInstance().getUser());
         }
-        messageTextAreaController.sendButton.setOnAction(this::sendMessage);
+        //messageTextAreaController.sendButton.setOnAction(this::sendMessage);
+        messageTextAreaController.sendButton.setOnAction(this::uploadFile);
         scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
         messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
     }
@@ -75,6 +76,25 @@ public class HomeController implements Initializable {
             messagesVBox.getChildren().add(pane);
             pane.maxWidthProperty().bind(messagesVBox.widthProperty());
         });
+    }
+
+    public void uploadFile(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if(selectedFile != null) {
+            try {
+                Message message = new Message(selectedFile.getName(), Session.getInstance().getUser(), MessageType.ATTACHMENT_MESSAGE);
+                model.sendFile(message, selectedFile, room);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

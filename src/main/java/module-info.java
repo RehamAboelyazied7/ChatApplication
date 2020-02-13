@@ -8,6 +8,7 @@ module com.jets {
     requires java.rmi;
     requires javafx.web;
     requires chatter.bot.api;
+    requires rmiio;
 
     //opens view to javafx.fxml;
     opens com.iti.chat.viewcontroller to javafx.fxml;

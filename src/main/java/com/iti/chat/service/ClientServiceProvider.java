@@ -1,11 +1,14 @@
 package com.iti.chat.service;
 
+import com.healthmarketscience.rmiio.RemoteInputStreamServer;
+import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
 import com.iti.chat.model.Notification;
 import com.iti.chat.model.User;
 import com.iti.chat.viewcontroller.HomeController;
 
+import java.io.*;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -53,6 +56,13 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendMessage(Message message, ChatRoom room) throws RemoteException, NotBoundException {
         initChatRoomService();
         chatRoomService.sendMessage(message, room);
+    }
+
+    public void sendFile(Message message, File file, ChatRoom room) throws IOException, NotBoundException {
+        initChatRoomService();
+        InputStream inputStream = new FileInputStream(file.getAbsolutePath());
+        RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
+        chatRoomService.sendFile(message, remoteFileData);
     }
 
     @Override
