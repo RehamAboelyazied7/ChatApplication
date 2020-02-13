@@ -24,7 +24,7 @@
                            prefHeight="45.0" prefWidth="300.0" promptText="Phone number" styleClass="text-field"/>
                 <PasswordField fx:id="passwordField" maxHeight="45.0" maxWidth="300.0" minHeight="45.0" minWidth="300.0"
                                prefHeight="45.0" prefWidth="300.0" promptText="Password" styleClass="text-field"/>
-                <Button fx:id="logInButton" layoutX="185.0" layoutY="347.0" maxHeight="45.0" maxWidth="300.0"
+                <Button fx:id="logInButton" maxHeight="45.0" maxWidth="300.0"
                         minHeight="45.0" minWidth="300.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0"
                         prefWidth="300.0" styleClass="main_button" text="Log in">
                     <font>
@@ -35,11 +35,11 @@
                     <children>
                         <CheckBox mnemonicParsing="false" text="Remember me"/>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg"/>
-                        <Label styleClass="hyperlink" text="Register?">
+                        <Hyperlink styleClass="hyperlink" text="Register?" onAction="#register">
                             <font>
                                 <Font name="System Bold" size="13.0"/>
                             </font>
-                        </Label>
+                        </Hyperlink>
                     </children>
                 </HBox>
             </children>

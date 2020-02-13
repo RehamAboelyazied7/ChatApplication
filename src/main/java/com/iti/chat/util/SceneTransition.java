@@ -1,9 +1,11 @@
 package com.iti.chat.util;
 
 import com.iti.chat.delegate.LoginDelegate;
+import com.iti.chat.delegate.RegisterDelegate;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.viewcontroller.HomeController;
 import com.iti.chat.viewcontroller.LoginController;
+import com.iti.chat.viewcontroller.RegisterController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -59,6 +61,10 @@ public class SceneTransition {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/Register2.fxml"));
             Parent parent = loader.load();
+            RegisterController registerController = loader.getController();
+            RegisterDelegate delegate = new RegisterDelegate(client, registerController);
+            registerController.setDelegate(delegate);
+            registerController.setStage(stage);
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();

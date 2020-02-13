@@ -1,5 +1,12 @@
 package com.iti.chat.viewcontroller;
 
+import com.iti.chat.delegate.LoginDelegate;
+import com.iti.chat.delegate.RegisterDelegate;
+import com.iti.chat.exception.DuplicatePhoneException;
+import com.iti.chat.model.Gender;
+import com.iti.chat.model.User;
+import com.iti.chat.model.UserStatus;
+import com.iti.chat.util.SceneTransition;
 import com.iti.chat.validator.RegisterValidation;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -21,6 +28,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -78,6 +87,8 @@ public class RegisterController implements Initializable {
     @FXML
     private Text confirmPasswordError;
 
+    private Stage stage;
+
     //error tooltips to explain what is wrong with data validation
     Tooltip passwordTooltip = new Tooltip("Password must contains a small letter" +
             ", a capital letter, a number and a special character and must contains at least 8 characters.");
@@ -90,8 +101,18 @@ public class RegisterController implements Initializable {
     private int phoneValidation;
     private int passwordValidation;
     private boolean passwordMatchValidation;
+    private RegisterDelegate delegate;
 
     SimpleBooleanProperty isMale = new SimpleBooleanProperty();
+
+    public void setDelegate(RegisterDelegate delegate) {
+
+        this.delegate = delegate;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -122,6 +143,25 @@ public class RegisterController implements Initializable {
 //                e.printStackTrace();
 //            }
 //            System.out.println("B register");
+            User user = new User();
+            user.setFirstName(firstNameTextField.getText());
+            user.setLastName(lastNameTextField.getText());
+            user.setGender(Gender.MALE);
+            user.setPhone(phoneTextField.getText());
+            user.setEmail("a@a.com");
+            try {
+                delegate.register(user, passwordTextField.getText());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (DuplicatePhoneException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            SceneTransition.goToLoginScreen(stage);
+
 
         }
     }

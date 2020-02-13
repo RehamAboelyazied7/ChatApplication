@@ -13,7 +13,7 @@
         <HBox prefHeight="26.0" prefWidth="650.0" />
         <HBox alignment="BOTTOM_CENTER">
             <children>
-                <Circle accessibleRole="IMAGE_VIEW" fill="DODGERBLUE" radius="55.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                <Circle fx:id="userImage" accessibleRole="IMAGE_VIEW" fill="DODGERBLUE" radius="55.0" stroke="TRANSPARENT" strokeType="INSIDE">
                     <HBox.margin>
                         <Insets right="-30.0" />
                     </HBox.margin>

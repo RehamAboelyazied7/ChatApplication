@@ -124,5 +124,18 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         return sessionService.login(phone, password, this);
     }
 
+    public void register(User user, String password) throws RemoteException, NotBoundException, SQLException {
+        initSessionService();
+        sessionService.register(user, password);
+    }
+
+    public void updateInfo() {
+        try {
+            sessionService.updateInfo(getUser());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
