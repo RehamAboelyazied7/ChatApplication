@@ -57,7 +57,7 @@ public class SceneTransition {
         stage.setTitle("Register");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/FXMLDocument.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/Register2.fxml"));
             Parent parent = loader.load();
             stage.setScene(new Scene(parent));
         } catch (IOException e) {

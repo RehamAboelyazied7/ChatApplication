@@ -4,6 +4,7 @@ import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.viewcontroller.LoginController;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 
@@ -32,7 +33,7 @@ public class LoginDelegate {
         this.loginView = loginView;
     }
 
-    public User login(String phone, String password) throws RemoteException, SQLException {
+    public User login(String phone, String password) throws RemoteException, SQLException, NotBoundException {
         return client.login(phone, password);
     }
 }

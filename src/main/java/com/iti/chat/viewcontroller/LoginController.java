@@ -2,6 +2,7 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.model.User;
+import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
 import javafx.event.ActionEvent;
@@ -10,14 +11,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 
 public class LoginController {
     @FXML
-    AnchorPane root;
+    StackPane root;
 
     @FXML
     Button logInButton;
@@ -56,8 +60,9 @@ public class LoginController {
                 System.out.println("invalid phone or password");
             }
 
-        } catch (SQLException | RemoteException e) {
+        } catch (SQLException | RemoteException | NotBoundException e) {
             e.printStackTrace();
+            JFXDialogFactory.showConnectionError(root);
         }
     }
 

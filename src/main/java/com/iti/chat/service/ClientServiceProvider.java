@@ -20,18 +20,12 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     FriendRequestsService friendRequestsService;
     ChatRoomService chatRoomService;
     SessionService sessionService;
+    Registry registry;
 
     public ClientServiceProvider() throws RemoteException {
-        Registry registry = LocateRegistry.getRegistry(4000);
-        try {
-            friendRequestsService = (FriendRequestsService) registry.lookup(ServerServices.FRIEND_REQUEST_SERVICE);
-            sessionService = (SessionService) registry.lookup(ServerServices.SESSION_SERVICE);
-            chatRoomService = (ChatRoomService) registry.lookup(ServerServices.CHAT_ROOM_SERVICE);
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        }
+        registry = LocateRegistry.getRegistry(4000);
     }
-    
+
     public ClientServiceProvider(HomeController controller) throws RemoteException {
         this();
         this.controller = controller;
@@ -56,7 +50,8 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     @Override
-    public void sendMessage(Message message, ChatRoom room) throws RemoteException {
+    public void sendMessage(Message message, ChatRoom room) throws RemoteException, NotBoundException {
+        initChatRoomService();
         chatRoomService.sendMessage(message, room);
     }
 
@@ -65,32 +60,57 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         controller.receiveMessage(message);
     }
 
-    public ChatRoom createNewChatRoom(List<User> users) throws RemoteException {
+    public ChatRoom createNewChatRoom(List<User> users) throws RemoteException, NotBoundException {
+        initChatRoomService();
         return chatRoomService.createNewChatRoom(users);
     }
-    
+
     @Override
     public void receiveNotification(Notification notification) {
 
         controller.receiveNotification(notification);
     }
 
-    public void sendFriendRequest(User receiver) throws RemoteException {
+    private void initFriendRequestService() throws RemoteException, NotBoundException {
+        if (friendRequestsService == null) {
+            friendRequestsService = (FriendRequestsService) registry.lookup(ServerServices.FRIEND_REQUEST_SERVICE);
+        }
+    }
+
+    private void initSessionService() throws RemoteException, NotBoundException {
+        if (sessionService == null) {
+            sessionService = (SessionService) registry.lookup(ServerServices.SESSION_SERVICE);
+        }
+    }
+
+    private void initChatRoomService() throws RemoteException, NotBoundException {
+        if (chatRoomService == null) {
+            chatRoomService = (ChatRoomService) registry.lookup(ServerServices.CHAT_ROOM_SERVICE);
+        }
+    }
+
+    public void sendFriendRequest(User receiver) throws RemoteException, NotBoundException {
+        initFriendRequestService();
         friendRequestsService.sendFriendRequest(this, receiver);
     }
 
-    public void acceptFriendRequest(User sender) throws RemoteException {
+    public void acceptFriendRequest(User sender) throws RemoteException, NotBoundException {
+        initFriendRequestService();
         friendRequestsService.acceptFriendRequest(this, sender);
     }
-    public void rejectFriendRequest(User sender) throws RemoteException {
+
+    public void rejectFriendRequest(User sender) throws RemoteException, NotBoundException {
+        initFriendRequestService();
         friendRequestsService.rejectFriendRequest(this, sender);
     }
 
-    public List<User> pendingFriendRequests() throws RemoteException {
+    public List<User> pendingFriendRequests() throws RemoteException, NotBoundException {
+        initFriendRequestService();
         return friendRequestsService.pendingFriendRequests(this);
     }
 
-    public User login(String phone, String password) throws RemoteException, SQLException {
+    public User login(String phone, String password) throws RemoteException, SQLException, NotBoundException {
+        initSessionService();
         return sessionService.login(phone, password, this);
     }
 
