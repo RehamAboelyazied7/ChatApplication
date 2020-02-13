@@ -39,6 +39,17 @@ public class SceneTransition {
         }
     }
 
+    public static void mainChatScene(Stage stage) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(SceneTransition.class.getResource("/view/rich_text_area.fxml"));
+        try {
+            Parent parent = loader.load();
+            stage.setScene(new Scene(parent));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void goToLoginScreen(Stage stage) {
         stage.setTitle("Chat Login");
         try {
@@ -59,7 +70,7 @@ public class SceneTransition {
         stage.setTitle("Register");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/Register2.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/Register.fxml"));
             Parent parent = loader.load();
             RegisterController registerController = loader.getController();
             RegisterDelegate delegate = new RegisterDelegate(client, registerController);

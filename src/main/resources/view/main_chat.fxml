@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="chatRoomRoot" prefHeight="400.0" prefWidth="600.0" stylesheets="@chatroom_stylesheet.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.MainChatController">
+
+   <children>
+      <ScrollPane id="showMsgsScrollPane" fx:id="showMsgsScrollPane" hbarPolicy="NEVER" layoutX="-1.0" layoutY="83.0" prefHeight="392.0" prefWidth="722.0">
+         <content>
+            <AnchorPane id="showMsgsAnchorPane" fx:id="showMsgsAnchorPane" prefHeight="389.0" prefWidth="722.0">
+               <children>
+                  <VBox id="showMsgsBox" fx:id="showMsgsBox" layoutX="34.0" prefHeight="389.0" prefWidth="653.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <FlowPane id="messageAreaPane" fx:id="messageAreaPane" layoutX="27.0" layoutY="542.0" prefHeight="52.0" prefWidth="566.0">
+         <children>
+            <StackPane prefHeight="32.0" prefWidth="19.0" />
+            <TextArea id="msgTxtField" fx:id="msgTxtField" prefHeight="48.0" prefWidth="495.0" promptText="Type your message ... ">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextArea>
+            <StackPane prefHeight="48.0" prefWidth="6.0" />
+            <ImageView id="attachFileImgBtn" fx:id="attachFileImgBtn" fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/attach_file_icon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </FlowPane>
+      <JFXButton id="sendMsgImgBtn" fx:id="sendMsgImgBtn" defaultButton="true" ellipsisString="" graphicTextGap="0.0" layoutX="597.0" layoutY="543.0" prefHeight="46.0" prefWidth="46.0" text=" " onAction="#sendMessage">
+         <graphic>
+            <ImageView fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/send_message_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="8.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Send message">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </JFXButton>
+      <JFXButton id="sendMsgImgBtn" fx:id="saveChatImgBtn" ellipsisString="" graphicTextGap="0.0" layoutX="659.0" layoutY="543.0" prefHeight="46.0" prefWidth="46.0" text=" " textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/saveicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="8.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Save chat history">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </JFXButton>
+      <Separator disable="true" layoutX="-1.0" layoutY="488.0" prefHeight="9.0" prefWidth="722.0" />
+      <JFXToggleButton fx:id="boldButton" layoutX="229.0" layoutY="487.0" prefHeight="52.0" prefWidth="103.0" text="B">
+         <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+         </font>
+      </JFXToggleButton>
+      <JFXComboBox fx:id="sizeComboBox" layoutX="57.0" layoutY="500.0" prefHeight="25.0" prefWidth="73.0" visibleRowCount="5" />
+      <Separator disable="true" layoutX="-1.0" layoutY="63.0" prefHeight="9.0" prefWidth="722.0" />
+      <JFXToggleButton fx:id="italicButton" layoutX="137.0" layoutY="485.0" prefHeight="63.0" prefWidth="103.0" text="I">
+         <font>
+            <Font name="Times New Roman Italic" size="18.0" />
+         </font>
+      </JFXToggleButton>
+      <JFXColorPicker id="fontColorPicker" fx:id="fontColorPicker" layoutX="375.0" layoutY="504.0" prefHeight="26.0" prefWidth="90.0" promptText="choose font color ..." style="-fx-color-label-visible: false;" />
+      <JFXButton id="addGroupMembersImgBtn" fx:id="addGroupMembersImgBtn" ellipsisString="" graphicTextGap="0.0" layoutX="657.0" layoutY="8.0" prefHeight="49.0" prefWidth="54.0" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/add_group_members_btn.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label id="chatReceiversTxtLabel" fx:id="chatReceiversTxtLabel" layoutX="27.0" layoutY="14.0" prefHeight="36.0" prefWidth="456.0">
+         <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="fontComboBox" layoutX="526.0" layoutY="506.0" prefHeight="26.0" prefWidth="133.0" visibleRowCount="5" />
+   </children>
+   <padding>
+      <Insets top="5.0" />
+   </padding>
+
+</AnchorPane>
