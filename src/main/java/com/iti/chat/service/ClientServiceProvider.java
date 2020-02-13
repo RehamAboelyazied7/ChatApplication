@@ -129,12 +129,8 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         sessionService.register(user, password);
     }
 
-    public void updateInfo() {
-        try {
-            sessionService.updateInfo(getUser());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+    public void updateUserInfo() throws RemoteException {
+        sessionService.updateInfo(getUser());
     }
 
 
