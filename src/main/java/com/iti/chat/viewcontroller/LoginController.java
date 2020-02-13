@@ -66,6 +66,11 @@ public class LoginController {
         }
     }
 
+    @FXML
+    public void register(ActionEvent ac) {
+        SceneTransition.goToRegisterScene(stage);
+    }
+
 
 
 }
