@@ -16,5 +16,5 @@ public interface ClientService extends Remote {
     void sendMessage(Message message, ChatRoom room) throws RemoteException, NotBoundException;
     void receiveMessage(Message message) throws RemoteException;
     void receiveNotification(Notification notification) throws RemoteException;
-    void updateUserInfo() throws RemoteException, SQLException;
+    void updateUserInfo(User user) throws RemoteException, SQLException;
 }

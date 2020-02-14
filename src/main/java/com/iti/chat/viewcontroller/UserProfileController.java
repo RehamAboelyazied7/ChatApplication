@@ -1,19 +1,16 @@
 package com.iti.chat.viewcontroller;
-
-
-import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.User;
+import com.iti.chat.util.JFXCountryComboBox;
 import com.iti.chat.util.Session;
 import com.iti.chat.validator.RegisterValidation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -29,6 +26,9 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private Circle userImage;
+
+    @FXML
+    private Circle userStatus;
 
     @FXML
     private Button editBtn;
@@ -52,10 +52,7 @@ public class UserProfileController implements Initializable {
     private TextField phoneField;
 
     @FXML
-    private TextField countryField;
-
-    @FXML
-    private TextField genderField;
+    private ComboBox<String> countryField;
 
     @FXML
     private Label nameWarning;
@@ -65,6 +62,9 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private Label phoneWarning;
+
+    @FXML
+    private ImageView genderImage;
 
     private Stage stage;
     private UserInfoDelegate delegate;
@@ -76,10 +76,14 @@ public class UserProfileController implements Initializable {
     private String phone;
     private String country;
 
+    User currentUser;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        currentUser = Session.getInstance().getUser();
+        setUserInfo();
         validation = new RegisterValidation();
+        addCountries();
         setEditableFields();
         collectData();
 
@@ -112,16 +116,18 @@ public class UserProfileController implements Initializable {
         String name = nameField.getText();
         String phone = phoneField.getText();
         String email = emailField.getText();
-        String country = countryField.getText();
+        String country = countryField.getValue();
+        String bio = bioField.getText();
+        System.out.println(countryField.getValue());
         String firstName = new String();
         String lastName = new String();
         boolean validData = true;
-        if (validation.checkName(name) == -1 || validation.checkName(name) == 0) {
+        if (name.trim().isEmpty()) {
             nameWarning.setText("Invalid");
             validData = false;
 
         }
-
+        // check email is not accurate
         /*if (validation.checkEmail(email) == -1) {
             emailWarning.setText("Invalid");
             System.out.println("email");
@@ -141,16 +147,16 @@ public class UserProfileController implements Initializable {
                 lastName += tempName[i];
             }
 
-           // User currentUser = Session.getInstance().getUser();
-            User currentUser = new User();
-            currentUser.setId(1);
+
+            //User currentUser = new User();
             currentUser.setFirstName(firstName);
+            currentUser.setLastName(lastName);
+            currentUser.setBio(bio);
             currentUser.setEmail(email);
             currentUser.setPhone(phone);
             currentUser.setCountry(country);
             try {
                 delegate.updateUserInfo(currentUser);
-                collectData();
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
@@ -161,10 +167,6 @@ public class UserProfileController implements Initializable {
             clearWarnings();
         }
     }
-    //Session.getInstance().getUser();
-    // update database
-    //update view
-
 
     @FXML
     public void cancel() {
@@ -172,7 +174,7 @@ public class UserProfileController implements Initializable {
         bioField.setText(bio);
         emailField.setText(email);
         phoneField.setText(phone);
-        countryField.setText(country);
+        countryField.setValue(country);
         setEditableFields();
         clearWarnings();
 
@@ -184,19 +186,16 @@ public class UserProfileController implements Initializable {
         bioField.setEditable(!bioField.isEditable());
         nameField.setEditable(!nameField.isEditable());
         emailField.setEditable(!emailField.isEditable());
-        phoneField.setEditable(!phoneField.isEditable());
         countryField.setEditable(!countryField.isEditable());
-        genderField.setEditable(!genderField.isEditable());
 
     }
 
     private void collectData() {
-
         name = nameField.getText();
         bio = bioField.getText();
         email = emailField.getText();
         phone = phoneField.getText();
-        country = countryField.getText();
+        country = countryField.getValue();
     }
 
     private void clearWarnings() {
@@ -213,6 +212,42 @@ public class UserProfileController implements Initializable {
             image = new Image(file.toURI().toString());
         }
         return image;
+
+    }
+
+    private void setUserInfo() {
+        nameField.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+        bioField.setText(currentUser.getBio());
+        phoneField.setText(currentUser.getPhone());
+        emailField.setText(currentUser.getEmail());
+        countryField.setValue(currentUser.getCountry());
+        setUserGender();
+        setUserStatus();
+
+    }
+
+    private void addCountries() {
+        JFXCountryComboBox country = new JFXCountryComboBox();
+        country.addCountries(countryField);
+    }
+
+    private void setUserStatus() {
+        if (currentUser.getStatus() == 1)
+            userStatus.setFill(Color.RED);
+        else if (currentUser.getStatus() == 0)
+            userStatus.setFill(Color.GREY);
+        else if (currentUser.getStatus() == 3)
+            userStatus.setFill(Color.BLACK);
+
+    }
+
+    private void setUserGender() {
+        if (currentUser.getGender() == 0)
+            //genderImage.setImage(new Image("view/icons/Female.png".));
+            System.out.println("Femlae");
+        else if (currentUser.getGender() == 1)
+            //genderImage.setImage(new Image("view/icons/Male.png"));
+            System.out.println("male");
 
     }
 }
