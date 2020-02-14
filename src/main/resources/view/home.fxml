@@ -4,29 +4,32 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.iti.chat.viewcontroller.HomeController"
-            prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;" fx:id="rootAnchorPane">
-    <fx:include source="sideBar.fxml" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" prefWidth="60"></fx:include>
-    <ListView AnchorPane.topAnchor="0" AnchorPane.leftAnchor="60" prefWidth="250" AnchorPane.bottomAnchor="0"
-              fx:id="listView">
-    </ListView>
-    <ScrollPane AnchorPane.leftAnchor="310" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
-                AnchorPane.bottomAnchor="170" fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" fx:id="scrollPane"
-                hmax="1.0" pannable="false">
-        <content>
-            <VBox fx:id="messagesVBox" fillWidth="true">
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.iti.chat.viewcontroller.HomeController"
+          prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;" maxHeight="Infinity" maxWidth="Infinity">
+    <children>
+        <fx:include source="sideBar.fxml" GridPane.columnIndex="0" GridPane.Hgrow="NEVER" GridPane.vgrow="ALWAYS" GridPane.fillHeight="true"></fx:include>
+        <ListView GridPane.columnIndex="1" GridPane.Hgrow="NEVER" GridPane.vgrow="ALWAYS"
+                  fx:id="listView">
+        </ListView>
+        <VBox GridPane.columnIndex="2" GridPane.Hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+            <children>
+                <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" fx:id="scrollPane"
+                            hmax="1.0" pannable="false" VBox.vgrow="ALWAYS">
+                    <content>
+                        <VBox fx:id="messagesVBox" fillWidth="true">
 
-            </VBox>
-        </content>
-    </ScrollPane>
-    <fx:include source="MessageTextArea.fxml" VBox.vgrow="NEVER" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0"
-                AnchorPane.leftAnchor="310"
-                fx:id="messageTextArea"></fx:include>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+                <fx:include source="rich_text_area.fxml" VBox.vgrow="NEVER" fx:id="messageTextArea"></fx:include>
+            </children>
+        </VBox>
+    </children>
     <stylesheets>
         <URL value="@ContactCellStyle.css"/>
         <URL value="@messageStyle.css"></URL>
     </stylesheets>
 
-</AnchorPane>
+</GridPane>

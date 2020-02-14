@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -29,15 +28,11 @@ public class HomeController implements Initializable {
     ScrollPane scrollPane;
 
     @FXML
-    AnchorPane rootAnchorPane;
-
-    @FXML
     ListView<User> listView;
 
     @FXML
     VBox messagesVBox;
-    @FXML
-    MessageTextAreaController messageTextAreaController;
+
     ClientServiceProvider model;
     ChatRoom room;
     Stage stage;
@@ -54,7 +49,7 @@ public class HomeController implements Initializable {
         stage.widthProperty().addListener((observableValue, number, t1) -> {
             scrollPane.requestLayout();
             messagesVBox.requestLayout();
-            rootAnchorPane.requestLayout();
+            //rootAnchorPane.requestLayout();
         });
     }
 
@@ -65,7 +60,7 @@ public class HomeController implements Initializable {
             listView.getItems().add(Session.getInstance().getUser());
         }
         //messageTextAreaController.sendButton.setOnAction(this::sendMessage);
-        messageTextAreaController.sendButton.setOnAction(this::uploadFile);
+       // messageTextAreaController.sendButton.setOnAction(this::uploadFile);
         scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
         messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
     }
@@ -98,15 +93,15 @@ public class HomeController implements Initializable {
     }
 
 
-    public void sendMessage(ActionEvent e) {
-        Message message = new Message(messageTextAreaController.getMessage(), Session.getInstance().getUser());
-        try {
-            model.sendMessage(message, room);
-            messageTextAreaController.clearText();
-        } catch (RemoteException | NotBoundException ex) {
-            ex.printStackTrace();
-        }
-    }
+//    public void sendMessage(ActionEvent e) {
+//        Message message = new Message(messageTextAreaController.getMessage(), Session.getInstance().getUser());
+//        try {
+//            model.sendMessage(message, room);
+//            messageTextAreaController.clearText();
+//        } catch (RemoteException | NotBoundException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
     public void receiveNotification(Notification notification) {
 
