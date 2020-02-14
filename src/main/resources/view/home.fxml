@@ -23,7 +23,7 @@
                         </VBox>
                     </content>
                 </ScrollPane>
-                <fx:include source="rich_text_area.fxml" VBox.vgrow="NEVER" fx:id="messageTextArea"></fx:include>
+                <fx:include source="rich_text_area.fxml" VBox.vgrow="NEVER" fx:id="richTextArea"></fx:include>
             </children>
         </VBox>
     </children>
