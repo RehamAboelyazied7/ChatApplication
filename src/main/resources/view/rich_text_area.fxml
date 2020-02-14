@@ -40,7 +40,7 @@
         <HBox id="messageAreaPane" fx:id="messageAreaPane" alignment="CENTER" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS" maxHeight="150">
             <children>
                 <TextArea id="msgTxtField" fx:id="msgTxtField" HBox.hgrow="ALWAYS"
-                          promptText="Type your message ... ">
+                          promptText="Type your message ... " wrapText="true">
                     <font>
                         <Font name="Arial" size="14.0"/>
                     </font>

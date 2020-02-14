@@ -37,7 +37,7 @@
       </ImageView>
       <ImageView fx:id="signOutImageView" fitHeight="40.0" fitWidth="40.0" layoutX="11.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="60.0">
          <image>
-            <Image url="@icons/Sign%20out.png" />
+            <Image url="@icons/Sign out.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -51,5 +51,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+
    </children>
 </AnchorPane>

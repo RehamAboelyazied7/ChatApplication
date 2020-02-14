@@ -25,6 +25,7 @@ public class SideBarController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
         ImageTint.setWhiteTint(profileImageView);
 
         profileImageView.setOnMouseClicked(e -> {

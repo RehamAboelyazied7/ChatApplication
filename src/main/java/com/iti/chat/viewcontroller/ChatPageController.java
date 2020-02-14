@@ -59,13 +59,14 @@ public class ChatPageController implements Initializable {
         AnchorPane.setTopAnchor(chatVBox, 10.0);
         messageHBox.getChildren().remove(ImageStackPane);
         messageVbox.setStyle("-fx-border-color: #ffff;-fx-background-radius:2em;-fx-background-color: #DCDCDC");
-        recieverMessage.setStyle("-fx-text-fill:#000000");
+        //recieverMessage.setStyle("-fx-text-fill:#000000");
         recieverName.setStyle("-fx-text-fill:#000000");
     }
     
     public void displayMessage(Message message) { //add code to display msg in chats
         recieverName.setText(message.getSender().getFirstName());
         recieverMessage.setText(message.getContent());
+        recieverMessage.setStyle(message.getStyle().toString());
         if(!Session.getInstance().getUser().equals(message.getSender())) {
             displayOnRight();
         }

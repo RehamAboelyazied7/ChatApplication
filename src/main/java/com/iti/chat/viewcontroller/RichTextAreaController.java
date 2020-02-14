@@ -1,13 +1,13 @@
 package com.iti.chat.viewcontroller;
 
+import com.iti.chat.model.Message;
 import com.iti.chat.model.MessageStyle;
 import com.iti.chat.util.RGBConverter;
+import com.iti.chat.util.Session;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
@@ -42,6 +42,7 @@ public class RichTextAreaController implements Initializable {
     private boolean italic;
 
     MessageStyle style;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         style = new MessageStyle();
@@ -52,6 +53,18 @@ public class RichTextAreaController implements Initializable {
         fontComboBox.setValue("Arial");
         style.setSize(15);
         setHandlers();
+    }
+
+    public Message getMessage() {
+        Message message = new Message();
+        message.setStyle(style);
+        message.setContent(msgTxtField.getText());
+        message.setSender(Session.getInstance().getUser());
+        return message;
+    }
+
+    public void clearText() {
+        msgTxtField.clear();
     }
 
     private void setHandlers() {
@@ -73,10 +86,9 @@ public class RichTextAreaController implements Initializable {
         });
         italicButton.setOnAction(ae -> {
             italic = !italic;
-            if(italic) {
+            if (italic) {
                 style.setFontPosture(FontPosture.ITALIC.name());
-            }
-            else {
+            } else {
                 style.setFontPosture(FontPosture.REGULAR.name());
             }
             applyStyle();
@@ -84,10 +96,9 @@ public class RichTextAreaController implements Initializable {
         });
         boldButton.setOnAction(ae -> {
             bold = !bold;
-            if(bold) {
+            if (bold) {
                 style.setFontWeight(FontWeight.BOLD.name());
-            }
-            else {
+            } else {
                 style.setFontWeight(FontWeight.LIGHT.name());
             }
             applyStyle();

@@ -18,11 +18,10 @@
                 <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="1.0" pannable="false" VBox.vgrow="ALWAYS">
                     <content>
                         <VBox fx:id="messagesVBox" fillWidth="true">
-
                         </VBox>
                     </content>
                 </ScrollPane>
-                <fx:include fx:id="messageTextArea" source="rich_text_area.fxml" VBox.vgrow="NEVER" />
+                <fx:include source="rich_text_area.fxml" VBox.vgrow="NEVER" fx:id="richTextArea"></fx:include>
             </children>
         </VBox>
     </children>

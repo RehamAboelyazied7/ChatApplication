@@ -35,7 +35,7 @@ public class SceneTransition {
             homeController.setModel(client);
             homeController.setStage(stage);
             client.setController(homeController);
-            stage.setScene(new Scene(parent));
+            stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class SceneTransition {
             LoginDelegate delegate = new LoginDelegate(client, loginController);
             loginController.setDelegate(delegate);
             loginController.setStage(stage);
-            stage.setScene(new Scene(parent));
+            stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,7 +78,7 @@ public class SceneTransition {
             RegisterDelegate delegate = new RegisterDelegate(client, registerController);
             registerController.setDelegate(delegate);
             registerController.setStage(stage);
-            stage.setScene(new Scene(parent));
+            stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {
             e.printStackTrace();
         }
