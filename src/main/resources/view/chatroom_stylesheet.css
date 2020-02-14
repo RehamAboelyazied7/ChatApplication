@@ -1,0 +1,44 @@
+
+#chatRoomRoot{
+    -fx-background-color: rgba(195, 207, 211, 0.4);
+}
+
+
+#messageAreaPane{
+    -fx-background-color: rgba(255, 255, 255, 1);
+    -fx-background-radius: 45;
+    -fx-border-style: solid;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 45;
+    -fx-border-color: #465464;
+}
+
+.text-area .scroll-pane {
+    -fx-hbar-policy: NEVER;
+    -fx-vbar-policy: NEVER;
+}
+
+.text-area{
+    -fx-background-color: #fff, #fff;
+}
+
+.text-area .content {
+    -fx-background-color: #fff;
+}
+
+.text-area:focused .content {
+    -fx-background-color: #fff;
+}
+
+#showMsgsScrollPane{
+   -fx-background-color: rgba(255, 255, 255, 0);
+   -fx-background: rgba(255, 255, 255, 0);
+}
+
+#showMsgsAnchorPane{
+   -fx-background-color: rgba(255, 255, 255, 0);
+}
+
+#showMsgsBox{
+    -fx-background-color: rgba(255, 255, 255, 0);
+}

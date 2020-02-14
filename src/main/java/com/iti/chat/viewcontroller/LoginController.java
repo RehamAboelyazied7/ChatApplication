@@ -54,6 +54,7 @@ public class LoginController {
             User user = delegate.login(phoneTextField.getText(), passwordField.getText());
             if(user != null) {
                 Session.getInstance().setUser(user);
+                //SceneTransition.goToHomeScene(stage);
                 SceneTransition.goToUserProfilerScene(stage);
             }
             else {

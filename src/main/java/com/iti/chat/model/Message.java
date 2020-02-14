@@ -9,6 +9,7 @@ public class Message implements Serializable {
     private User sender;
     private String remotePath;
     private ChatRoom chatRoom;
+    private MessageStyle style;
 
     public Message() {
         messageType = MessageType.TEXT_MESSAGE;
@@ -24,6 +25,14 @@ public class Message implements Serializable {
         this.content = content;
         this.sender = sender;
         this.messageType = MessageType.TEXT_MESSAGE;
+    }
+
+    public MessageStyle getStyle() {
+        return style;
+    }
+
+    public void setStyle(MessageStyle style) {
+        this.style = style;
     }
 
     public String getRemotePath() {

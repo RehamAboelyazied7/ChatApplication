@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Separator?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          prefHeight="200.0" prefWidth="600.0" fx:controller="com.iti.chat.viewcontroller.RichTextAreaController">
+    <children>
+        <HBox spacing="20" alignment="CENTER" GridPane.rowIndex="0" GridPane.hgrow="NEVER">
+            <children>
+                <JFXToggleButton fx:id="boldButton" prefHeight="52.0" prefWidth="70" text="B">
+                    <font>
+                        <Font name="Times New Roman Bold" size="18.0"/>
+                    </font>
+                </JFXToggleButton>
+
+                <JFXToggleButton fx:id="italicButton" prefHeight="63.0" prefWidth="70" text="I">
+                    <font>
+                        <Font name="Times New Roman Italic" size="18.0"/>
+                    </font>
+                </JFXToggleButton>
+                <JFXComboBox fx:id="sizeComboBox" prefHeight="25.0" prefWidth="73.0" visibleRowCount="5">
+                </JFXComboBox>
+
+                <JFXColorPicker id="fontColorPicker" fx:id="fontColorPicker" prefHeight="26.0" prefWidth="90.0"
+                                promptText="choose font color ..." style="-fx-color-label-visible: false;"/>
+                <JFXComboBox fx:id="fontComboBox" prefHeight="26.0" prefWidth="133.0"
+                             visibleRowCount="5"/>
+            </children>
+        </HBox>
+
+        <HBox id="messageAreaPane" fx:id="messageAreaPane" alignment="CENTER" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS" maxHeight="150">
+            <children>
+                <TextArea id="msgTxtField" fx:id="msgTxtField" HBox.hgrow="ALWAYS"
+                          promptText="Type your message ... ">
+                    <font>
+                        <Font name="Arial" size="14.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets top="10" bottom="10" left="20"></Insets>
+                    </HBox.margin>
+                </TextArea>
+                <Separator orientation="VERTICAL"></Separator>
+                <JFXButton fx:id="sendButton" ellipsisString="" graphicTextGap="0.0" prefHeight="49.0" prefWidth="54.0" textAlignment="CENTER">
+                    <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@right-arrow.png"/>
+                            </image>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+            </children>
+
+        </HBox>
+    </children>
+    <stylesheets>
+        <URL value="@chatroom_stylesheet.css">
+
+        </URL>
+    </stylesheets>
+
+</GridPane>
