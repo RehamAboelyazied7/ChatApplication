@@ -56,7 +56,7 @@ public class SceneTransition {
         stage.setTitle("Chat Login");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/Login.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/LogIn.fxml"));
             Parent parent = loader.load();
             LoginController loginController = loader.getController();
             LoginDelegate delegate = new LoginDelegate(client, loginController);

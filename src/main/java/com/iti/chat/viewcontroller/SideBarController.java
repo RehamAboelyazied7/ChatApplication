@@ -11,22 +11,41 @@ import java.util.ResourceBundle;
 public class SideBarController implements Initializable {
 
     @FXML
-    ImageView friendsImageView;
+    ImageView profileImageView;
 
     @FXML
-    ImageView searchImageView;
+    ImageView magnifierImageView;
 
+    @FXML
+    ImageView contactsImageView;
+
+    @FXML
+    ImageView signOutImageView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        friendsImageView.setOnMouseClicked(e -> {
-            ImageTint.setWhiteTint(friendsImageView);
-            ImageTint.removeTint(searchImageView);
+
+        ImageTint.setWhiteTint(profileImageView);
+
+        profileImageView.setOnMouseClicked(e -> {
+
+                ImageTint.setWhiteTint(profileImageView);
+
         });
 
-        searchImageView.setOnMouseClicked(e -> {
-            ImageTint.setWhiteTint(searchImageView);
-            ImageTint.removeTint(friendsImageView);
+        magnifierImageView.setOnMouseClicked(e -> {
+
+            ImageTint.setWhiteTint(magnifierImageView);
+            ImageTint.removeTint(contactsImageView);
+
         });
+
+        contactsImageView.setOnMouseClicked(e -> {
+
+            ImageTint.setWhiteTint(contactsImageView);
+            ImageTint.removeTint(magnifierImageView);
+
+        });
+
     }
 }

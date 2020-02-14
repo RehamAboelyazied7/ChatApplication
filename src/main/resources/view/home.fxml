@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.*?>
-<?import java.net.URL?>
-<GridPane xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="com.iti.chat.viewcontroller.HomeController"
-          prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;" maxHeight="Infinity" maxWidth="Infinity">
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane fx:id="motherGridPane" maxHeight="Infinity" maxWidth="Infinity" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.HomeController">
     <children>
-        <fx:include source="sideBar.fxml" GridPane.columnIndex="0" GridPane.Hgrow="NEVER" GridPane.vgrow="ALWAYS" GridPane.fillHeight="true"></fx:include>
-        <ListView GridPane.columnIndex="1" GridPane.Hgrow="NEVER" GridPane.vgrow="ALWAYS"
-                  fx:id="listView">
+        <fx:include fx:id="sideBarAnchorPane" source="sideBar.fxml" GridPane.Hgrow="NEVER" GridPane.columnIndex="0" GridPane.fillHeight="true" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
+        <ListView fx:id="listView" GridPane.Hgrow="NEVER" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
         </ListView>
-        <VBox GridPane.columnIndex="2" GridPane.Hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+        <VBox GridPane.Hgrow="ALWAYS" GridPane.columnIndex="2" GridPane.vgrow="ALWAYS">
             <children>
-                <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" fx:id="scrollPane"
-                            hmax="1.0" pannable="false" VBox.vgrow="ALWAYS">
+                <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="1.0" pannable="false" VBox.vgrow="ALWAYS">
                     <content>
                         <VBox fx:id="messagesVBox" fillWidth="true">
 
                         </VBox>
                     </content>
                 </ScrollPane>
-                <fx:include source="rich_text_area.fxml" VBox.vgrow="NEVER" fx:id="messageTextArea"></fx:include>
+                <fx:include fx:id="messageTextArea" source="rich_text_area.fxml" VBox.vgrow="NEVER" />
             </children>
         </VBox>
     </children>
     <stylesheets>
-        <URL value="@ContactCellStyle.css"/>
-        <URL value="@messageStyle.css"></URL>
+        <URL value="@ContactCellStyle.css" />
+        <URL value="@messageStyle.css" />
     </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
 
 </GridPane>
