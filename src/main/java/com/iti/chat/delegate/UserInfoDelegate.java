@@ -33,6 +33,6 @@ public class UserInfoDelegate {
     }
 
     public void updateUserInfo(User user) throws RemoteException, SQLException {
-        client.updateUserInfo();
+        client.updateUserInfo(user);
     }
 }

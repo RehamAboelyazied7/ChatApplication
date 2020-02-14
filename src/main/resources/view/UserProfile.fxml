@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="650.0" styleClass="backGround" stylesheets="@profileScreen.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.UserProfileController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="650.0" styleClass="backGround" stylesheets="@profileScreen.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.UserProfileController">
     <children>
         <HBox prefHeight="26.0" prefWidth="650.0" />
         <HBox alignment="BOTTOM_CENTER">
@@ -18,7 +23,7 @@
                         <Insets right="-30.0" />
                     </HBox.margin>
                 </Circle>
-                <Circle fill="#26fc3c" radius="6.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                <Circle fx:id="userStatus" fill="#26fc3c" radius="6.0" stroke="TRANSPARENT" strokeType="INSIDE">
                     <HBox.margin>
                         <Insets bottom="5.0" />
                     </HBox.margin>
@@ -27,7 +32,7 @@
         </HBox>
         <HBox alignment="CENTER" prefHeight="48.0" prefWidth="650.0">
             <children>
-                <JFXTextField fx:id="nameField" alignment="CENTER" prefHeight="25.0" prefWidth="408.0" styleClass="custom-text-field" text="User name" unFocusColor="WHITE">
+                <JFXTextField fx:id="nameField" alignment="CENTER" prefHeight="25.0" prefWidth="408.0" styleClass="custom-text-field" unFocusColor="WHITE">
                     <font>
                         <Font name="Arial Black" size="24.0" />
                     </font>
@@ -47,6 +52,11 @@
         <HBox prefHeight="37.0" prefWidth="650.0" />
         <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="650.0">
             <children>
+            <ImageView fx:id="genderImage" fitHeight="56.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@sender.png" />
+               </image>
+            </ImageView>
                 <JFXTextArea fx:id="bioField" prefHeight="71.0" prefWidth="464.0" text="Bio..............." unFocusColor="WHITE">
                     <font>
                         <Font name="Arial Italic" size="18.0" />
@@ -54,7 +64,7 @@
                 </JFXTextArea>
             </children>
         </HBox>
-        <HBox prefHeight="38.0" prefWidth="650.0" />
+        <HBox prefHeight="27.0" prefWidth="650.0" />
         <HBox alignment="CENTER" prefHeight="54.0" prefWidth="634.0">
             <children>
                 <ImageView fitHeight="40.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
@@ -100,11 +110,11 @@
                         <Image url="@icons/country_icon.png" />
                     </image>
                 </ImageView>
-                <JFXTextField fx:id="countryField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="Egypt, Cairo" unFocusColor="#1e66e4">
-                    <HBox.margin>
-                        <Insets bottom="2.0" left="10.0" />
-                    </HBox.margin>
-                </JFXTextField>
+                <JFXComboBox fx:id="countryField" layoutX="307.0" layoutY="113.0" prefHeight="25.0" prefWidth="282.0" unFocusColor="#2d22ff">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="9.0" />
+               </HBox.margin></JFXComboBox>
+               
                 <Label textFill="#f51717">
                     <font>
                         <Font size="14.0" />
@@ -113,18 +123,6 @@
             </children>
         </HBox>
         <HBox alignment="CENTER" layoutX="10.0" layoutY="200.0" prefHeight="54.0" prefWidth="634.0">
-            <children>
-                <ImageView fitHeight="34.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@icons/person.png" />
-                    </image>
-                </ImageView>
-                <JFXTextField fx:id="genderField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="Gender" unFocusColor="#1e66e4">
-                    <HBox.margin>
-                        <Insets bottom="2.0" left="10.0" />
-                    </HBox.margin>
-                </JFXTextField>
-            </children>
             <VBox.margin>
                 <Insets right="10.0" />
             </VBox.margin>
