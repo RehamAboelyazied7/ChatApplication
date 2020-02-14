@@ -25,7 +25,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         stage.setMinHeight(700);
         stage.setMinWidth(900);
-        SceneTransition.goToUserProfilerScene(stage);
+        SceneTransition.goToLoginScreen(stage);
 
         stage.show();
     }
