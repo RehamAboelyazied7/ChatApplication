@@ -51,7 +51,6 @@ public class HomeController implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
         stage.widthProperty().addListener((observableValue, number, t1) -> {
-            //scrollPane.requestLayout();
             messagesVBox.requestLayout();
         });
     }
