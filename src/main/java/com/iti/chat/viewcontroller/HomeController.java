@@ -12,13 +12,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,10 +34,16 @@ public class HomeController implements Initializable {
     ScrollPane scrollPane;
 
     @FXML
+    GridPane motherGridPane;
+
+    @FXML
     ListView<User> listView;
 
     @FXML
     VBox messagesVBox;
+
+    @FXML
+    AnchorPane sideBarAnchorPane;
 
     ClientServiceProvider model;
     ChatRoom room;
@@ -80,6 +86,7 @@ public class HomeController implements Initializable {
         //richTextAreaController.sendButton.setOnAction(this::uploadFile);
         scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
         messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
+        sideBarAnchorPane.minHeightProperty().bind(motherGridPane.heightProperty());
     }
 
     public void receiveMessage(Message message) {
