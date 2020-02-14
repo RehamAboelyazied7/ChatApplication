@@ -32,7 +32,7 @@
 
                 <JFXColorPicker id="fontColorPicker" fx:id="fontColorPicker" prefHeight="26.0" prefWidth="90.0"
                                 promptText="choose font color ..." style="-fx-color-label-visible: false;"/>
-                <JFXComboBox fx:id="fontComboBox" prefHeight="26.0" prefWidth="133.0"
+                <JFXComboBox fx:id="fontComboBox" prefHeight="26.0" prefWidth="200.0"
                              visibleRowCount="5"/>
             </children>
         </HBox>
@@ -40,7 +40,7 @@
         <HBox id="messageAreaPane" fx:id="messageAreaPane" alignment="CENTER" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS" maxHeight="150">
             <children>
                 <TextArea id="msgTxtField" fx:id="msgTxtField" HBox.hgrow="ALWAYS"
-                          promptText="Type your message ... ">
+                          promptText="Type your message ... " wrapText="true">
                     <font>
                         <Font name="Arial" size="14.0"/>
                     </font>

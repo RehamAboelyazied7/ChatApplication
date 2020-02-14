@@ -2,7 +2,9 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
+import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
+import com.jfoenix.controls.JFXDialog;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,11 +12,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,10 +26,15 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HomeController implements Initializable {
     @FXML
     ScrollPane scrollPane;
+
+    @FXML
+    GridPane motherGridPane;
 
     @FXML
     ListView<User> listView;
@@ -33,9 +42,16 @@ public class HomeController implements Initializable {
     @FXML
     VBox messagesVBox;
 
+    @FXML
+    AnchorPane sideBarAnchorPane;
+
     ClientServiceProvider model;
     ChatRoom room;
     Stage stage;
+    FileTransferProgressController fileTransferProgressController;
+
+    @FXML
+    RichTextAreaController richTextAreaController;
 
 
     public void setModel(ClientServiceProvider model) {
@@ -47,9 +63,7 @@ public class HomeController implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
         stage.widthProperty().addListener((observableValue, number, t1) -> {
-            scrollPane.requestLayout();
             messagesVBox.requestLayout();
-            //rootAnchorPane.requestLayout();
         });
     }
 
@@ -59,10 +73,20 @@ public class HomeController implements Initializable {
         for (int i = 0; i < 3; i++) {
             listView.getItems().add(Session.getInstance().getUser());
         }
-        //messageTextAreaController.sendButton.setOnAction(this::sendMessage);
-       // messageTextAreaController.sendButton.setOnAction(this::uploadFile);
+        richTextAreaController.sendButton.setOnAction(ae -> {
+            try {
+                model.sendMessage(richTextAreaController.getMessage(), room);
+                richTextAreaController.clearText();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            }
+        });
+        //richTextAreaController.sendButton.setOnAction(this::uploadFile);
         scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
         messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
+        sideBarAnchorPane.minHeightProperty().bind(motherGridPane.heightProperty());
     }
 
     public void receiveMessage(Message message) {
@@ -77,31 +101,31 @@ public class HomeController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
         if(selectedFile != null) {
-            try {
-                Message message = new Message(selectedFile.getName(), Session.getInstance().getUser(), MessageType.ATTACHMENT_MESSAGE);
-                model.sendFile(message, selectedFile, room);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (NotBoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            fileTransferProgressController = createFileTransfer(selectedFile.length());
+            StackPane container = new StackPane();
+            messagesVBox.getChildren().add(container);
+            fileTransferProgressController.willStartTransfer(container);
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.submit(() -> {
+                try {
+                    Message message = new Message(selectedFile.getName(), Session.getInstance().getUser(), MessageType.ATTACHMENT_MESSAGE);
+                    model.sendFile(message, selectedFile, room);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (NotBoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
-
-//    public void sendMessage(ActionEvent e) {
-//        Message message = new Message(messageTextAreaController.getMessage(), Session.getInstance().getUser());
-//        try {
-//            model.sendMessage(message, room);
-//            messageTextAreaController.clearText();
-//        } catch (RemoteException | NotBoundException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+    public void didSendNBytes(long n) {
+        fileTransferProgressController.setCurrentBytes(n);
+    }
 
     public void receiveNotification(Notification notification) {
 
@@ -115,6 +139,20 @@ public class HomeController implements Initializable {
             ChatPageController controller = loader.getController();
             controller.displayMessage(message);
             return pane;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public FileTransferProgressController createFileTransfer(long bytes) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/file_transfer_progress.fxml"));
+        try {
+            loader.load();
+            FileTransferProgressController controller = loader.getController();
+            controller.setTotalBytes(bytes);
+            return controller;
         } catch (IOException e) {
             e.printStackTrace();
         }
