@@ -17,14 +17,18 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class SceneTransition {
-    static ClientServiceProvider client;
+    public static ClientServiceProvider client;
+
     static {
+
         try {
             client = new ClientServiceProvider();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
     }
+
     public static void goToHomeScene(Stage stage) {
         stage.setTitle("Chat");
         try {
