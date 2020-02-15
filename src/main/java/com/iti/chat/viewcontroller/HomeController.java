@@ -57,9 +57,20 @@ public class HomeController implements Initializable {
         });
     }
 
+    public void acceptFriendRequest(User user) {
+        try {
+            model.acceptFriendRequest(user);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listView.setCellFactory(listView -> new ContactListCell());
+        //listView.setCellFactory(listView -> new ContactListCell());
+        listView.setCellFactory(listView -> new RequestContactCell(this));
         for (int i = 0; i < 3; i++) {
             listView.getItems().add(Session.getInstance().getUser());
         }
