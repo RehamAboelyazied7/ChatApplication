@@ -23,6 +23,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        stage.setOnCloseRequest(event -> {
+
+            System.exit(0);
+
+        });
+
         stage.setMinHeight(700);
         stage.setMinWidth(900);
         SceneTransition.goToLoginScreen(stage);
