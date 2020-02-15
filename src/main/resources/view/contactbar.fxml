@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -33,13 +34,16 @@
          </font>
       </Label>
       <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-      <ImageView fx:id="saveImageView" fitHeight="42.0" fitWidth="44.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveImageView" fitHeight="36.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/Save_chat.png" />
          </image>
          <HBox.margin>
             <Insets right="15.0" />
          </HBox.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
    </children>
 </HBox>

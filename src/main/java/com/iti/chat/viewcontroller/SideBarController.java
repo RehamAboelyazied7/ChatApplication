@@ -12,19 +12,19 @@ import java.util.ResourceBundle;
 public class SideBarController implements Initializable {
 
     @FXML
-    VBox sideBarVBox;
+    private VBox sideBarVBox;
 
     @FXML
-    ImageView profileImageView;
+    private ImageView profileImageView;
 
     @FXML
-    ImageView magnifierImageView;
+    private ImageView magnifierImageView;
 
     @FXML
-    ImageView contactsImageView;
+    private ImageView contactsImageView;
 
     @FXML
-    ImageView signOutImageView;
+    private ImageView signOutImageView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,5 +52,45 @@ public class SideBarController implements Initializable {
 //
 //        });
 
+    }
+
+    public VBox getSideBarVBox() {
+        return sideBarVBox;
+    }
+
+    public void setSideBarVBox(VBox sideBarVBox) {
+        this.sideBarVBox = sideBarVBox;
+    }
+
+    public ImageView getProfileImageView() {
+        return profileImageView;
+    }
+
+    public void setProfileImageView(ImageView profileImageView) {
+        this.profileImageView = profileImageView;
+    }
+
+    public ImageView getMagnifierImageView() {
+        return magnifierImageView;
+    }
+
+    public void setMagnifierImageView(ImageView magnifierImageView) {
+        this.magnifierImageView = magnifierImageView;
+    }
+
+    public ImageView getContactsImageView() {
+        return contactsImageView;
+    }
+
+    public void setContactsImageView(ImageView contactsImageView) {
+        this.contactsImageView = contactsImageView;
+    }
+
+    public ImageView getSignOutImageView() {
+        return signOutImageView;
+    }
+
+    public void setSignOutImageView(ImageView signOutImageView) {
+        this.signOutImageView = signOutImageView;
     }
 }

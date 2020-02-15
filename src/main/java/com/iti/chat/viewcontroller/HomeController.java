@@ -2,6 +2,7 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
+import com.iti.chat.util.Animator;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -12,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -59,6 +59,17 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        sideBarController.getProfileImageView().setOpacity(0.4);
+        sideBarController.getContactsImageView().setOpacity(0.4);
+
+        Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+        Animator.setIconAnimation(sideBarController.getSignOutImageView());
+        Animator.setIconAnimation(chatRoomController.getContactBarController().getSaveImageView());
+
+
+
+
         listView.setCellFactory(listView -> new ContactListCell());
         for (int i = 0; i < 3; i++) {
             listView.getItems().add(Session.getInstance().getUser());

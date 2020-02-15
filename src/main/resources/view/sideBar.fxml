@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-
 <VBox fx:id="sideBarVBox" alignment="TOP_CENTER" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
    <children>
       <Circle fill="white" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0">
@@ -16,7 +15,7 @@
             <Insets top="15.0" />
          </VBox.margin>
       </Circle>
-      <HBox prefHeight="47.0" prefWidth="64.0" />
+      <HBox prefHeight="24.0" prefWidth="64.0" />
       <ImageView fx:id="profileImageView" fitHeight="33.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/user.png" />
@@ -41,7 +40,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="signOutImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/logout.png" />
          </image>
