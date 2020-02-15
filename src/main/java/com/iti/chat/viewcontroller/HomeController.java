@@ -2,17 +2,13 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
-import com.jfoenix.controls.JFXDialog;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -30,20 +26,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HomeController implements Initializable {
-    @FXML
-    ScrollPane scrollPane;
 
     @FXML
-    GridPane motherGridPane;
+    private GridPane motherGridPane;
 
     @FXML
     ListView<User> listView;
-
-    @FXML
-    VBox messagesVBox;
-
-    @FXML
-    AnchorPane sideBarAnchorPane;
 
     ClientServiceProvider model;
     ChatRoom room;
@@ -51,8 +39,10 @@ public class HomeController implements Initializable {
     FileTransferProgressController fileTransferProgressController;
 
     @FXML
-    RichTextAreaController richTextAreaController;
+    private ChatRoomController chatRoomController;
 
+    @FXML
+    private  SideBarController sideBarController;
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
@@ -63,7 +53,7 @@ public class HomeController implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
         stage.widthProperty().addListener((observableValue, number, t1) -> {
-            messagesVBox.requestLayout();
+            chatRoomController.getMessagesVBox().requestLayout();
         });
     }
 
@@ -73,10 +63,10 @@ public class HomeController implements Initializable {
         for (int i = 0; i < 3; i++) {
             listView.getItems().add(Session.getInstance().getUser());
         }
-        richTextAreaController.sendButton.setOnAction(ae -> {
+        chatRoomController.getRichTextAreaController().getSendButton().setOnAction(ae -> {
             try {
-                model.sendMessage(richTextAreaController.getMessage(), room);
-                richTextAreaController.clearText();
+                model.sendMessage(chatRoomController.getRichTextAreaController().getMessage(), room);
+                chatRoomController.getRichTextAreaController().clearText();
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {
@@ -84,16 +74,16 @@ public class HomeController implements Initializable {
             }
         });
         //richTextAreaController.sendButton.setOnAction(this::uploadFile);
-        scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
-        messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
-        sideBarAnchorPane.minHeightProperty().bind(motherGridPane.heightProperty());
+        chatRoomController.getScrollPane().vvalueProperty().bind(chatRoomController.getMessagesVBox().heightProperty());
+        chatRoomController.getMessagesVBox().maxWidthProperty().bind(chatRoomController.getScrollPane().widthProperty());
+//        sideBarAnchorPane.minHeightProperty().bind(motherGridPane.heightProperty());
     }
 
     public void receiveMessage(Message message) {
         Platform.runLater(() -> {
             Pane pane = createMessageNode(message);
-            messagesVBox.getChildren().add(pane);
-            pane.maxWidthProperty().bind(messagesVBox.widthProperty());
+            chatRoomController.getMessagesVBox().getChildren().add(pane);
+            pane.maxWidthProperty().bind(chatRoomController.getMessagesVBox().widthProperty());
         });
     }
 
@@ -103,7 +93,7 @@ public class HomeController implements Initializable {
         if(selectedFile != null) {
             fileTransferProgressController = createFileTransfer(selectedFile.length());
             StackPane container = new StackPane();
-            messagesVBox.getChildren().add(container);
+            chatRoomController.getMessagesVBox().getChildren().add(container);
             fileTransferProgressController.willStartTransfer(container);
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.submit(() -> {
@@ -159,4 +149,27 @@ public class HomeController implements Initializable {
         return null;
     }
 
+    public GridPane getMotherGridPane() {
+        return motherGridPane;
+    }
+
+    public void setMotherGridPane(GridPane motherGridPane) {
+        this.motherGridPane = motherGridPane;
+    }
+
+    public ChatRoomController getChatRoomController() {
+        return chatRoomController;
+    }
+
+    public void setChatRoomController(ChatRoomController chatRoomController) {
+        this.chatRoomController = chatRoomController;
+    }
+
+    public SideBarController getSideBarController() {
+        return sideBarController;
+    }
+
+    public void setSideBarController(SideBarController sideBarController) {
+        this.sideBarController = sideBarController;
+    }
 }

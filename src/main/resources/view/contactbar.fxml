@@ -4,63 +4,42 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="600.0" style="-fx-background-color: #4c84ff;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="motherHBox" alignment="CENTER_LEFT" maxHeight="70.0" minHeight="70.0" style="-fx-background-color: #4c84ff;" stylesheets="@chatroom_stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.ContactBarController">
    <children>
-      <HBox layoutX="-10.0" prefHeight="72.0" prefWidth="197.0" style="-: #4c84ff;">
+      <StackPane>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
          <children>
-            <ImageView fitHeight="37.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="37.0" right="10.0" top="17.0" />
-               </HBox.margin>
-               <image>
-                  <Image url="@../ball.png" />
-               </image>
-            </ImageView>
-            <Label prefHeight="27.0" prefWidth="84.0" text="nouran">
-               <HBox.margin>
-                  <Insets bottom="20.0" right="15.0" top="18.0" />
-               </HBox.margin>
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="18.0" fitWidth="14.0" layoutX="35.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../ball.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="20.0" left="-20.0" right="20.0" top="30.0" />
-               </HBox.margin>
-            </ImageView>
+            <Circle fx:id="userImageCircle" fill="WHITE" radius="20.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Circle fx:id="statusCircle" fill="#48ff48" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE">
+               <StackPane.margin>
+                  <Insets left="30.0" top="30.0" />
+               </StackPane.margin>
+            </Circle>
          </children>
-      </HBox>
-      <HBox layoutX="477.0" layoutY="-8.0" prefHeight="85.0" prefWidth="123.0">
-         <padding>
-            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-         </padding>
-         <children>
-            <ImageView fitHeight="25.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../ball.png" />
-               </image>
-               <HBox.margin>
-                  <Insets top="7.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="29.0" layoutX="35.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../ball.png" />
-               </image>
-               <HBox.margin>
-                  <Insets left="10.0" top="7.0" />
-               </HBox.margin>
-            </ImageView>
-         </children>
-      </HBox>
+      </StackPane>
+      <Label fx:id="nameLabel" prefHeight="27.0" prefWidth="84.0" text="nouran">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+      <ImageView fx:id="saveImageView" fitHeight="42.0" fitWidth="44.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/Save_chat.png" />
+         </image>
+         <HBox.margin>
+            <Insets right="15.0" />
+         </HBox.margin>
+      </ImageView>
    </children>
-</AnchorPane>
+</HBox>
