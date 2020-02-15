@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorChatPage" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.TestController">
+<AnchorPane fx:id="anchorChatPage" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.ChatPageController">
 
     <children>
         <VBox fx:id="chatVBox" style="-fx-background-color: #FFFF;" AnchorPane.leftAnchor="5" AnchorPane.topAnchor="5">

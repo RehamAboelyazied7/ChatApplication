@@ -4,10 +4,7 @@ import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.delegate.RegisterDelegate;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.viewcontroller.HomeController;
-import com.iti.chat.viewcontroller.LoginController;
-import com.iti.chat.viewcontroller.RegisterController;
-import com.iti.chat.viewcontroller.UserProfileController;
+import com.iti.chat.viewcontroller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -94,7 +91,8 @@ public class SceneTransition {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/ChatPageWebView.fxml"));
             Parent parent = loader.load();
-            //ChatPageController chatPageView = loader.getController();
+            ChatPageController chatPageView = loader.getController();
+            //chatPageView.displayNotification();
             //ServiceProviderController controller = new ServiceProviderController();
             //chatPageView.setController(controller);
             //controller.setView(chatPageView);
@@ -112,15 +110,25 @@ public class SceneTransition {
         stage.setTitle("Profile");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/contactListCell.fxml"));
             Parent parent = loader.load();
-            UserProfileController userProfileController = loader.getController();
+            /*UserProfileController userProfileController = loader.getController();
             UserInfoDelegate userInfoDelegate = new UserInfoDelegate(client, userProfileController);
             userProfileController.setDelegate(userInfoDelegate);
-            userProfileController.setStage(stage);
+            userProfileController.setStage(stage);*/
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+   public static void goToNotification(Stage stage) {
+            stage.setTitle("Notification");
+            NotificationListController notificationListController=new NotificationListController();
+            Scene scene=new Scene(notificationListController.addList(),500,500);
+            stage.setScene(scene);
+            stage.setMinWidth(200);
+            stage.setMinHeight(100);
+    }
+
+
 }

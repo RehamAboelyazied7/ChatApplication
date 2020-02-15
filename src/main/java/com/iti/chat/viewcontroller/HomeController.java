@@ -74,9 +74,10 @@ public class HomeController implements Initializable {
             }
         });
         //richTextAreaController.sendButton.setOnAction(this::uploadFile);
+
         chatRoomController.getScrollPane().vvalueProperty().bind(chatRoomController.getMessagesVBox().heightProperty());
         chatRoomController.getMessagesVBox().maxWidthProperty().bind(chatRoomController.getScrollPane().widthProperty());
-//        sideBarAnchorPane.minHeightProperty().bind(motherGridPane.heightProperty());
+        //sideBarVBox.minHeightProperty().bind(motherGridPane.heightProperty());
     }
 
     public void receiveMessage(Message message) {

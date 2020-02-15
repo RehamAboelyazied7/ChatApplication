@@ -1,24 +1,50 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.User;
+import com.iti.chat.model.UserStatus;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ContactListController {
-    void addListOfContacts(ObservableList<User> contactList) {
-        /*ObservableList<User> userList = FXCollections.observableArrayList();
-        ObservableList<ContactBox> data = FXCollections.observableArrayList();
-        userList.addAll(new User("Reham", "Mohamed","011" , "Reham@ga" , 1),
-                new User("Khaled", "Mohamed","011" , "Reham@ga" , 2));*/
-        final ListView<User> listView = new ListView<User>(contactList);
-        listView.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
-            @Override
-            public ListCell<User> call(ListView<User> contactBoxListView) {
-                return new ContactListCell();
-            }
-        });
+
+public class ContactListController implements Initializable {
+
+    @FXML
+    Circle userImage;
+
+    @FXML
+    Circle userStatus;
+
+    @FXML
+    Text userName;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public void setUserData(User user) {
+        userName.setText(user.getFirstName() + " " + user.getLastName());
+        int status = user.getStatus();
+        if (status == UserStatus.ONLINE) {
+            userStatus.setFill(Color.GREEN);
+        } else if (status == UserStatus.BUSY) {
+            userStatus.setFill(Color.RED);
+        } else {
+            userStatus.setFill(Color.GREY);
+        }
+        //set user  image
+        //userImage.setFill(new ImagePattern(user.getImage()));
     }
 
 }
