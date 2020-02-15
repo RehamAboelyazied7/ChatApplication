@@ -43,7 +43,7 @@ public class HomeController implements Initializable {
     VBox messagesVBox;
 
     @FXML
-    AnchorPane sideBarAnchorPane;
+    VBox sideBarVBox;
 
     ClientServiceProvider model;
     ChatRoom room;
@@ -86,7 +86,7 @@ public class HomeController implements Initializable {
         //richTextAreaController.sendButton.setOnAction(this::uploadFile);
         scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
         messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
-        sideBarAnchorPane.minHeightProperty().bind(motherGridPane.heightProperty());
+        //sideBarVBox.minHeightProperty().bind(motherGridPane.heightProperty());
     }
 
     public void receiveMessage(Message message) {

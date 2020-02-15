@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="62.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
-   <children>
-      <ImageView fx:id="profileImageView" fitHeight="48.0" fitWidth="40.0" layoutX="11.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@icons/Profile.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <Circle fill="white" layoutX="31.0" layoutY="34.0" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0" />
-      <Separator layoutY="71.0" prefWidth="62.0" />
-      <ImageView fx:id="contactsImageView" fitHeight="40.0" fitWidth="40.0" layoutX="11.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@icons/Contacts.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <ImageView fx:id="magnifierImageView" fitHeight="40.0" fitWidth="40.0" layoutX="13.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@icons/Magnifier.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <ImageView fx:id="signOutImageView" fitHeight="40.0" fitWidth="40.0" layoutX="11.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="60.0">
-         <image>
-            <Image url="@icons/Sign out.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="11.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0">
-         <image>
-            <Image url="@icons/Exit.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
 
+<VBox fx:id="sideBarVBox" alignment="TOP_CENTER" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
+   <children>
+      <Circle fill="white" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0">
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin>
+      </Circle>
+      <HBox prefHeight="47.0" prefWidth="64.0" />
+      <ImageView fx:id="profileImageView" fitHeight="33.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/user.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="contactsImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/group.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="magnifierImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/search.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/logout.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <VBox.margin>
+            <Insets left="4.0" />
+         </VBox.margin>
+      </ImageView>
    </children>
-</AnchorPane>
+</VBox>
