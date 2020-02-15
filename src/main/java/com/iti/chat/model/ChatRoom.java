@@ -53,7 +53,7 @@ public class ChatRoom implements Serializable{
 
     public void addUser(User user) {
         users.add(user);
-        user.getChatRooms().add(this);
+//        user.getChatRooms().add(this);
     }
 
     public void setUsers(List<User> users) {
