@@ -17,4 +17,7 @@ public interface ClientService extends Remote {
     void receiveMessage(Message message) throws RemoteException;
     void receiveNotification(Notification notification) throws RemoteException;
     void updateUserInfo(User user) throws RemoteException, SQLException;
+    void updateUserPassword(User user) throws RemoteException, SQLException;
+    void didSendNBytes(long n) throws RemoteException;
+
 }

@@ -63,6 +63,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         InputStream inputStream = new FileInputStream(file.getAbsolutePath());
         RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
         chatRoomService.sendFile(message, remoteFileData);
+        inputStream.close();
     }
 
     @Override
@@ -133,5 +134,13 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         sessionService.updateInfo(user);
     }
 
+    @Override
+    public void updateUserPassword(User user) throws RemoteException, SQLException {
+        sessionService.updateUserPassword(user);
+    }
 
+    public void didSendNBytes(long n) throws RemoteException {
+        controller.didSendNBytes(n);
+
+    }
 }

@@ -1,24 +1,41 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.User;
+import com.iti.chat.util.SceneTransition;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
+import javafx.scene.layout.HBox;
+
+import java.io.IOException;
 
 public class ContactListCell extends ListCell<User> {
-    private ContactBox contactCell;
 
     public ContactListCell() {
         super();
-        contactCell = new ContactBox();
+
     }
 
     @Override
     protected void updateItem(User item, boolean empty) {
         super.updateItem(item, empty);
-        if (item != null && !empty) { // <== test for null item and empty parameter
-            contactCell.setName(item.getFirstName());
-            contactCell.setInfo(item.getStatusMessage());
-            //friendImg = new Image("test.png");
-            setGraphic(contactCell);
+        if (item != null && !empty) {
+            Parent parent = null;
+            //load fxml
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SceneTransition.class.getResource("/view/contactListCell.fxml"));
+            try {
+                parent = loader.load();
+                ContactListController contactListController = loader.getController();
+                contactListController.setUserData(item);
+                // set graphic bel view
+                setGraphic(parent);
+                setPrefHeight(60);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // set view based on user
+
         } else {
             setGraphic(null);
         }

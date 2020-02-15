@@ -9,144 +9,162 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="650.0" styleClass="backGround" stylesheets="@profileScreen.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.UserProfileController">
-    <children>
-        <HBox prefHeight="26.0" prefWidth="650.0" />
-        <HBox alignment="BOTTOM_CENTER">
-            <children>
-                <Circle fx:id="userImage" accessibleRole="IMAGE_VIEW" fill="DODGERBLUE" radius="55.0" stroke="TRANSPARENT" strokeType="INSIDE">
-                    <HBox.margin>
-                        <Insets right="-30.0" />
-                    </HBox.margin>
-                </Circle>
-                <Circle fx:id="userStatus" fill="#26fc3c" radius="6.0" stroke="TRANSPARENT" strokeType="INSIDE">
-                    <HBox.margin>
-                        <Insets bottom="5.0" />
-                    </HBox.margin>
-                </Circle>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="48.0" prefWidth="650.0">
-            <children>
-                <JFXTextField fx:id="nameField" alignment="CENTER" prefHeight="25.0" prefWidth="408.0" styleClass="custom-text-field" unFocusColor="WHITE">
-                    <font>
-                        <Font name="Arial Black" size="24.0" />
-                    </font>
-                </JFXTextField>
-                <JFXButton fx:id="editBtn" onAction="#edit" prefHeight="33.0" prefWidth="41.0" styleClass="img_btn" stylesheets="@profileScreen.css">
-                    <HBox.margin>
-                        <Insets left="-15.0" />
-                    </HBox.margin>
-                </JFXButton>
-            <Label fx:id="nameWarning" textFill="#e12222">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            </children>
-        </HBox>
-        <HBox prefHeight="37.0" prefWidth="650.0" />
-        <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="650.0">
-            <children>
-            <ImageView fx:id="genderImage" fitHeight="56.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@sender.png" />
-               </image>
-            </ImageView>
-                <JFXTextArea fx:id="bioField" prefHeight="71.0" prefWidth="464.0" text="Bio..............." unFocusColor="WHITE">
-                    <font>
-                        <Font name="Arial Italic" size="18.0" />
-                    </font>
-                </JFXTextArea>
-            </children>
-        </HBox>
-        <HBox prefHeight="27.0" prefWidth="650.0" />
-        <HBox alignment="CENTER" prefHeight="54.0" prefWidth="634.0">
-            <children>
-                <ImageView fitHeight="40.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@icons/mail_icon.png" />
-                    </image>
-                </ImageView>
-                <JFXTextField fx:id="emailField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="admin@gmail.com" unFocusColor="#1e66e4">
-                    <HBox.margin>
-                        <Insets bottom="2.0" left="10.0" />
-                    </HBox.margin>
-                </JFXTextField>
-                <Label fx:id="emailWarning" textFill="#f52020">
-                    <font>
+
+<StackPane fx:id="profilPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.UserProfileController">
+   <children>
+      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="650.0" styleClass="backGround" stylesheets="@profileScreen.css">
+          <children>
+              <HBox prefHeight="26.0" prefWidth="650.0" />
+              <HBox alignment="BOTTOM_CENTER">
+                  <children>
+                      <Circle fx:id="userImage" accessibleRole="IMAGE_VIEW" fill="DODGERBLUE" radius="55.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                          <HBox.margin>
+                              <Insets right="-30.0" />
+                          </HBox.margin>
+                      </Circle>
+                      <Circle fx:id="userStatus" fill="#26fc3c" radius="6.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                          <HBox.margin>
+                              <Insets bottom="5.0" />
+                          </HBox.margin>
+                      </Circle>
+                  </children>
+              </HBox>
+              <HBox alignment="CENTER" prefHeight="48.0" prefWidth="650.0">
+                  <children>
+                      <JFXTextField fx:id="nameField" alignment="CENTER" prefHeight="53.0" prefWidth="525.0" styleClass="custom-text-field" text="Reham Mohamed" unFocusColor="WHITE">
+                          <font>
+                              <Font name="Arial Black" size="24.0" />
+                          </font>
+                      </JFXTextField>
+                  <Label fx:id="nameWarning" textFill="#e12222">
+                     <font>
                         <Font size="14.0" />
-                    </font>
-                </Label>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="10.0" layoutY="146.0" prefHeight="54.0" prefWidth="634.0">
-            <children>
-                <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@icons/phone_icon.png" />
-                    </image>
-                </ImageView>
-                <JFXTextField fx:id="phoneField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="0111-020-0783" unFocusColor="#1e66e4">
-                    <HBox.margin>
-                        <Insets bottom="2.0" left="10.0" />
-                    </HBox.margin>
-                </JFXTextField>
-                <Label fx:id="phoneWarning" textFill="#fc2a2a">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="10.0" layoutY="200.0" prefHeight="54.0" prefWidth="634.0">
-            <children>
-                <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@icons/country_icon.png" />
-                    </image>
-                </ImageView>
-                <JFXComboBox fx:id="countryField" layoutX="307.0" layoutY="113.0" prefHeight="25.0" prefWidth="282.0" unFocusColor="#2d22ff">
-               <HBox.margin>
-                  <Insets bottom="2.0" left="9.0" />
-               </HBox.margin></JFXComboBox>
-               
-                <Label textFill="#f51717">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="10.0" layoutY="200.0" prefHeight="54.0" prefWidth="634.0">
-            <VBox.margin>
-                <Insets right="10.0" />
-            </VBox.margin>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="10.0" layoutY="401.0" prefHeight="54.0" prefWidth="478.0">
-            <children>
-                <HBox prefHeight="54.0" prefWidth="418.0" />
-                <JFXButton fx:id="saveBtn" onAction="#save" styleClass="blue_btn" text="Save" textAlignment="CENTER">
-                    <HBox.margin>
-                        <Insets />
-                    </HBox.margin>
-                    <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </padding>
-                </JFXButton>
-                <JFXButton fx:id="cancelBtn" layoutX="502.0" layoutY="17.0" onAction="#cancel" styleClass="red_btn" text="cancel" textAlignment="CENTER">
-                    <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </padding>
-                    <HBox.margin>
+                     </font>
+                  </Label>
+                  </children>
+              </HBox>
+              <HBox alignment="CENTER" prefHeight="37.0" prefWidth="650.0">
+               <children>
+                  <JFXButton fx:id="passwordBtn" onAction="#changePassword" styleClass="password_btn" text="change password" textFill="#2d26aee3">
+                     <HBox.margin>
                         <Insets left="10.0" />
-                    </HBox.margin>
-                </JFXButton>
-            </children>
-        </HBox>
-    </children>
-</VBox>
+                     </HBox.margin>
+                  </JFXButton>
+                      <JFXButton fx:id="editBtn" onAction="#edit" prefHeight="30.0" prefWidth="85.0" styleClass="img_btn" stylesheets="@profileScreen.css" text="Edit" textFill="#2d25bc">
+                          <HBox.margin>
+                              <Insets />
+                          </HBox.margin>
+                      </JFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+              <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="650.0">
+                  <children>
+                  <ImageView fx:id="genderImage" fitHeight="56.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@sender.png" />
+                     </image>
+                  </ImageView>
+                      <JFXTextArea fx:id="bioField" prefHeight="71.0" prefWidth="464.0" text="Bio..............." unFocusColor="WHITE">
+                          <font>
+                              <Font name="Arial Italic" size="18.0" />
+                          </font>
+                      </JFXTextArea>
+                  </children>
+              </HBox>
+              <HBox prefHeight="27.0" prefWidth="650.0" />
+              <HBox alignment="CENTER" prefHeight="54.0" prefWidth="634.0">
+                  <children>
+                      <ImageView fitHeight="40.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@icons/mail_icon.png" />
+                          </image>
+                      </ImageView>
+                      <JFXTextField fx:id="emailField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="admin@gmail.com" unFocusColor="#1e66e4">
+                          <HBox.margin>
+                              <Insets bottom="2.0" left="10.0" />
+                          </HBox.margin>
+                      </JFXTextField>
+                      <Label fx:id="emailWarning" textFill="#f52020">
+                          <font>
+                              <Font size="14.0" />
+                          </font>
+                      </Label>
+                  </children>
+              </HBox>
+              <HBox alignment="CENTER" layoutX="10.0" layoutY="146.0" prefHeight="54.0" prefWidth="634.0">
+                  <children>
+                      <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@icons/phone_icon.png" />
+                          </image>
+                      </ImageView>
+                      <JFXTextField fx:id="phoneField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="0111-020-0783" unFocusColor="#1e66e4">
+                          <HBox.margin>
+                              <Insets bottom="2.0" left="10.0" />
+                          </HBox.margin>
+                      </JFXTextField>
+                      <Label fx:id="phoneWarning" textFill="#fc2a2a">
+                          <font>
+                              <Font size="14.0" />
+                          </font>
+                      </Label>
+                  </children>
+              </HBox>
+              <HBox alignment="CENTER" layoutX="10.0" layoutY="200.0" prefHeight="54.0" prefWidth="634.0">
+                  <children>
+                      <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@icons/country_icon.png" />
+                          </image>
+                      </ImageView>
+                      <JFXComboBox fx:id="countryField" layoutX="307.0" layoutY="113.0" prefHeight="25.0" prefWidth="282.0" unFocusColor="#2d22ff">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="9.0" />
+                     </HBox.margin>
+                  </JFXComboBox>
+                     
+                      <Label textFill="#f51717">
+                          <font>
+                              <Font size="14.0" />
+                          </font>
+                      </Label>
+                  </children>
+              </HBox>
+              <HBox alignment="CENTER" layoutX="10.0" layoutY="200.0" prefHeight="54.0" prefWidth="634.0">
+                  <VBox.margin>
+                      <Insets right="10.0" />
+                  </VBox.margin>
+              </HBox>
+              <HBox alignment="CENTER" layoutX="10.0" layoutY="401.0" prefHeight="54.0" prefWidth="478.0">
+                  <children>
+                      <HBox prefHeight="54.0" prefWidth="418.0" />
+                      <JFXButton fx:id="saveBtn" onAction="#save" styleClass="blue_btn" text="Save" textAlignment="CENTER">
+                          <HBox.margin>
+                              <Insets />
+                          </HBox.margin>
+                          <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                          </padding>
+                      </JFXButton>
+                      <JFXButton fx:id="cancelBtn" layoutX="502.0" layoutY="17.0" onAction="#cancel" styleClass="red_btn" text="cancel" textAlignment="CENTER">
+                          <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                          </padding>
+                          <HBox.margin>
+                              <Insets left="10.0" />
+                          </HBox.margin>
+                      </JFXButton>
+                  </children>
+              </HBox>
+          </children>
+      </VBox>
+   </children>
+</StackPane>

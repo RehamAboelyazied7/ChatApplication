@@ -22,14 +22,21 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        stage.setMinHeight(700);
+        stage.setMinWidth(900);
+       SceneTransition.goToLoginScreen(stage);
+    //SceneTransition.goToNotification(stage);
+        stage.setOnCloseRequest(event -> {
 
-//        TrayNotification notification=new TrayNotification();
+            System.exit(0);
 
+        });
 
         stage.setMinHeight(700);
         stage.setMinWidth(900);
-     //   SceneTransition.goToLoginScreen(stage);
-    SceneTransition.goToNotification(stage);
+        //SceneTransition.goToUserProfilerScene(stage);
+        SceneTransition.goToLoginScreen(stage);
+
         stage.show();
     }
 

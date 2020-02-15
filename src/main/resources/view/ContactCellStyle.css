@@ -1,20 +1,15 @@
 
-#contactNameLabel {
-    -fx-font-size: 12px;
+.list-cell {
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
-    -fx-padding: 2px 7px;
+    -fx-padding: 10px 15px;
 
-}
-
-#contactInfoLabel {
-    -fx-text-fill: #a2a3ac;
-    -fx-padding: 2px 7px;
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: #EEEEEE;
-    -fx-text-fill: white;
+    -fx-background-color: #efefef;
+    /*-fx-text-fill: white;*/
 }
 
 .list-cell:odd, .list-cell:filled:hover {

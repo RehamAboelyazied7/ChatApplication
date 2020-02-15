@@ -1,7 +1,9 @@
 package com.iti.chat.viewcontroller;
+
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.User;
 import com.iti.chat.util.JFXCountryComboBox;
+import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
 import com.iti.chat.validator.RegisterValidation;
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -25,6 +28,9 @@ import java.util.ResourceBundle;
 public class UserProfileController implements Initializable {
 
     @FXML
+    private StackPane profilPane;
+
+    @FXML
     private Circle userImage;
 
     @FXML
@@ -38,6 +44,9 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private Button cancelBtn;
+
+    @FXML
+    private Button passwordBtn;
 
     @FXML
     private TextField nameField;
@@ -81,7 +90,7 @@ public class UserProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentUser = Session.getInstance().getUser();
-        setUserInfo();
+        //setUserInfo();
         validation = new RegisterValidation();
         addCountries();
         setEditableFields();
@@ -177,6 +186,28 @@ public class UserProfileController implements Initializable {
         countryField.setValue(country);
         setEditableFields();
         clearWarnings();
+
+    }
+
+    @FXML
+    public void changePassword() {
+        String password = JFXDialogFactory.changeUserPassWord(profilPane);
+        if (password != null) {
+            System.out.println(password);
+            if (password.equals("NOTVALIDPASSWORD")) {
+
+            } else {
+                try {
+                    currentUser.setPassword(password);
+                    delegate.updateUserPassword(currentUser);
+                    nameWarning.setText("password Updated");
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 

@@ -14,14 +14,18 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class SceneTransition {
-    static ClientServiceProvider client;
+    public static ClientServiceProvider client;
+
     static {
+
         try {
             client = new ClientServiceProvider();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
     }
+
     public static void goToHomeScene(Stage stage) {
         stage.setTitle("Chat");
         try {
@@ -32,7 +36,7 @@ public class SceneTransition {
             homeController.setModel(client);
             homeController.setStage(stage);
             client.setController(homeController);
-            stage.setScene(new Scene(parent));
+            stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,13 +57,13 @@ public class SceneTransition {
         stage.setTitle("Chat Login");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/Login.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/LogIn.fxml"));
             Parent parent = loader.load();
             LoginController loginController = loader.getController();
             LoginDelegate delegate = new LoginDelegate(client, loginController);
             loginController.setDelegate(delegate);
             loginController.setStage(stage);
-            stage.setScene(new Scene(parent));
+            stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,7 +79,7 @@ public class SceneTransition {
             RegisterDelegate delegate = new RegisterDelegate(client, registerController);
             registerController.setDelegate(delegate);
             registerController.setStage(stage);
-            stage.setScene(new Scene(parent));
+            stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -106,12 +110,12 @@ public class SceneTransition {
         stage.setTitle("Profile");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/contactListCell.fxml"));
             Parent parent = loader.load();
-            UserProfileController userProfileController = loader.getController();
+            /*UserProfileController userProfileController = loader.getController();
             UserInfoDelegate userInfoDelegate = new UserInfoDelegate(client, userProfileController);
             userProfileController.setDelegate(userInfoDelegate);
-            userProfileController.setStage(stage);
+            userProfileController.setStage(stage);*/
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();
