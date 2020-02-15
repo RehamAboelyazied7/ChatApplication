@@ -35,4 +35,8 @@ public class UserInfoDelegate {
     public void updateUserInfo(User user) throws RemoteException, SQLException {
         client.updateUserInfo(user);
     }
+
+    public void updateUserPassword(User user) throws RemoteException, SQLException {
+        client.updateUserPassword(user);
+    }
 }
