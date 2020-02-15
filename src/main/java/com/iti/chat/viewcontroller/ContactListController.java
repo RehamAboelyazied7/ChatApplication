@@ -19,13 +19,13 @@ import java.util.ResourceBundle;
 public class ContactListController implements Initializable {
 
     @FXML
-    Circle userImage;
+    private Circle userImage;
 
     @FXML
-    Circle userStatus;
+    private Circle userStatus;
 
     @FXML
-    Text userName;
+    private Text userName;
 
 
     @Override

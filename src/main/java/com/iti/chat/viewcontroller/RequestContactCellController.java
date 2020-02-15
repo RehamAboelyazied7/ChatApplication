@@ -5,7 +5,6 @@ import com.iti.chat.model.UserStatus;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -15,30 +14,32 @@ import java.util.ResourceBundle;
 
 public class RequestContactCellController implements Initializable {
     @FXML
-    JFXButton acceptBtn;
+    private JFXButton acceptBtn;
 
     @FXML
-    JFXButton rejectBtn;
+    private JFXButton rejectBtn;
 
     @FXML
-    Circle userImage;
+    private Circle userImage;
 
     @FXML
-    Circle userStatus;
+    private Circle userStatus;
 
     @FXML
-    Text userName;
+    private Text userName;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
     @FXML
-    public void acceptFriend(){
+    public void acceptFriend() {
 
     }
+
     @FXML
-    public void rejectFriend(){
+    public void rejectFriend() {
 
     }
 

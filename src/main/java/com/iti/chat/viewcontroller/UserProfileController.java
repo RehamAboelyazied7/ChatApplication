@@ -1,11 +1,13 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.delegate.UserInfoDelegate;
+import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
 import com.iti.chat.util.JFXCountryComboBox;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
 import com.iti.chat.validator.RegisterValidation;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -75,6 +77,9 @@ public class UserProfileController implements Initializable {
     @FXML
     private ImageView genderImage;
 
+    @FXML
+    private JFXToggleButton chatBot;
+
     private Stage stage;
     private UserInfoDelegate delegate;
 
@@ -90,7 +95,7 @@ public class UserProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentUser = Session.getInstance().getUser();
-        //setUserInfo();
+        setUserInfo();
         validation = new RegisterValidation();
         addCountries();
         setEditableFields();
@@ -102,6 +107,7 @@ public class UserProfileController implements Initializable {
                 userImage.setFill(new ImagePattern(image));
             }
         });
+
     }
 
     public void setDelegate(UserInfoDelegate delegate) {
@@ -211,6 +217,17 @@ public class UserProfileController implements Initializable {
 
     }
 
+    @FXML
+    public void enableChatBot() {
+        if (chatBot.isSelected()) {
+            currentUser.setChatBotEnabled(true);
+            System.out.println("enable chatbot");
+        } else {
+            currentUser.setChatBotEnabled(false);
+            System.out.println("disable chatBot");
+        }
+    }
+
     private void setEditableFields() {
         saveBtn.setVisible(!saveBtn.isVisible());
         cancelBtn.setVisible(!cancelBtn.isVisible());
@@ -273,12 +290,12 @@ public class UserProfileController implements Initializable {
     }
 
     private void setUserGender() {
-        if (currentUser.getGender() == 0)
-            //genderImage.setImage(new Image("view/icons/Female.png".));
-            System.out.println("Femlae");
-        else if (currentUser.getGender() == 1)
-            //genderImage.setImage(new Image("view/icons/Male.png"));
-            System.out.println("male");
+        if (currentUser.getGender() == Gender.FEMALE)
+            genderImage.setImage(new Image(getClass().getResource("/view/icons/Female.png").toExternalForm()));
+            //System.out.println("Femlae");
+        else if (currentUser.getGender() == Gender.MALE)
+            genderImage.setImage(new Image(getClass().getResource("/view/icons/Male.png").toExternalForm()));
+        //System.out.println("male");
 
     }
 }
