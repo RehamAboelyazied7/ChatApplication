@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="motherVBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.ChatRoomController">
+   <children>
+      <fx:include fx:id="contactBar" source="contactbar.fxml" />
+      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="1.0" pannable="false" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox fx:id="messagesVBox" fillWidth="true" />
+         </content>
+      </ScrollPane>
+      <fx:include fx:id="richTextArea" source="rich_text_area.fxml" />
+   </children>
+</VBox>
