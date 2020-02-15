@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="71.0" prefWidth="289.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.ContactListController">
+   <children>
+      <HBox alignment="BOTTOM_CENTER" prefHeight="65.0" prefWidth="61.0">
+                  <children>
+                      <Circle fx:id="userImage" accessibleRole="IMAGE_VIEW" fill="DODGERBLUE" radius="20.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                          <HBox.margin>
+                              <Insets bottom="16.0" right="-9.0" />
+                          </HBox.margin>
+                      </Circle>
+                      <Circle fx:id="userStatus" fill="#26fc3c" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                          <HBox.margin>
+                              <Insets bottom="18.0" />
+                          </HBox.margin>
+                      </Circle>
+                  </children>
+              </HBox>
+      <Text fx:id="userName" strokeType="OUTSIDE" strokeWidth="0.0" text="Name " wrappingWidth="205.0087890625">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Text>
+   </children>
+</HBox>

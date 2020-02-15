@@ -108,12 +108,12 @@ public class SceneTransition {
         stage.setTitle("Profile");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/contactListCell.fxml"));
             Parent parent = loader.load();
-            UserProfileController userProfileController = loader.getController();
+            /*UserProfileController userProfileController = loader.getController();
             UserInfoDelegate userInfoDelegate = new UserInfoDelegate(client, userProfileController);
             userProfileController.setDelegate(userInfoDelegate);
-            userProfileController.setStage(stage);
+            userProfileController.setStage(stage);*/
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();
