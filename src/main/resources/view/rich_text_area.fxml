@@ -44,7 +44,7 @@
                         <Font name="Times New Roman Italic" size="18.0" />
                     </font>
                 </JFXToggleButton>
-                <JFXComboBox fx:id="sizeComboBox" prefHeight="25.0" prefWidth="73.0" visibleRowCount="5">
+                <JFXComboBox fx:id="sizeComboBox" prefHeight="25.0" minWidth="73.0" visibleRowCount="5">
                 </JFXComboBox>
 
                 <JFXColorPicker id="fontColorPicker" fx:id="fontColorPicker" prefHeight="26.0" prefWidth="90.0" promptText="choose font color ..." style="-fx-color-label-visible: false;" />

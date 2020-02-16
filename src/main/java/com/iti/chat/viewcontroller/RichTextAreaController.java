@@ -52,6 +52,11 @@ public class RichTextAreaController implements Initializable {
 
     MessageStyle style;
 
+    public JFXButton getPaperClipButton() {
+        return paperClipButton;
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         style = new MessageStyle();
@@ -64,20 +69,22 @@ public class RichTextAreaController implements Initializable {
         setHandlers();
 
 
-        paperClipButton.setOnAction(actionEvent -> {
 
-            FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.showOpenDialog(new Stage());
 
-            if (file != null) {
-
-                paperClipImageView.setVisible(false);
-                JFXSpinner spinner = new JFXSpinner();
-                spinner.setRadius(7);
-                paperClipButton.setGraphic(spinner);
-            }
-
-        });
+//        paperClipButton.setOnAction(actionEvent -> {
+//
+//            FileChooser fileChooser = new FileChooser();
+//            File file = fileChooser.showOpenDialog(new Stage());
+//
+//            if (file != null) {
+//
+//                paperClipImageView.setVisible(false);
+//                JFXSpinner spinner = new JFXSpinner();
+//                spinner.setRadius(7);
+//                paperClipButton.setGraphic(spinner);
+//            }
+//
+//        });
     }
 
     public Message getMessage() {

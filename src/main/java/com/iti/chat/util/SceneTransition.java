@@ -1,5 +1,6 @@
 package com.iti.chat.util;
 
+import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.delegate.RegisterDelegate;
 import com.iti.chat.delegate.UserInfoDelegate;
@@ -8,6 +9,8 @@ import com.iti.chat.viewcontroller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,10 +36,45 @@ public class SceneTransition {
             loader.setLocation(SceneTransition.class.getResource("/view/home.fxml"));
             Parent parent = loader.load();
             HomeController homeController = loader.getController();
-            client.setController(homeController);
+            //client.setController(homeController);
+            //client.setChatRoomController(homeController.getChatRoomController());
+            //homeController.getChatRoomController().setClient(client);
             homeController.setModel(client);
             homeController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadProfileScene(VBox rightVBox) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
+            Parent parent = loader.load();
+            UserProfileController userProfileController = loader.getController();
+            UserInfoDelegate userInfoDelegate = new UserInfoDelegate(client, userProfileController);
+            userProfileController.setDelegate(userInfoDelegate);
+            rightVBox.getChildren().clear();
+            rightVBox.getChildren().add(parent);
+            VBox.setVgrow(parent, Priority.ALWAYS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadChatRoom(VBox rightVBox) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SceneTransition.class.getResource("/view/Chat_Room.fxml"));
+            Parent parent = loader.load();
+            ChatRoomController chatRoomController = loader.getController();
+            ChatRoomDelegate delegate = new ChatRoomDelegate(client, chatRoomController);
+            client.setChatRoomDelegate(delegate);
+            chatRoomController.setDelegate(delegate);
+            rightVBox.getChildren().clear();
+            rightVBox.getChildren().add(parent);
+            VBox.setVgrow(parent, Priority.ALWAYS);
         } catch (IOException e) {
             e.printStackTrace();
         }
