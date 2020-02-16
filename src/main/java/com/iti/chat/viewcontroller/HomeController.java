@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -74,6 +75,8 @@ public class HomeController implements Initializable {
         for (int i = 0; i < 3; i++) {
             listView.getItems().add(Session.getInstance().getUser());
         }
+        listView.setPlaceholder(new Label("No Content In List"));
+        listView.setMinWidth(200);
         chatRoomController.getRichTextAreaController().getSendButton().setOnAction(ae -> {
             try {
                 model.sendMessage(chatRoomController.getRichTextAreaController().getMessage(), room);
