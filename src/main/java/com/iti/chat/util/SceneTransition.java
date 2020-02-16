@@ -33,9 +33,9 @@ public class SceneTransition {
             loader.setLocation(SceneTransition.class.getResource("/view/home.fxml"));
             Parent parent = loader.load();
             HomeController homeController = loader.getController();
+            client.setController(homeController);
             homeController.setModel(client);
             homeController.setStage(stage);
-            client.setController(homeController);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,12 +110,12 @@ public class SceneTransition {
         stage.setTitle("Profile");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/contactListCell.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
             Parent parent = loader.load();
-            /*UserProfileController userProfileController = loader.getController();
+            UserProfileController userProfileController = loader.getController();
             UserInfoDelegate userInfoDelegate = new UserInfoDelegate(client, userProfileController);
             userProfileController.setDelegate(userInfoDelegate);
-            userProfileController.setStage(stage);*/
+            userProfileController.setStage(stage);
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +14,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
-
 
 <StackPane fx:id="profilPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.UserProfileController">
    <children>
@@ -60,6 +60,7 @@
                               <Insets />
                           </HBox.margin>
                       </JFXButton>
+                  <JFXToggleButton fx:id="chatBot" onAction="#enableChatBot" text="ChatBot" textFill="#1a0be1" />
                </children>
                <VBox.margin>
                   <Insets />

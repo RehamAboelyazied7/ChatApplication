@@ -18,5 +18,11 @@
 }
 
 
-
+.button_accept{
+    -fx-graphic: url('icons/check-mark.png');
+}
+.button_reject{
+    -fx-graphic: url('icons/close.png');
+    -fx-background-size: 14 14;
+}
 

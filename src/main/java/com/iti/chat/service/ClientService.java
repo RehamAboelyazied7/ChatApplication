@@ -1,10 +1,12 @@
 package com.iti.chat.service;
 
+import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
 import com.iti.chat.model.Notification;
 import com.iti.chat.model.User;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -19,5 +21,7 @@ public interface ClientService extends Remote {
     void updateUserInfo(User user) throws RemoteException, SQLException;
     void updateUserPassword(User user) throws RemoteException, SQLException;
     void didSendNBytes(long n) throws RemoteException;
+    void downloadFile(RemoteInputStream remoteInputStream) throws IOException;
+    void downloadImage(RemoteInputStream remoteInputStream) throws IOException;
 
 }

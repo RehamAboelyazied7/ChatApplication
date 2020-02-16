@@ -2,20 +2,22 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.Message;
 import com.iti.chat.model.MessageStyle;
-import com.iti.chat.util.RGBConverter;
+import com.iti.chat.util.ColorUtils;
 import com.iti.chat.util.Session;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXColorPicker;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXToggleButton;
+import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -24,19 +26,26 @@ import java.util.stream.IntStream;
 public class RichTextAreaController implements Initializable {
 
     @FXML
-    JFXToggleButton boldButton;
+    private GridPane motherGridPane;
+
     @FXML
-    JFXToggleButton italicButton;
+    private JFXToggleButton boldButton;
     @FXML
-    JFXComboBox sizeComboBox;
+    private JFXToggleButton italicButton;
     @FXML
-    JFXColorPicker fontColorPicker;
+    private JFXComboBox sizeComboBox;
     @FXML
-    JFXComboBox fontComboBox;
+    private JFXColorPicker fontColorPicker;
     @FXML
-    TextArea msgTxtField;
+    private JFXComboBox fontComboBox;
     @FXML
-    JFXButton sendButton;
+    private TextArea msgTxtField;
+    @FXML
+    private JFXButton sendButton;
+    @FXML
+    private JFXButton paperClipButton;
+    @FXML
+    private ImageView paperClipImageView;
 
     private boolean bold;
     private boolean italic;
@@ -53,6 +62,22 @@ public class RichTextAreaController implements Initializable {
         fontComboBox.setValue("Arial");
         style.setSize(15);
         setHandlers();
+
+
+        paperClipButton.setOnAction(actionEvent -> {
+
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(new Stage());
+
+            if (file != null) {
+
+                paperClipImageView.setVisible(false);
+                JFXSpinner spinner = new JFXSpinner();
+                spinner.setRadius(7);
+                paperClipButton.setGraphic(spinner);
+            }
+
+        });
     }
 
     public Message getMessage() {
@@ -63,6 +88,13 @@ public class RichTextAreaController implements Initializable {
         return message;
     }
 
+    public void diff(Color color1, Color color2) {
+        double red = Math.abs(color1.getRed() - color2.getRed()) * 255;
+        double green = Math.abs(color1.getGreen() - color2.getGreen()) * 255;
+        double blue = Math.abs(color1.getBlue() - color2.getBlue()) * 255;
+        System.out.println("diff is " + (red + green + blue));
+    }
+
     public void clearText() {
         msgTxtField.clear();
     }
@@ -70,7 +102,9 @@ public class RichTextAreaController implements Initializable {
     private void setHandlers() {
         fontColorPicker.valueProperty().addListener((observableValue, color, t1) -> {
             Color col = (Color) t1;
-            String rgb = RGBConverter.toRGB(col);
+            Color old = Color.web(style.getColor());
+            diff(old, col);
+            String rgb = ColorUtils.toRGB(col);
             style.setColor(rgb);
             applyStyle();
         });
@@ -108,5 +142,85 @@ public class RichTextAreaController implements Initializable {
 
     private void applyStyle() {
         msgTxtField.setStyle(style.toString());
+    }
+
+    public JFXToggleButton getBoldButton() {
+        return boldButton;
+    }
+
+    public void setBoldButton(JFXToggleButton boldButton) {
+        this.boldButton = boldButton;
+    }
+
+    public JFXToggleButton getItalicButton() {
+        return italicButton;
+    }
+
+    public void setItalicButton(JFXToggleButton italicButton) {
+        this.italicButton = italicButton;
+    }
+
+    public JFXComboBox getSizeComboBox() {
+        return sizeComboBox;
+    }
+
+    public void setSizeComboBox(JFXComboBox sizeComboBox) {
+        this.sizeComboBox = sizeComboBox;
+    }
+
+    public JFXColorPicker getFontColorPicker() {
+        return fontColorPicker;
+    }
+
+    public void setFontColorPicker(JFXColorPicker fontColorPicker) {
+        this.fontColorPicker = fontColorPicker;
+    }
+
+    public JFXComboBox getFontComboBox() {
+        return fontComboBox;
+    }
+
+    public void setFontComboBox(JFXComboBox fontComboBox) {
+        this.fontComboBox = fontComboBox;
+    }
+
+    public TextArea getMsgTxtField() {
+        return msgTxtField;
+    }
+
+    public void setMsgTxtField(TextArea msgTxtField) {
+        this.msgTxtField = msgTxtField;
+    }
+
+    public JFXButton getSendButton() {
+        return sendButton;
+    }
+
+    public void setSendButton(JFXButton sendButton) {
+        this.sendButton = sendButton;
+    }
+
+    public boolean isBold() {
+        return bold;
+    }
+
+    public void setBold(boolean bold) {
+        this.bold = bold;
+    }
+
+    public boolean isItalic() {
+        return italic;
+    }
+
+    public void setItalic(boolean italic) {
+        this.italic = italic;
+    }
+
+    public GridPane getMotherGridPane() {
+        return motherGridPane;
+    }
+
+    public void setMotherGridPane(GridPane motherGridPane) {
+        this.motherGridPane = motherGridPane;
     }
 }

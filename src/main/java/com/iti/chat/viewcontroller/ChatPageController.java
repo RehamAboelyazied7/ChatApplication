@@ -2,6 +2,7 @@ package com.iti.chat.viewcontroller;
 
 
 import com.iti.chat.model.*;
+import com.iti.chat.util.ColorUtils;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -31,6 +32,10 @@ public class ChatPageController implements Initializable {
     public Circle CircleImageView;
     @FXML
     public Label recieverName, recieverMessage;
+
+    public static final String LEFT_MESSAGE_BUBBLE_COLOR = "#4c84ff";
+    public static final String RIGHT_MESSAGE_BUBBLE_COLOR = "#DCDCDC";
+    public String bubbleColor;
 
 
     private ChatRoom currentChatRoom = new ChatRoom();
@@ -67,14 +72,23 @@ public class ChatPageController implements Initializable {
     }
 
     
-    public void displayOnRight() {
+    public void displayOnRight(Message message) {
+        bubbleColor = RIGHT_MESSAGE_BUBBLE_COLOR;
         AnchorPane.clearConstraints(chatVBox);
         AnchorPane.setRightAnchor(chatVBox, 10.0);
         AnchorPane.setTopAnchor(chatVBox, 10.0);
         messageHBox.getChildren().remove(ImageStackPane);
-        messageVbox.setStyle("-fx-border-color: #ffff;-fx-background-radius:2em;-fx-background-color: #DCDCDC");
-        //recieverMessage.setStyle("-fx-text-fill:#000000");
         recieverName.setStyle("-fx-text-fill:#000000");
+        if(ColorUtils.areSimilarColors(RIGHT_MESSAGE_BUBBLE_COLOR, message.getStyle().getColor())) {
+            bubbleColor = ColorUtils.invertedColor(message.getStyle().getColor());
+        }
+    }
+
+    public void displayOnLeft(Message message) {
+        bubbleColor = LEFT_MESSAGE_BUBBLE_COLOR;
+        if(ColorUtils.areSimilarColors(LEFT_MESSAGE_BUBBLE_COLOR, message.getStyle().getColor())) {
+            bubbleColor = ColorUtils.invertedColor(message.getStyle().getColor());
+        }
     }
     
     public void displayMessage(Message message) {
@@ -83,8 +97,12 @@ public class ChatPageController implements Initializable {
         recieverMessage.setText(message.getContent());
         recieverMessage.setStyle(message.getStyle().toString());
         if(!Session.getInstance().getUser().equals(message.getSender())) {
-            displayOnRight();
+            displayOnRight(message);
         }
+        else {
+            displayOnLeft(message);
+        }
+        messageVbox.setStyle("-fx-border-color: #ffff;-fx-background-radius:2em;-fx-background-color: " + bubbleColor);
     }
 
     public void displayNotification(){//List<Notification> notification) {

@@ -5,13 +5,6 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import com.jfoenix.controls.JFXSpinner;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -58,8 +51,8 @@ public class JFXDialogFactory {
         gridPane.setVgap(5);
         gridPane.setHgap(5);
 
-        TextField newPassword = new TextField();
-        TextField confirmPassword = new TextField();
+        PasswordField newPassword = new PasswordField();
+        PasswordField confirmPassword = new PasswordField();
 
         Label newPasswordLabel = new Label("new password");
         Label confirmPasswordLabel = new Label("confirm password");
