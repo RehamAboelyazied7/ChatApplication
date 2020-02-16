@@ -11,15 +11,15 @@
 <GridPane fx:id="motherGridPane" maxHeight="Infinity" maxWidth="Infinity" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.HomeController">
     <children>
         <fx:include fx:id="sideBar" source="sideBar.fxml" GridPane.Hgrow="NEVER" GridPane.columnIndex="0" GridPane.fillHeight="true" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
-        <ListView fx:id="listView" GridPane.Hgrow="NEVER" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
+        <ListView fx:id="listView" minWidth="220.0" GridPane.Hgrow="NEVER" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
         </ListView>
-        <VBox GridPane.Hgrow="ALWAYS" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-         <children>
-            <fx:include fx:id="chatRoom" source="Chat_Room.fxml" VBox.vgrow="ALWAYS" />
-         </children>
+        <VBox fx:id="rightVBox" alignment="CENTER" GridPane.Hgrow="ALWAYS" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="5.0" />
          </GridPane.margin>
+         <children>
+            <fx:include fx:id="userProfile" source="UserProfile.fxml" />
+         </children>
         </VBox>
     </children>
     <stylesheets>

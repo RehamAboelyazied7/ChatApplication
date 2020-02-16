@@ -7,6 +7,9 @@ import com.iti.chat.util.Animator;
 import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -31,6 +35,9 @@ import java.util.concurrent.Executors;
 public class HomeController implements Initializable {
 
     @FXML
+    private VBox rightVBox;
+
+    @FXML
     private GridPane motherGridPane;
 
     @FXML
@@ -41,11 +48,13 @@ public class HomeController implements Initializable {
     Stage stage;
     FileTransferProgressController fileTransferProgressController;
 
-    @FXML
     private ChatRoomController chatRoomController;
 
     @FXML
     private  SideBarController sideBarController;
+
+    @FXML
+    UserProfileController userProfileController;
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
@@ -60,9 +69,16 @@ public class HomeController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
-        stage.widthProperty().addListener((observableValue, number, t1) -> {
-            chatRoomController.getMessagesVBox().requestLayout();
-        });
+
+
+
+//        stage.widthProperty().addListener((observableValue, number, t1) -> {
+//            chatRoomController.getMessagesVBox().requestLayout();
+//        });
+
+
+
+
     }
 
     public void acceptFriendRequest(User user) {
@@ -78,35 +94,49 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        try {
+            model = new ClientServiceProvider();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        model.setUser(Session.getInstance().getUser());
+
         sideBarController.getProfileImageView().setOpacity(0.4);
         sideBarController.getContactsImageView().setOpacity(0.4);
 
         Animator.setIconAnimation(sideBarController.getMagnifierImageView());
         Animator.setIconAnimation(sideBarController.getSignOutImageView());
-        Animator.setIconAnimation(chatRoomController.getContactBarController().getSaveImageView());
-
 
         listView.setCellFactory(listView -> new ContactListCell());
-        //listView.setCellFactory(listView -> new ContactListCell());
 
-        listView.setCellFactory(listView -> new RequestContactCell(this));
-        for (int i = 0; i < 3; i++) {
-            listView.getItems().add(Session.getInstance().getUser());
-        }
-        chatRoomController.getRichTextAreaController().getSendButton().setOnAction(ae -> {
-            try {
-                model.sendMessage(chatRoomController.getRichTextAreaController().getMessage(), room);
-                chatRoomController.getRichTextAreaController().clearText();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (NotBoundException e) {
-                e.printStackTrace();
-            }
-        });
+        ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
+        listView.setItems(userObservableList);
+
+//        listView.setCellFactory(listView -> new RequestContactCell(this));
+//        for (int i = 0; i < 3; i++) {
+//            listView.getItems().add(Session.getInstance().getUser());
+//        }
+
+
+
+
+//        chatRoomController.getRichTextAreaController().getSendButton().setOnAction(ae -> {
+//            try {
+//                model.sendMessage(chatRoomController.getRichTextAreaController().getMessage(), room);
+//                chatRoomController.getRichTextAreaController().clearText();
+//            } catch (RemoteException e) {
+//                e.printStackTrace();
+//            } catch (NotBoundException e) {
+//                e.printStackTrace();
+//            }
+//        });
+
+
+
         //richTextAreaController.sendButton.setOnAction(this::uploadFile);
 
-        chatRoomController.getScrollPane().vvalueProperty().bind(chatRoomController.getMessagesVBox().heightProperty());
-        chatRoomController.getMessagesVBox().maxWidthProperty().bind(chatRoomController.getScrollPane().widthProperty());
+
         //sideBarVBox.minHeightProperty().bind(motherGridPane.heightProperty());
     }
 
@@ -212,5 +242,13 @@ public class HomeController implements Initializable {
 
     public void setSideBarController(SideBarController sideBarController) {
         this.sideBarController = sideBarController;
+    }
+
+    public VBox getRightVBox() {
+        return rightVBox;
+    }
+
+    public void setRightVBox(VBox rightVBox) {
+        this.rightVBox = rightVBox;
     }
 }
