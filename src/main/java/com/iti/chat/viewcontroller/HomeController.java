@@ -154,7 +154,7 @@ public class HomeController implements Initializable {
         try {
             Image image = FileTransfer.downloadImage(remoteInputStream);
             System.out.println("inside receive file");
-            sideBarController.profileImageView.setImage(image);
+            sideBarController.getProfileImageView().setImage(image);
         } catch (IOException e) {
             e.printStackTrace();
         }
