@@ -6,6 +6,8 @@ import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
 import com.jfoenix.controls.JFXDialog;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +39,8 @@ public class HomeController implements Initializable {
     GridPane motherGridPane;
 
     @FXML
-    ListView<User> listView;
+    //ListView<User> listView;
+    ListView<Notification> listView;
 
     @FXML
     VBox messagesVBox;
@@ -69,10 +72,15 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listView.setCellFactory(listView -> new ContactListCell());
-        for (int i = 0; i < 3; i++) {
-            listView.getItems().add(Session.getInstance().getUser());
-        }
+//        listView.setCellFactory(listView -> new ContactListCell());
+//        for (int i = 0; i < 3; i++) {
+//            listView.getItems().add(Session.getInstance().getUser());
+//        }
+        listView.setCellFactory(listView -> new NotificationListCell());
+        ObservableList<Notification> notificationObservableList= FXCollections.observableArrayList();
+        notificationObservableList.add(new Notification(new User("shimaa","monuir","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),1));
+        notificationObservableList.add(new Notification(new User("esraa","mohamed","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),3));
+        listView.getItems().addAll(notificationObservableList);
         richTextAreaController.sendButton.setOnAction(ae -> {
             try {
                 model.sendMessage(richTextAreaController.getMessage(), room);
