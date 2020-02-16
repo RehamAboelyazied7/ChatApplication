@@ -1,14 +1,25 @@
 package com.iti.chat.service;
 
+import com.healthmarketscience.rmiio.RemoteInputStream;
+import com.healthmarketscience.rmiio.RemoteInputStreamClient;
 import com.healthmarketscience.rmiio.RemoteInputStreamServer;
 import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
 import com.iti.chat.model.Notification;
 import com.iti.chat.model.User;
+import com.iti.chat.util.FileTransfer;
 import com.iti.chat.viewcontroller.HomeController;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -64,6 +75,15 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
         chatRoomService.sendFile(message, remoteFileData);
         inputStream.close();
+    }
+
+    public void download(RemoteInputStream remoteInputStream) throws IOException {
+        controller.receiveFile(remoteInputStream);
+    }
+
+    public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
+        initChatRoomService();
+        chatRoomService.getFile(remotePath, this);
     }
 
     @Override

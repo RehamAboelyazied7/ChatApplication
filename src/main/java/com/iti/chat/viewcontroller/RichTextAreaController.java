@@ -2,7 +2,7 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.Message;
 import com.iti.chat.model.MessageStyle;
-import com.iti.chat.util.RGBConverter;
+import com.iti.chat.util.ColorUtils;
 import com.iti.chat.util.Session;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
@@ -88,6 +88,13 @@ public class RichTextAreaController implements Initializable {
         return message;
     }
 
+    public void diff(Color color1, Color color2) {
+        double red = Math.abs(color1.getRed() - color2.getRed()) * 255;
+        double green = Math.abs(color1.getGreen() - color2.getGreen()) * 255;
+        double blue = Math.abs(color1.getBlue() - color2.getBlue()) * 255;
+        System.out.println("diff is " + (red + green + blue));
+    }
+
     public void clearText() {
         msgTxtField.clear();
     }
@@ -95,7 +102,9 @@ public class RichTextAreaController implements Initializable {
     private void setHandlers() {
         fontColorPicker.valueProperty().addListener((observableValue, color, t1) -> {
             Color col = (Color) t1;
-            String rgb = RGBConverter.toRGB(col);
+            Color old = Color.web(style.getColor());
+            diff(old, col);
+            String rgb = ColorUtils.toRGB(col);
             style.setColor(rgb);
             applyStyle();
         });

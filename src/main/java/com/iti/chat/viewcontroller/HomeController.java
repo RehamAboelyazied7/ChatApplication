@@ -1,8 +1,10 @@
 package com.iti.chat.viewcontroller;
 
+import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
+import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -10,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -48,6 +51,11 @@ public class HomeController implements Initializable {
         this.model = model;
         room = new ChatRoom();
         room.addUser(Session.getInstance().getUser());
+//        try {
+//            model.requestFileDownload(Session.getInstance().getUser().getRemoteImagePath());
+//        } catch (IOException | NotBoundException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void setStage(Stage stage) {
@@ -55,6 +63,16 @@ public class HomeController implements Initializable {
         stage.widthProperty().addListener((observableValue, number, t1) -> {
             chatRoomController.getMessagesVBox().requestLayout();
         });
+    }
+
+    public void acceptFriendRequest(User user) {
+        try {
+            model.acceptFriendRequest(user);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -68,9 +86,10 @@ public class HomeController implements Initializable {
         Animator.setIconAnimation(chatRoomController.getContactBarController().getSaveImageView());
 
 
-
-
         listView.setCellFactory(listView -> new ContactListCell());
+        //listView.setCellFactory(listView -> new ContactListCell());
+
+        listView.setCellFactory(listView -> new RequestContactCell(this));
         for (int i = 0; i < 3; i++) {
             listView.getItems().add(Session.getInstance().getUser());
         }
@@ -89,6 +108,16 @@ public class HomeController implements Initializable {
         chatRoomController.getScrollPane().vvalueProperty().bind(chatRoomController.getMessagesVBox().heightProperty());
         chatRoomController.getMessagesVBox().maxWidthProperty().bind(chatRoomController.getScrollPane().widthProperty());
         //sideBarVBox.minHeightProperty().bind(motherGridPane.heightProperty());
+    }
+
+    public void receiveFile(RemoteInputStream remoteInputStream) {
+        try {
+            Image image = FileTransfer.downloadImage(remoteInputStream);
+            System.out.println("inside receive file");
+            sideBarController.getProfileImageView().setImage(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void receiveMessage(Message message) {

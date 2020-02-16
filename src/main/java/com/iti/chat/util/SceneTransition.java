@@ -33,9 +33,9 @@ public class SceneTransition {
             loader.setLocation(SceneTransition.class.getResource("/view/home.fxml"));
             Parent parent = loader.load();
             HomeController homeController = loader.getController();
+            client.setController(homeController);
             homeController.setModel(client);
             homeController.setStage(stage);
-            client.setController(homeController);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {
             e.printStackTrace();

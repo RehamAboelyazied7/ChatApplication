@@ -19,12 +19,14 @@ public class User implements Comparable<User>, Serializable {
     private List<User> friends;
     private List<ChatRoom> chatRooms;
     private boolean chatBotEnabled;
+    private String remoteImagePath;
 
     {
         friends = new ArrayList<>();
         chatRooms = new ArrayList<>();
         country = "Egypt";
         status = UserStatus.OFFLINE;
+        remoteImagePath = "/Users/Hossiny/Downloads/blue-background.jpg";
     }
 
     public User (String firstName, String lastName, String phone, String email, int gender, String country){
@@ -39,6 +41,14 @@ public class User implements Comparable<User>, Serializable {
 
     public User() {
 
+    }
+
+    public String getRemoteImagePath() {
+        return remoteImagePath;
+    }
+
+    public void setRemoteImagePath(String remoteImagePath) {
+        this.remoteImagePath = remoteImagePath;
     }
 
     public boolean isChatBotEnabled() {
