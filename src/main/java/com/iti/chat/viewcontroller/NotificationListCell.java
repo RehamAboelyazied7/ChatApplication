@@ -20,9 +20,9 @@ public class NotificationListCell extends ListCell<Notification> {
     }
 
     @Override
-    protected void updateItem(Notification notification, boolean b) {
-        super.updateItem(notification, b);
-        if(notification==null){
+    protected void updateItem(Notification notification, boolean empty) {
+        super.updateItem(notification, empty);
+        if(notification==null || empty){
             setGraphic(null);
         }else{
             HBox hBox=new HBox(2);

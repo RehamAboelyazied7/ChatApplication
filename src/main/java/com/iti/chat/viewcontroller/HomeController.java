@@ -10,6 +10,10 @@ import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+
+import javafx.application.Platform;
+
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,10 +37,12 @@ public class HomeController implements Initializable {
     private VBox rightVBox;
 
     @FXML
+    //ListView<User> listView;
+    ListView<Notification> listView;
     private GridPane motherGridPane;
 
-    @FXML
-    ListView<User> listView;
+//    @FXML
+//    ListView<User> listView;
 
     ClientServiceProvider model;
     ChatRoom room;
@@ -92,6 +98,16 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+//        listView.setCellFactory(listView -> new ContactListCell());
+//        for (int i = 0; i < 3; i++) {
+//            listView.getItems().add(Session.getInstance().getUser());
+//        }
+        listView.setCellFactory(listView -> new NotificationListCell());
+        ObservableList<Notification> notificationObservableList= FXCollections.observableArrayList();
+        notificationObservableList.add(new Notification(new User("shimaa","monuir","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),1));
+        notificationObservableList.add(new Notification(new User("esraa","mohamed","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),3));
+        listView.getItems().addAll(notificationObservableList);
+
         try {
             model = new ClientServiceProvider();
         } catch (RemoteException e) {
@@ -100,16 +116,6 @@ public class HomeController implements Initializable {
 
         listView.setPlaceholder(new Label("No Content In List"));
         listView.setMinWidth(200);
-//        chatRoomController.getRichTextAreaController().getSendButton().setOnAction(ae -> {
-//            try {
-//                model.sendMessage(chatRoomController.getRichTextAreaController().getMessage(), room);
-//                chatRoomController.getRichTextAreaController().clearText();
-//            } catch (RemoteException e) {
-//                e.printStackTrace();
-//            } catch (NotBoundException e) {
-//                e.printStackTrace();
-//            }
-//        });
 
 
 
@@ -121,10 +127,10 @@ public class HomeController implements Initializable {
         Animator.setIconAnimation(sideBarController.getMagnifierImageView());
         Animator.setIconAnimation(sideBarController.getSignOutImageView());
 
-        listView.setCellFactory(listView -> new ContactListCell());
-
-        ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
-        listView.setItems(userObservableList);
+//        listView.setCellFactory(listView -> new ContactListCell());
+//
+//        ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
+//        listView.setItems(userObservableList);
 
 //        listView.setCellFactory(listView -> new RequestContactCell(this));
 //        for (int i = 0; i < 3; i++) {
