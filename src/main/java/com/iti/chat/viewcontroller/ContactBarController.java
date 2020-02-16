@@ -1,12 +1,17 @@
 package com.iti.chat.viewcontroller;
 
+import com.iti.chat.util.Animator;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 
-public class ContactBarController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ContactBarController implements Initializable {
 
     @FXML
     private HBox motherHBox;
@@ -22,6 +27,14 @@ public class ContactBarController {
 
     @FXML
     private ImageView saveImageView;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Animator.setIconAnimation(saveImageView);
+
+    }
 
     public Circle getUserImageCircle() {
         return userImageCircle;
@@ -62,4 +75,6 @@ public class ContactBarController {
     public void setMotherHBox(HBox motherHBox) {
         this.motherHBox = motherHBox;
     }
+
+
 }
