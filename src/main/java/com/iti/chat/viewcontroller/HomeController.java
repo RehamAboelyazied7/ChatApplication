@@ -52,7 +52,7 @@ public class HomeController implements Initializable {
         room = new ChatRoom();
         room.addUser(Session.getInstance().getUser());
 //        try {
-//            model.requestFileDownload(Session.getInstance().getUser().getRemoteImagePath());
+//            model.requestImageDownload(Session.getInstance().getUser().getRemoteImagePath());
 //        } catch (IOException | NotBoundException e) {
 //            e.printStackTrace();
 //        }
@@ -101,6 +101,16 @@ public class HomeController implements Initializable {
     }
 
     public void receiveFile(RemoteInputStream remoteInputStream) {
+        try {
+            Image image = FileTransfer.downloadImage(remoteInputStream);
+            System.out.println("inside receive file");
+            sideBarController.profileImageView.setImage(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void receiveImage(RemoteInputStream remoteInputStream) {
         try {
             Image image = FileTransfer.downloadImage(remoteInputStream);
             System.out.println("inside receive file");

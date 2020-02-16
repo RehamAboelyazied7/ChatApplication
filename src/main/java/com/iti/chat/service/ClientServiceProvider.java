@@ -1,25 +1,18 @@
 package com.iti.chat.service;
 
 import com.healthmarketscience.rmiio.RemoteInputStream;
-import com.healthmarketscience.rmiio.RemoteInputStreamClient;
 import com.healthmarketscience.rmiio.RemoteInputStreamServer;
 import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
 import com.iti.chat.model.Notification;
 import com.iti.chat.model.User;
-import com.iti.chat.util.FileTransfer;
 import com.iti.chat.viewcontroller.HomeController;
 
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.channels.WritableByteChannel;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -34,6 +27,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     FriendRequestsService friendRequestsService;
     ChatRoomService chatRoomService;
     SessionService sessionService;
+    FileTransferService fileTransferService;
     Registry registry;
 
     public ClientServiceProvider() throws RemoteException {
@@ -77,13 +71,22 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         inputStream.close();
     }
 
-    public void download(RemoteInputStream remoteInputStream) throws IOException {
+    public void downloadFile(RemoteInputStream remoteInputStream) throws IOException {
+        controller.receiveFile(remoteInputStream);
+    }
+    public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
         controller.receiveFile(remoteInputStream);
     }
 
     public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
-        initChatRoomService();
-        chatRoomService.getFile(remotePath, this);
+        initFileTransferService();
+        fileTransferService.downloadFile(remotePath, this);
+    }
+
+
+    public void requestImageDownload(String remotePath) throws IOException, NotBoundException {
+        initFileTransferService();
+        fileTransferService.downloadImage(remotePath, this);
     }
 
     @Override
@@ -117,6 +120,12 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     private void initChatRoomService() throws RemoteException, NotBoundException {
         if (chatRoomService == null) {
             chatRoomService = (ChatRoomService) registry.lookup(ServerServices.CHAT_ROOM_SERVICE);
+        }
+    }
+
+    private void initFileTransferService() throws RemoteException, NotBoundException {
+        if(fileTransferService == null) {
+            fileTransferService = (FileTransferService) registry.lookup(ServerServices.FILE_TRANSFER_SERVICE);
         }
     }
 
