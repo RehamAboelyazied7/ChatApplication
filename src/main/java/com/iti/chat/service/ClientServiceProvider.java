@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ClientServiceProvider extends UnicastRemoteObject implements ClientService {
-    public User currentUser;
+    private User currentUser;
     HomeController controller;
     FriendRequestsService friendRequestsService;
     ChatRoomService chatRoomService;
@@ -172,4 +172,5 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         controller.didSendNBytes(n);
 
     }
+
 }

@@ -4,19 +4,20 @@ import com.iti.chat.model.Message;
 import com.iti.chat.model.MessageStyle;
 import com.iti.chat.util.ColorUtils;
 import com.iti.chat.util.Session;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXColorPicker;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXToggleButton;
+import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -41,6 +42,10 @@ public class RichTextAreaController implements Initializable {
     private TextArea msgTxtField;
     @FXML
     private JFXButton sendButton;
+    @FXML
+    private JFXButton paperClipButton;
+    @FXML
+    private ImageView paperClipImageView;
 
     private boolean bold;
     private boolean italic;
@@ -57,6 +62,22 @@ public class RichTextAreaController implements Initializable {
         fontComboBox.setValue("Arial");
         style.setSize(15);
         setHandlers();
+
+
+        paperClipButton.setOnAction(actionEvent -> {
+
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(new Stage());
+
+            if (file != null) {
+
+                paperClipImageView.setVisible(false);
+                JFXSpinner spinner = new JFXSpinner();
+                spinner.setRadius(7);
+                paperClipButton.setGraphic(spinner);
+            }
+
+        });
     }
 
     public Message getMessage() {
