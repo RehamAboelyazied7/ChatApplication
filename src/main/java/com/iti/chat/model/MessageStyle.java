@@ -1,6 +1,6 @@
 package com.iti.chat.model;
 
-import com.iti.chat.util.RGBConverter;
+import com.iti.chat.util.ColorUtils;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -15,7 +15,7 @@ public class MessageStyle implements Serializable {
     String fontPosture;
     {
         size = 15;
-        color = RGBConverter.toRGB(Color.BLACK);
+        color = ColorUtils.toRGB(Color.BLACK);
         fontFamily = "Arial";
         fontWeight = FontWeight.LIGHT.name();
         fontPosture = FontPosture.REGULAR.name();

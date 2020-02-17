@@ -1,16 +1,16 @@
 package com.iti.chat.util;
 
+import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.delegate.RegisterDelegate;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.viewcontroller.HomeController;
-import com.iti.chat.viewcontroller.LoginController;
-import com.iti.chat.viewcontroller.RegisterController;
-import com.iti.chat.viewcontroller.UserProfileController;
+import com.iti.chat.viewcontroller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,10 +36,45 @@ public class SceneTransition {
             loader.setLocation(SceneTransition.class.getResource("/view/home.fxml"));
             Parent parent = loader.load();
             HomeController homeController = loader.getController();
+            //client.setController(homeController);
+            //client.setChatRoomController(homeController.getChatRoomController());
+            //homeController.getChatRoomController().setClient(client);
             homeController.setModel(client);
             homeController.setStage(stage);
-            client.setController(homeController);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadProfileScene(VBox rightVBox) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
+            Parent parent = loader.load();
+            UserProfileController userProfileController = loader.getController();
+            UserInfoDelegate userInfoDelegate = new UserInfoDelegate(client, userProfileController);
+            userProfileController.setDelegate(userInfoDelegate);
+            rightVBox.getChildren().clear();
+            rightVBox.getChildren().add(parent);
+            VBox.setVgrow(parent, Priority.ALWAYS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadChatRoom(VBox rightVBox) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SceneTransition.class.getResource("/view/Chat_Room.fxml"));
+            Parent parent = loader.load();
+            ChatRoomController chatRoomController = loader.getController();
+            ChatRoomDelegate delegate = new ChatRoomDelegate(client, chatRoomController);
+            client.setChatRoomDelegate(delegate);
+            chatRoomController.setDelegate(delegate);
+            rightVBox.getChildren().clear();
+            rightVBox.getChildren().add(parent);
+            VBox.setVgrow(parent, Priority.ALWAYS);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,7 +129,8 @@ public class SceneTransition {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/ChatPageWebView.fxml"));
             Parent parent = loader.load();
-            //ChatPageController chatPageView = loader.getController();
+            ChatPageController chatPageView = loader.getController();
+            //chatPageView.displayNotification();
             //ServiceProviderController controller = new ServiceProviderController();
             //chatPageView.setController(controller);
             //controller.setView(chatPageView);
@@ -112,15 +148,25 @@ public class SceneTransition {
         stage.setTitle("Profile");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/contactListCell.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
             Parent parent = loader.load();
-            /*UserProfileController userProfileController = loader.getController();
+            UserProfileController userProfileController = loader.getController();
             UserInfoDelegate userInfoDelegate = new UserInfoDelegate(client, userProfileController);
             userProfileController.setDelegate(userInfoDelegate);
-            userProfileController.setStage(stage);*/
+            userProfileController.setStage(stage);
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+   public static void goToNotification(Stage stage) {
+            stage.setTitle("Notification");
+            NotificationListController notificationListController=new NotificationListController();
+            Scene scene=new Scene(notificationListController.addList(),500,500);
+            stage.setScene(scene);
+            stage.setMinWidth(200);
+            stage.setMinHeight(100);
+    }
+
+
 }

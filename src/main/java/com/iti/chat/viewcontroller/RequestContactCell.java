@@ -5,13 +5,11 @@ import com.iti.chat.util.SceneTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
-import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
-public class ContactListCell extends ListCell<User> {
-
-    public ContactListCell() {
+public class RequestContactCell extends ListCell<User> {
+    public RequestContactCell(HomeController homeController) {
         super();
 
     }
@@ -21,17 +19,20 @@ public class ContactListCell extends ListCell<User> {
         super.updateItem(item, empty);
         if (item != null && !empty) {
             Parent parent = null;
+            //load fxml
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/contactListCell.fxml"));
+            loader.setLocation(SceneTransition.class.getResource("/view/RequestContactCell.fxml"));
             try {
                 parent = loader.load();
-                ContactListController contactListController = loader.getController();
-                contactListController.setUserData(item);
+                RequestContactCellController requestContactCellController = loader.getController();
+                requestContactCellController.setUserData(item);
+
                 setGraphic(parent);
                 setPrefHeight(60);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
 
         } else {
             setGraphic(null);

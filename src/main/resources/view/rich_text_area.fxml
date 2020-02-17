@@ -1,59 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXColorPicker?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import java.net.URL?>
-<?import javafx.scene.control.Separator?>
-<GridPane xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          prefHeight="200.0" prefWidth="600.0" fx:controller="com.iti.chat.viewcontroller.RichTextAreaController">
+
+<GridPane fx:id="motherGridPane" prefHeight="135.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.RichTextAreaController">
     <children>
-        <HBox spacing="20" alignment="CENTER" GridPane.rowIndex="0" GridPane.hgrow="NEVER">
+        <HBox alignment="CENTER" spacing="20" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
             <children>
-                <JFXToggleButton fx:id="boldButton" prefHeight="52.0" prefWidth="70" text="B">
+            <JFXButton fx:id="paperClipButton" buttonType="RAISED" prefHeight="31.0" prefWidth="18.0" text="." textFill="WHITE">
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fx:id="paperClipImageView" fitHeight="73.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@paperclip.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+                <JFXToggleButton fx:id="boldButton" prefHeight="52.0" prefWidth="70.0" text="B">
                     <font>
-                        <Font name="Times New Roman Bold" size="18.0"/>
+                        <Font name="Times New Roman Bold" size="18.0" />
                     </font>
                 </JFXToggleButton>
 
                 <JFXToggleButton fx:id="italicButton" prefHeight="63.0" prefWidth="70" text="I">
                     <font>
-                        <Font name="Times New Roman Italic" size="18.0"/>
+                        <Font name="Times New Roman Italic" size="18.0" />
                     </font>
                 </JFXToggleButton>
-                <JFXComboBox fx:id="sizeComboBox" prefHeight="25.0" prefWidth="73.0" visibleRowCount="5">
+                <JFXComboBox fx:id="sizeComboBox" prefHeight="25.0" minWidth="73.0" visibleRowCount="5">
                 </JFXComboBox>
 
-                <JFXColorPicker id="fontColorPicker" fx:id="fontColorPicker" prefHeight="26.0" prefWidth="90.0"
-                                promptText="choose font color ..." style="-fx-color-label-visible: false;"/>
-                <JFXComboBox fx:id="fontComboBox" prefHeight="26.0" prefWidth="200.0"
-                             visibleRowCount="5"/>
+                <JFXColorPicker id="fontColorPicker" fx:id="fontColorPicker" prefHeight="26.0" prefWidth="90.0" promptText="choose font color ..." style="-fx-color-label-visible: false;" />
+                <JFXComboBox fx:id="fontComboBox" prefHeight="26.0" prefWidth="200.0" visibleRowCount="5" />
             </children>
         </HBox>
 
-        <HBox id="messageAreaPane" fx:id="messageAreaPane" alignment="CENTER" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS" maxHeight="150">
+        <HBox id="messageAreaPane" fx:id="messageAreaPane" alignment="CENTER" maxHeight="150" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
             <children>
-                <TextArea id="msgTxtField" fx:id="msgTxtField" HBox.hgrow="ALWAYS"
-                          promptText="Type your message ... " wrapText="true">
+                <TextArea id="msgTxtField" fx:id="msgTxtField" promptText="Type your message ... " wrapText="true" HBox.hgrow="ALWAYS">
                     <font>
-                        <Font name="Arial" size="14.0"/>
+                        <Font name="Arial" size="14.0" />
                     </font>
                     <HBox.margin>
-                        <Insets top="10" bottom="10" left="20"></Insets>
+                        <Insets bottom="10" left="20" top="10" />
                     </HBox.margin>
                 </TextArea>
-                <Separator orientation="VERTICAL"></Separator>
+                <Separator orientation="VERTICAL" />
                 <JFXButton fx:id="sendButton" ellipsisString="" graphicTextGap="0.0" prefHeight="49.0" prefWidth="54.0" textAlignment="CENTER">
                     <graphic>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@right-arrow.png"/>
+                                <Image url="@right-arrow.png" />
                             </image>
                             <cursor>
                                 <Cursor fx:constant="HAND" />
@@ -70,5 +84,12 @@
 
         </URL>
     </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 
 </GridPane>

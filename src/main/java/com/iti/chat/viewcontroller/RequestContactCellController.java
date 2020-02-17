@@ -2,21 +2,22 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
-import javafx.collections.ObservableList;
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+public class RequestContactCellController implements Initializable {
+    @FXML
+    private JFXButton acceptBtn;
 
-public class ContactListController implements Initializable {
+    @FXML
+    private JFXButton rejectBtn;
 
     @FXML
     private Circle userImage;
@@ -27,9 +28,18 @@ public class ContactListController implements Initializable {
     @FXML
     private Text userName;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    @FXML
+    public void acceptFriend() {
+
+    }
+
+    @FXML
+    public void rejectFriend() {
 
     }
 
@@ -46,5 +56,4 @@ public class ContactListController implements Initializable {
         //set user  image
         //userImage.setFill(new ImagePattern(user.getImage()));
     }
-
 }
