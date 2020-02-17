@@ -1,35 +1,32 @@
 package com.iti.chat.viewcontroller;
 
-import com.healthmarketscience.rmiio.RemoteInputStream;
+import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
-import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 import javafx.application.Platform;
+
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,16 +43,19 @@ public class HomeController implements Initializable {
     private VBox rightVBox;
 
     @FXML
+    ListView<User> listView;
+//    ListView<Notification> listView;
     private GridPane motherGridPane;
 
-    @FXML
-    ListView<User> listView;
+//    @FXML
+//    ListView<User> listView;
 
     private ClientServiceProvider model;
     private ChatRoom room;
     private Stage stage;
     private FileTransferProgressController fileTransferProgressController;
 
+    @FXML
     private ChatRoomController chatRoomController;
 
     @FXML
@@ -66,8 +66,11 @@ public class HomeController implements Initializable {
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
-        room = new ChatRoom();
-        room.addUser(Session.getInstance().getUser());
+//        ChatRoomDelegate delegate = new ChatRoomDelegate(model, chatRoomController);
+//        chatRoomController.setDelegate(delegate);
+//        model.setChatRoomDelegate(delegate);
+        //room = new ChatRoom();
+        //room.addUser(Session.getInstance().getUser());
 //        try {
 //            model.requestImageDownload(Session.getInstance().getUser().getRemoteImagePath());
 //        } catch (IOException | NotBoundException e) {
@@ -96,6 +99,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+//<<<<<<< HEAD
         //not clicked by default
         Animator.setIconAnimation(sideBarController.getMagnifierImageView());
         Animator.setIconAnimation(sideBarController.getSignOutImageView());
@@ -143,6 +147,17 @@ public class HomeController implements Initializable {
 
         });
 
+//=======
+////        listView.setCellFactory(listView -> new ContactListCell());
+////        for (int i = 0; i < 3; i++) {
+////            listView.getItems().add(Session.getInstance().getUser());
+////        }
+//        listView.setCellFactory(listView -> new NotificationListCell());
+//        ObservableList<Notification> notificationObservableList= FXCollections.observableArrayList();
+//        notificationObservableList.add(new Notification(new User("shimaa","monuir","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),1));
+//        notificationObservableList.add(new Notification(new User("esraa","mohamed","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),3));
+//        listView.getItems().addAll(notificationObservableList);
+//>>>>>>> d71a691d8f9c274a94c3b80b210ac34fc7ea09d5
 
         try {
             model = new ClientServiceProvider();
@@ -152,6 +167,7 @@ public class HomeController implements Initializable {
 
         listView.setPlaceholder(new Label("No Content In List"));
         listView.setMinWidth(200);
+//<<<<<<< HEAD
 
         model.setUser(Session.getInstance().getUser());
 
@@ -159,6 +175,23 @@ public class HomeController implements Initializable {
 
         ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
         listView.setItems(userObservableList);
+//=======
+
+
+
+        model.setUser(Session.getInstance().getUser());
+
+        sideBarController.getProfileImageView().setOpacity(0.4);
+        sideBarController.getContactsImageView().setOpacity(0.4);
+
+        Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+        Animator.setIconAnimation(sideBarController.getSignOutImageView());
+
+//        listView.setCellFactory(listView -> new ContactListCell());
+//
+//        ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
+//        listView.setItems(userObservableList);
+//>>>>>>> d71a691d8f9c274a94c3b80b210ac34fc7ea09d5
 
 //        listView.setCellFactory(listView -> new RequestContactCell(this));
 //        for (int i = 0; i < 3; i++) {
@@ -178,40 +211,18 @@ public class HomeController implements Initializable {
 //        });
 
 
+
         //richTextAreaController.sendButton.setOnAction(this::uploadFile);
 
 
         //sideBarVBox.minHeightProperty().bind(motherGridPane.heightProperty());
+        //chatRoomController.getMessagesVBox().minHeightProperty().bind(motherGridPane.heightProperty());
+        //sideBarController.getSignOutImageView().setOnMouseClicked(ae -> SceneTransition.loadProfileScene(rightVBox));
+        SceneTransition.loadChatRoom(rightVBox);
     }
 
-    public void receiveFile(RemoteInputStream remoteInputStream) {
-        try {
-            Image image = FileTransfer.downloadImage(remoteInputStream);
-            System.out.println("inside receive file");
-            sideBarController.getProfileImageView().setImage(image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void receiveImage(RemoteInputStream remoteInputStream) {
-        try {
-            Image image = FileTransfer.downloadImage(remoteInputStream);
-            System.out.println("inside receive file");
-            sideBarController.getProfileImageView().setImage(image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void receiveMessage(Message message) {
-        Platform.runLater(() -> {
-            Pane pane = createMessageNode(message);
-            chatRoomController.getMessagesVBox().getChildren().add(pane);
-            pane.maxWidthProperty().bind(chatRoomController.getMessagesVBox().widthProperty());
-        });
-    }
-
+//<<<<<<< HEAD
     public void uploadFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
@@ -246,19 +257,7 @@ public class HomeController implements Initializable {
 
     }
 
-    public Pane createMessageNode(Message message) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/ChatPage.fxml"));
-        try {
-            Pane pane = loader.load();
-            ChatPageController controller = loader.getController();
-            controller.displayMessage(message);
-            return pane;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     public FileTransferProgressController createFileTransfer(long bytes) {
         FXMLLoader loader = new FXMLLoader();
