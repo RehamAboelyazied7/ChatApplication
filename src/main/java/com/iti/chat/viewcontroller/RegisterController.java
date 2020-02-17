@@ -38,9 +38,6 @@ public class RegisterController implements Initializable {
     @FXML
     private Circle imageCircle;
 
-//    @FXML
-//    private ImageView userImageView;
-
     @FXML
     private ImageView tempImageView;
 
