@@ -44,7 +44,6 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         this.controller = controller;
     }
 
-
     @Override
     public User getUser() {
 
