@@ -60,6 +60,8 @@ public class ChatRoomController implements Initializable {
 
     File savePath;
 
+    ExecutorService executorService;
+
     public RichTextAreaController getRichTextAreaController() {
         return richTextAreaController;
     }
@@ -102,6 +104,13 @@ public class ChatRoomController implements Initializable {
         });
     }
 
+    private void initThreadPool() {
+        if(executorService == null) {
+            executorService = Executors.newFixedThreadPool(3);
+        }
+
+    }
+
     public void setDelegate(ChatRoomDelegate delegate) {
         this.delegate = delegate;
         currentChatRoom = new ChatRoom();
@@ -117,11 +126,14 @@ public class ChatRoomController implements Initializable {
     }
 
     public void receiveFile(RemoteInputStream remoteInputStream) {
-        try {
-            FileTransfer.download(savePath.getAbsolutePath(), remoteInputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        initThreadPool();
+        executorService.submit(() -> {
+            try {
+                FileTransfer.download(savePath.getAbsolutePath(), remoteInputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void receiveImage(RemoteInputStream remoteInputStream) {

@@ -1,16 +1,28 @@
-<?import javafx.scene.control.*?>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
-<StackPane id="mainPane" prefHeight="491.0" prefWidth="868.0" styleClass="background"
-           stylesheets="@RegisterScreen.css" xmlns="http://javafx.com/javafx/11.0.1"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.RegisterController" alignment="CENTER">
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane id="mainPane" alignment="CENTER" prefHeight="491.0" prefWidth="868.0" styleClass="background" stylesheets="@RegisterScreen.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.RegisterController">
    <BorderPane>
       <padding>
-         <Insets top="20"></Insets>
+         <Insets top="20" />
       </padding>
       <top>
          <StackPane alignment="CENTER">
@@ -22,8 +34,8 @@
          </StackPane>
       </top>
       <center>
-         <GridPane hgap="20" alignment="CENTER">
-            <VBox spacing="20" GridPane.columnIndex="0">
+         <GridPane alignment="CENTER" hgap="20">
+            <VBox spacing="20">
                <Label styleClass="normal_label" text="First Name">
                   <font>
                      <Font size="24.0" />
@@ -70,16 +82,16 @@
                </HBox>
                <HBox spacing="10">
                   <children>
-                     <TextField fx:id="lastNameTextField"  prefHeight="31.0" prefWidth="180.0" promptText="Medhat" />
-                     <Text fx:id="lastNameError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg" wrappingWidth="150"/>
+                     <TextField fx:id="lastNameTextField" prefHeight="31.0" prefWidth="180.0" promptText="Medhat" />
+                     <Text fx:id="lastNameError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg" wrappingWidth="150" />
                   </children>
                </HBox>
-               <HBox spacing="10">
+               <HBox prefHeight="21.0" prefWidth="256.0" spacing="10">
                   <children>
                      <HBox spacing="50">
                         <children>
-                           <RadioButton fx:id="maleRadioButton"  mnemonicParsing="false" onAction="#maleRadioButtonActionHandler" text="Male" />
-                           <RadioButton fx:id="femaleRadioButton"  mnemonicParsing="false" onAction="#femaleRadioButtonActionHandler" text="Female" />
+                           <JFXRadioButton styleClass="custom-radio-button" text="Male" />
+                           <JFXRadioButton styleClass="custom-radio-button" text="Female" />
                         </children>
                      </HBox>
                      <Text fx:id="genderError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg" wrappingWidth="150" />
@@ -87,24 +99,24 @@
                </HBox>
                <HBox spacing="10">
                   <children>
-                     <TextField fx:id="phoneTextField"  prefHeight="31.0" prefWidth="180.0" />
+                     <TextField fx:id="phoneTextField" prefHeight="31.0" prefWidth="180.0" />
                      <Text fx:id="phoneNumberError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg" wrappingWidth="150" />
                   </children>
                </HBox>
 
                <HBox spacing="10">
-                  <PasswordField fx:id="passwordTextField"  prefHeight="31.0" prefWidth="240.0" promptText="*******************" />
+                  <PasswordField fx:id="passwordTextField" prefHeight="31.0" prefWidth="240.0" promptText="*******************" />
                   <Text fx:id="passwordError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg" wrappingWidth="150" />
                   <VBox.margin>
-                     <Insets top="-6"></Insets>
+                     <Insets top="-6" />
                   </VBox.margin>
                </HBox>
 
                <HBox spacing="10">
                   <VBox.margin>
-                     <Insets top="-2"></Insets>
+                     <Insets top="-2" />
                   </VBox.margin>
-                  <PasswordField fx:id="confirmPasswordTextField"  prefHeight="31.0" prefWidth="240.0" promptText="*******************" />
+                  <PasswordField fx:id="confirmPasswordTextField" prefHeight="31.0" prefWidth="240.0" promptText="*******************" />
                   <Text fx:id="confirmPasswordError" layoutX="505.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="warningMsg" wrappingWidth="150" />
                </HBox>
 
@@ -125,8 +137,8 @@
                </HBox>
             </VBox>
 
-            <VBox GridPane.columnIndex="2" spacing="10">
-               <StackPane >
+            <VBox spacing="10" GridPane.columnIndex="2">
+               <StackPane>
                   <children>
                      <Circle fx:id="imageCircle" fill="DODGERBLUE" radius="71.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
                      <ImageView fx:id="tempImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -142,6 +154,14 @@
                   </font>
                </Button>
             </VBox>
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
 
 
          </GridPane>

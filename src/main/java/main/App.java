@@ -1,7 +1,15 @@
 package main;
 
 
+import com.iti.chat.model.User;
+import com.iti.chat.service.ChatRoomService;
+import com.iti.chat.service.SessionService;
 import com.iti.chat.util.SceneTransition;
+import com.iti.chat.util.Session;
+import com.iti.chat.viewcontroller.LoginController;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,22 +31,14 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         stage.setMinHeight(700);
         stage.setMinWidth(900);
-    //   SceneTransition.goToLoginScreen(stage);
-//    SceneTransition.goToNotification(stage);
-//        stage.setOnCloseRequest(event -> {
-//
-//            System.exit(0);
-//
-//        });
-        //SceneTransition.goToHomeScene(stage);
-        SceneTransition.goToLoginScreen(stage);
-
-        stage.setMinHeight(700);
-        stage.setMinWidth(900);
         //SceneTransition.goToUserProfilerScene(stage);
         //SceneTransition.goToLoginScreen(stage);
+        File file = new File("authenticationInfo.txt");
+        if (file.length() == 0) {
+            SceneTransition.goToLoginScreen(stage);
 
-        stage.show();
+            stage.show();
+        }
     }
 
     public static void setRoot(String fxml) throws IOException {
