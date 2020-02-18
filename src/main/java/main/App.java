@@ -39,6 +39,12 @@ public class App extends Application {
 
             stage.show();
         }
+        stage.setOnCloseRequest(windowEvent -> {
+
+            System.exit(0);
+
+        });
+
     }
 
     public static void setRoot(String fxml) throws IOException {

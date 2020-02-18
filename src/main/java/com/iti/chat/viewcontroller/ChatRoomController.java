@@ -49,10 +49,9 @@ public class ChatRoomController implements Initializable {
 
     private ClientServiceProvider model;
 
-    private ChatRoom room;
+    private ChatRoom currentChatRoom;
     Stage stage;
 
-    ChatRoom currentChatRoom;
 
     ClientServiceProvider client;
 
@@ -68,17 +67,6 @@ public class ChatRoomController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        richTextAreaController.getSendButton().setOnAction(ae -> {
-            try {
-                model.sendMessage(richTextAreaController.getMessage(), room);
-                richTextAreaController.clearText();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (NotBoundException e) {
-                e.printStackTrace();
-            }
-        });
 
         scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
         messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
@@ -228,12 +216,12 @@ public class ChatRoomController implements Initializable {
             });
         }
     }
-    public ChatRoom getRoom() {
-        return room;
+    public ChatRoom getCurrentChatRoom() {
+        return currentChatRoom;
     }
 
-    public void setRoom(ChatRoom room) {
-        this.room = room;
+    public void setCurrentChatRoom(ChatRoom currentChatRoom) {
+        this.currentChatRoom = currentChatRoom;
     }
 
     public VBox getMessagesVBox() {

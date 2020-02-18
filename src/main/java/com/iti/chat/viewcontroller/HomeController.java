@@ -218,7 +218,6 @@ public class HomeController implements Initializable {
         //sideBarVBox.minHeightProperty().bind(motherGridPane.heightProperty());
         //chatRoomController.getMessagesVBox().minHeightProperty().bind(motherGridPane.heightProperty());
         //sideBarController.getSignOutImageView().setOnMouseClicked(ae -> SceneTransition.loadProfileScene(rightVBox));
-        SceneTransition.loadChatRoom(rightVBox);
     }
 
 

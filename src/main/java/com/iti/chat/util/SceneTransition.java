@@ -4,6 +4,7 @@ import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.delegate.RegisterDelegate;
 import com.iti.chat.delegate.UserInfoDelegate;
+import com.iti.chat.model.ChatRoom;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.viewcontroller.*;
 import javafx.fxml.FXMLLoader;
@@ -63,15 +64,17 @@ public class SceneTransition {
         }
     }
 
-    public static void loadChatRoom(VBox rightVBox) {
+    public static void loadChatRoom(VBox rightVBox , ChatRoom room) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/Chat_Room.fxml"));
             Parent parent = loader.load();
             ChatRoomController chatRoomController = loader.getController();
+            chatRoomController.getContactBarController().getNameLabel().setText(room.getName());
             ChatRoomDelegate delegate = new ChatRoomDelegate(client, chatRoomController);
             client.setChatRoomDelegate(delegate);
             chatRoomController.setDelegate(delegate);
+            chatRoomController.setCurrentChatRoom(room);
             rightVBox.getChildren().clear();
             rightVBox.getChildren().add(parent);
             VBox.setVgrow(parent, Priority.ALWAYS);

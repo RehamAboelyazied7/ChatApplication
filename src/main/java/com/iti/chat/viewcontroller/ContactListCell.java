@@ -56,25 +56,12 @@ public class ContactListCell extends ListCell<User> {
 
                 Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
 
-                try {
+                ChatRoom room = new ChatRoom();
+                room.addUser(item);
+                room.addUser(Session.getInstance().getUser());
+                room.setName(item.getFirstName() + " " + item.getLastName());
+                SceneTransition.loadChatRoom(homeController.getRightVBox(), room);
 
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(SceneTransition.class.getResource("/view/Chat_Room.fxml"));
-                    Parent parent = loader.load();
-                    ChatRoomController chatRoomController = loader.getController();
-                    homeController.setChatRoomController(chatRoomController);
-                    chatRoomController.setModel(homeController.getModel());
-                    chatRoomController.setRoom(homeController.getRoom());
-                    chatRoomController.getContactBarController().getNameLabel().setText(item.getFirstName() + " " + item.getLastName());
-                    VBox.setVgrow(parent , Priority.ALWAYS);
-                    room.addUser(Session.getInstance().getUser());
-                    room.addUser(item);
-                    homeController.getRightVBox().getChildren().clear();
-                    homeController.getRightVBox().getChildren().add(parent);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
 
         });
