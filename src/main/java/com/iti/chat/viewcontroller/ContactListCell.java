@@ -12,6 +12,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class ContactListCell extends ListCell<User> {
 
@@ -56,11 +57,13 @@ public class ContactListCell extends ListCell<User> {
 
                 Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
 
-                ChatRoom room = new ChatRoom();
-                room.addUser(item);
-                room.addUser(Session.getInstance().getUser());
-                room.setName(item.getFirstName() + " " + item.getLastName());
-                SceneTransition.loadChatRoom(homeController.getRightVBox(), room);
+//                ChatRoom room = new ChatRoom();
+//                room.addUser(item);
+//                room.addUser(Session.getInstance().getUser());
+//                room.setName(item.getFirstName() + " " + item.getLastName());
+
+                ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room);
+                chatRoomController.createOrSetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
 
             }
 

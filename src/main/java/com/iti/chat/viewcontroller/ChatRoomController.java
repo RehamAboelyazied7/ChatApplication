@@ -1,6 +1,7 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.ChatRoom;
+import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
 import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.delegate.ChatRoomDelegate;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -216,12 +218,33 @@ public class ChatRoomController implements Initializable {
             });
         }
     }
+
+
+    public void createOrSetChatRoom(List<User> users) {
+        User currentUser = Session.getInstance().getUser();
+        ChatRoom chatRoom = currentUser.getSharedChatRoom(users);
+        if(chatRoom == null) {
+            try {
+                setCurrentChatRoom(delegate.createNewChatRoom(users));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public ChatRoom getCurrentChatRoom() {
         return currentChatRoom;
     }
 
     public void setCurrentChatRoom(ChatRoom currentChatRoom) {
+
         this.currentChatRoom = currentChatRoom;
+        messagesVBox.getChildren().clear();
+        currentChatRoom.getMessages().forEach(message -> {
+            receiveMessage(message);
+        });
+
     }
 
     public VBox getMessagesVBox() {
