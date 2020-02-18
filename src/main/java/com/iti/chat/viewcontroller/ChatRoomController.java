@@ -1,5 +1,8 @@
 package com.iti.chat.viewcontroller;
 
+import com.healthmarketscience.rmiio.RemoteInputStream;
+import com.iti.chat.delegate.ChatRoomDelegate;
+import com.iti.chat.model.Message;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
@@ -73,5 +76,14 @@ public class ChatRoomController implements Initializable{
         scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
         messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
 
+    }
+
+    public void receiveMessage(Message message) {
+    }
+
+    public void receiveFile(RemoteInputStream remoteInputStream) {
+    }
+
+    public void setDelegate(ChatRoomDelegate delegate) {
     }
 }

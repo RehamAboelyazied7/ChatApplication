@@ -3,11 +3,14 @@ package com.iti.chat.service;
 import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.healthmarketscience.rmiio.RemoteInputStreamServer;
 import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
+import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
 import com.iti.chat.model.Notification;
 import com.iti.chat.model.User;
+import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
+import com.iti.chat.viewcontroller.PushNotification;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,14 +27,24 @@ import java.util.List;
 public class ClientServiceProvider extends UnicastRemoteObject implements ClientService {
     private User currentUser;
     HomeController controller;
+    ChatRoomController chatRoomController;
     FriendRequestsService friendRequestsService;
     ChatRoomService chatRoomService;
     SessionService sessionService;
     FileTransferService fileTransferService;
+    ChatRoomDelegate chatRoomDelegate;
     Registry registry;
 
     public ClientServiceProvider() throws RemoteException {
         registry = LocateRegistry.getRegistry(4000);
+    }
+
+    public void setChatRoomDelegate(ChatRoomDelegate chatRoomDelegate) {
+        this.chatRoomDelegate = chatRoomDelegate;
+    }
+
+    public void setChatRoomController(ChatRoomController chatRoomController) {
+        this.chatRoomController = chatRoomController;
     }
 
     public ClientServiceProvider(HomeController controller) throws RemoteException {
@@ -67,15 +80,16 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         initChatRoomService();
         InputStream inputStream = new FileInputStream(file.getAbsolutePath());
         RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
-        chatRoomService.sendFile(message, remoteFileData);
-        inputStream.close();
+        chatRoomService.sendFile(message, room, remoteFileData);
     }
 
     public void downloadFile(RemoteInputStream remoteInputStream) throws IOException {
-        controller.receiveFile(remoteInputStream);
+        //chatRoomController.receiveFile(remoteInputStream);
+        chatRoomDelegate.receiveFile(remoteInputStream);
     }
+
     public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
-        controller.receiveFile(remoteInputStream);
+        chatRoomController.receiveFile(remoteInputStream);
     }
 
     public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
@@ -91,7 +105,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void receiveMessage(Message message) {
-        controller.receiveMessage(message);
+        //chatRoomController.receiveMessage(message);
+       // PushNotification.createNotify(message);
+        chatRoomDelegate.receiveMessage(message);
     }
 
     public ChatRoom createNewChatRoom(List<User> users) throws RemoteException, NotBoundException {
@@ -124,7 +140,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     private void initFileTransferService() throws RemoteException, NotBoundException {
-        if(fileTransferService == null) {
+        if (fileTransferService == null) {
             fileTransferService = (FileTransferService) registry.lookup(ServerServices.FILE_TRANSFER_SERVICE);
         }
     }

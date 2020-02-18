@@ -1,40 +1,36 @@
 package com.iti.chat.viewcontroller;
 
-import com.healthmarketscience.rmiio.RemoteInputStream;
-import com.iti.chat.model.*;
+import com.iti.chat.delegate.ChatRoomDelegate;
+import com.iti.chat.model.ChatRoom;
+import com.iti.chat.model.Notification;
+import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
-import com.iti.chat.util.FileTransfer;
+import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 import javafx.application.Platform;
-<<<<<<< HEAD
-=======
+
 import javafx.beans.Observable;
->>>>>>> eb9076c84560e3395aabe5c77a7a670a0dbbb145
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import java.io.File;
-import java.io.FileNotFoundException;
+import org.controlsfx.control.Notifications;
+
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class HomeController implements Initializable {
 
@@ -42,21 +38,19 @@ public class HomeController implements Initializable {
     private VBox rightVBox;
 
     @FXML
-<<<<<<< HEAD
     //ListView<User> listView;
-    ListView<Notification> listView;
-=======
+            ListView<Notification> listView;
     private GridPane motherGridPane;
->>>>>>> eb9076c84560e3395aabe5c77a7a670a0dbbb145
 
-    @FXML
-    ListView<User> listView;
+//    @FXML
+//    ListView<User> listView;
 
     ClientServiceProvider model;
     ChatRoom room;
     Stage stage;
     FileTransferProgressController fileTransferProgressController;
 
+    @FXML
     private ChatRoomController chatRoomController;
 
     @FXML
@@ -67,8 +61,11 @@ public class HomeController implements Initializable {
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
-        room = new ChatRoom();
-        room.addUser(Session.getInstance().getUser());
+//        ChatRoomDelegate delegate = new ChatRoomDelegate(model, chatRoomController);
+//        chatRoomController.setDelegate(delegate);
+//        model.setChatRoomDelegate(delegate);
+        //room = new ChatRoom();
+        //room.addUser(Session.getInstance().getUser());
 //        try {
 //            model.requestImageDownload(Session.getInstance().getUser().getRemoteImagePath());
 //        } catch (IOException | NotBoundException e) {
@@ -78,7 +75,6 @@ public class HomeController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
-
 
 
 //        stage.widthProperty().addListener((observableValue, number, t1) -> {
@@ -102,7 +98,7 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-<<<<<<< HEAD
+
 //        listView.setCellFactory(listView -> new ContactListCell());
 //        for (int i = 0; i < 3; i++) {
 //            listView.getItems().add(Session.getInstance().getUser());
@@ -112,8 +108,6 @@ public class HomeController implements Initializable {
         notificationObservableList.add(new Notification(new User("shimaa","monuir","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),1));
         notificationObservableList.add(new Notification(new User("esraa","mohamed","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),3));
         listView.getItems().addAll(notificationObservableList);
-        richTextAreaController.sendButton.setOnAction(ae -> {
-=======
 
         try {
             model = new ClientServiceProvider();
@@ -123,17 +117,7 @@ public class HomeController implements Initializable {
 
         listView.setPlaceholder(new Label("No Content In List"));
         listView.setMinWidth(200);
-        chatRoomController.getRichTextAreaController().getSendButton().setOnAction(ae -> {
->>>>>>> eb9076c84560e3395aabe5c77a7a670a0dbbb145
-            try {
-                model.sendMessage(chatRoomController.getRichTextAreaController().getMessage(), room);
-                chatRoomController.getRichTextAreaController().clearText();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (NotBoundException e) {
-                e.printStackTrace();
-            }
-        });
+
 
 
         model.setUser(Session.getInstance().getUser());
@@ -144,10 +128,10 @@ public class HomeController implements Initializable {
         Animator.setIconAnimation(sideBarController.getMagnifierImageView());
         Animator.setIconAnimation(sideBarController.getSignOutImageView());
 
-        listView.setCellFactory(listView -> new ContactListCell());
-
-        ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
-        listView.setItems(userObservableList);
+//        listView.setCellFactory(listView -> new ContactListCell());
+//
+//        ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
+//        listView.setItems(userObservableList);
 
 //        listView.setCellFactory(listView -> new RequestContactCell(this));
 //        for (int i = 0; i < 3; i++) {
@@ -157,101 +141,28 @@ public class HomeController implements Initializable {
 
 
 
-//        chatRoomController.getRichTextAreaController().getSendButton().setOnAction(ae -> {
-//            try {
-//                model.sendMessage(chatRoomController.getRichTextAreaController().getMessage(), room);
-//                chatRoomController.getRichTextAreaController().clearText();
-//            } catch (RemoteException e) {
-//                e.printStackTrace();
-//            } catch (NotBoundException e) {
-//                e.printStackTrace();
-//            }
-//        });
-
-
-
-
         //richTextAreaController.sendButton.setOnAction(this::uploadFile);
 
 
         //sideBarVBox.minHeightProperty().bind(motherGridPane.heightProperty());
+        //chatRoomController.getMessagesVBox().minHeightProperty().bind(motherGridPane.heightProperty());
+        //sideBarController.getSignOutImageView().setOnMouseClicked(ae -> SceneTransition.loadProfileScene(rightVBox));
+        SceneTransition.loadChatRoom(rightVBox);
     }
 
-    public void receiveFile(RemoteInputStream remoteInputStream) {
-        try {
-            Image image = FileTransfer.downloadImage(remoteInputStream);
-            System.out.println("inside receive file");
-            sideBarController.getProfileImageView().setImage(image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void receiveImage(RemoteInputStream remoteInputStream) {
-        try {
-            Image image = FileTransfer.downloadImage(remoteInputStream);
-            System.out.println("inside receive file");
-            sideBarController.getProfileImageView().setImage(image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void receiveMessage(Message message) {
-        Platform.runLater(() -> {
-            Pane pane = createMessageNode(message);
-            chatRoomController.getMessagesVBox().getChildren().add(pane);
-            pane.maxWidthProperty().bind(chatRoomController.getMessagesVBox().widthProperty());
-        });
-    }
-
-    public void uploadFile(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        File selectedFile = fileChooser.showOpenDialog(stage);
-        if(selectedFile != null) {
-            fileTransferProgressController = createFileTransfer(selectedFile.length());
-            StackPane container = new StackPane();
-            chatRoomController.getMessagesVBox().getChildren().add(container);
-            fileTransferProgressController.willStartTransfer(container);
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            executorService.submit(() -> {
-                try {
-                    Message message = new Message(selectedFile.getName(), Session.getInstance().getUser(), MessageType.ATTACHMENT_MESSAGE);
-                    model.sendFile(message, selectedFile, room);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (NotBoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-    }
 
     public void didSendNBytes(long n) {
         fileTransferProgressController.setCurrentBytes(n);
     }
 
     public void receiveNotification(Notification notification) {
+           PushNotification pushNotification=new PushNotification();
+           pushNotification.createNotify(notification);
 
     }
 
-    public Pane createMessageNode(Message message) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/ChatPage.fxml"));
-        try {
-            Pane pane = loader.load();
-            ChatPageController controller = loader.getController();
-            controller.displayMessage(message);
-            return pane;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     public FileTransferProgressController createFileTransfer(long bytes) {
         FXMLLoader loader = new FXMLLoader();

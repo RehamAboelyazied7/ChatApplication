@@ -1,7 +1,6 @@
 package main;
 
 
-import com.iti.chat.notifications.notification.TrayNotification;
 import com.iti.chat.util.SceneTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -31,7 +30,8 @@ public class App extends Application {
 //            System.exit(0);
 //
 //        });
-        SceneTransition.goToHomeScene(stage);
+        //SceneTransition.goToChatScene(stage);
+        SceneTransition.goToLoginScreen(stage);
 
         stage.setMinHeight(700);
         stage.setMinWidth(900);

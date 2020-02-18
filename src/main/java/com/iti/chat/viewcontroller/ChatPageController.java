@@ -9,11 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-//import org.controlsfx.control.Notifications;
+import org.controlsfx.control.Notifications;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -47,7 +48,7 @@ public class ChatPageController implements Initializable {
         CircleImageView.setFill(new ImagePattern(image));
         chatVBox.maxWidthProperty().bind(anchorChatPage.widthProperty().multiply(0.8));
         currentChatRoom.addUser(Session.getInstance().getUser());
-///        displayNotification();
+        displayNotification();
 
       /*  List<Notification> notify=new ArrayList<>();
         User sender=new User("Shimaa","elnady","01006863721","shimaa@gmil.com",1,"hh");
@@ -109,12 +110,19 @@ public class ChatPageController implements Initializable {
 
 
 
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                Notifications.create().title("add").text("shimaa send freind request").
-//                        showWarning();
-//            }
+        Platform.runLater(new Runnable() {
+                              @Override
+                              public void run() {
+
+                                  ImageView imageView=new ImageView(new Image(this.getClass().getResource("/view/sender.png").toExternalForm()));
+                                  imageView.setFitWidth(50);
+                                  imageView.setFitHeight(50);
+                                  Notifications.create().graphic(imageView).title("add").text("shimaa send freind request").darkStyle().
+                                          show();
+                              }
+                          }
+            );
+
 //        });
        /* NotificationType notifyType = NotificationType.SUCCESS;
         TrayNotification tray = new TrayNotification();

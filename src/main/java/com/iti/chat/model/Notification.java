@@ -6,7 +6,7 @@ public class Notification implements Serializable{
     public User source;
     public User receiver;
     public int notificationType;
-
+    //public String messages;
     public Notification(User source, User receiver, int notificationType) {
         this.source = source;
         this.receiver = receiver;
@@ -43,15 +43,19 @@ public class Notification implements Serializable{
         switch (notificationType) {
             case NotificationType.FRIENDSHIP_ACCEPTED:
                 message += " accepted your friend request";
+                //messages="FRIENDSHIP_ACCEPTED";
                 break;
             case NotificationType.FRIENDSHIP_REJECTED:
                 message += " rejected your friend request";
+                //messages="FRIENDSHIP_REJECTED";
                 break;
             case NotificationType.MESSAGE_RECEIVED:
                 message += " sent you a message";
+                //messages="MESSAGE_RECEIVED";
                 break;
             default:
                 message += " sent you a friend request";
+                //messages="sent you a friend request";
         }
         return message;
     }
