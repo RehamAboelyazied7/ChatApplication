@@ -48,7 +48,7 @@ public class ChatPageController implements Initializable {
         CircleImageView.setFill(new ImagePattern(image));
         chatVBox.maxWidthProperty().bind(anchorChatPage.widthProperty().multiply(0.8));
         currentChatRoom.addUser(Session.getInstance().getUser());
-        displayNotification();
+        //displayNotification();
 
       /*  List<Notification> notify=new ArrayList<>();
         User sender=new User("Shimaa","elnady","01006863721","shimaa@gmil.com",1,"hh");
@@ -106,7 +106,7 @@ public class ChatPageController implements Initializable {
         messageVbox.setStyle("-fx-border-color: #ffff;-fx-background-radius:2em;-fx-background-color: " + bubbleColor);
     }
 
-    public void displayNotification(){//List<Notification> notification) {
+  /*  public void displayNotification(){//List<Notification> notification) {
 
 
 
@@ -140,8 +140,11 @@ public class ChatPageController implements Initializable {
 
 
     }
+    /*
 
 }
+
+     */
 
 
 
