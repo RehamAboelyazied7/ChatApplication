@@ -20,11 +20,6 @@ public class ContactListCell extends ListCell<User> {
     private ChatRoom room = new ChatRoom();
     private User user;
 
-//    public ContactListCell() {
-//        super();
-//
-//    }
-
     public ContactListCell(HomeController homeController) {
         super();
         this.homeController = homeController;
@@ -56,12 +51,6 @@ public class ContactListCell extends ListCell<User> {
             if (item != null) {
 
                 Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
-
-//                ChatRoom room = new ChatRoom();
-//                room.addUser(item);
-//                room.addUser(Session.getInstance().getUser());
-//                room.setName(item.getFirstName() + " " + item.getLastName());
-
                 ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room);
                 chatRoomController.createOrSetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
 
