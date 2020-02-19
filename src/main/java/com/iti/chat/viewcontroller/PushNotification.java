@@ -14,7 +14,7 @@ public class PushNotification {
 
     public  void createNotify(Notification notification) {
         ImageView imageView=new ImageView(new Image(getClass().getResource("/view/sender.png").toExternalForm()));
-        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
         imageView.setFitHeight(50);
         Platform.runLater(() -> {
             if(check==1) {
