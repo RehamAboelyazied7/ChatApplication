@@ -43,8 +43,6 @@ public class ContactListController implements Initializable {
         } else {
             userStatus.setFill(Color.GREY);
         }
-        //set user  image
-        //userImage.setFill(new ImagePattern(user.getImage()));
     }
 
 }

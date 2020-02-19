@@ -25,5 +25,11 @@ public class Session {
         return instance;
     }
 
+    public static void signOutInstance(){
+
+        instance.user = null;
+        instance = null;
+
+    }
 
 }

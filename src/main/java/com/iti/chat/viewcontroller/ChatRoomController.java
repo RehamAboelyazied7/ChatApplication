@@ -1,11 +1,12 @@
 package com.iti.chat.viewcontroller;
 
+import com.iti.chat.model.ChatRoom;
+import com.iti.chat.model.User;
+import com.iti.chat.service.ClientServiceProvider;
 import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.delegate.ChatRoomDelegate;
-import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
 import com.iti.chat.model.MessageType;
-import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
@@ -19,18 +20,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ChatRoomController implements Initializable{
+public class ChatRoomController implements Initializable {
 
     @FXML
     private VBox messagesVBox;
@@ -47,9 +48,11 @@ public class ChatRoomController implements Initializable{
     @FXML
     private ScrollPane scrollPane;
 
+    private ClientServiceProvider model;
+
+    private ChatRoom currentChatRoom;
     Stage stage;
 
-    ChatRoom currentChatRoom;
 
     ClientServiceProvider client;
 
@@ -57,12 +60,18 @@ public class ChatRoomController implements Initializable{
 
     File savePath;
 
+    ExecutorService executorService;
+
     public RichTextAreaController getRichTextAreaController() {
         return richTextAreaController;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
+        messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
+
         scrollPane.vvalueProperty().bind(messagesVBox.heightProperty());
         messagesVBox.maxWidthProperty().bind(scrollPane.widthProperty());
         richTextAreaController.getPaperClipButton().setOnAction(ae -> {
@@ -84,6 +93,13 @@ public class ChatRoomController implements Initializable{
         });
     }
 
+    private void initThreadPool() {
+        if (executorService == null) {
+            executorService = Executors.newFixedThreadPool(3);
+        }
+
+    }
+
     public void setDelegate(ChatRoomDelegate delegate) {
         this.delegate = delegate;
         currentChatRoom = new ChatRoom();
@@ -99,11 +115,14 @@ public class ChatRoomController implements Initializable{
     }
 
     public void receiveFile(RemoteInputStream remoteInputStream) {
-        try {
-            FileTransfer.download(savePath.getAbsolutePath(), remoteInputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        initThreadPool();
+        executorService.submit(() -> {
+            try {
+                FileTransfer.download(savePath.getAbsolutePath(), remoteInputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void receiveImage(RemoteInputStream remoteInputStream) {
@@ -151,7 +170,7 @@ public class ChatRoomController implements Initializable{
         FileChooser chooser = new FileChooser();
         chooser.setInitialFileName(fileName);
         savePath = chooser.showSaveDialog(stage);
-        if(savePath != null) {
+        if (savePath != null) {
             try {
                 delegate.requestFileDownload(remotePath);
             } catch (IOException e) {
@@ -163,28 +182,34 @@ public class ChatRoomController implements Initializable{
     }
 
     public void receiveMessage(Message message) {
+        currentChatRoom.getMessages().add(message);
+        printMessageOnChatRoom(message);
+
+    }
+
+    public void printMessageOnChatRoom(Message message) {
+
         Platform.runLater(() -> {
             Pane pane;
-            if(message.getMessageType() == MessageType.TEXT_MESSAGE) {
+            if (message.getMessageType() == MessageType.TEXT_MESSAGE) {
                 pane = createTextMessageNode(message);
-            }
-            else {
+            } else {
                 pane = createAttachmentMessageNode(message);
             }
             messagesVBox.getChildren().add(pane);
             pane.maxWidthProperty().bind(getMessagesVBox().widthProperty());
         });
+
     }
 
     public void uploadFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
-        if(selectedFile != null) {
+        if (selectedFile != null) {
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.submit(() -> {
                 try {
                     Message message = new Message(selectedFile.getName(), Session.getInstance().getUser(), MessageType.ATTACHMENT_MESSAGE);
-                    //client.sendFile(message, selectedFile, currentChatRoom);
                     delegate.sendFile(message, selectedFile, currentChatRoom);
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -199,16 +224,58 @@ public class ChatRoomController implements Initializable{
         }
     }
 
+
+    public void createOrSetChatRoom(List<User> users) {
+        User currentUser = Session.getInstance().getUser();
+        ChatRoom chatRoom = currentUser.getSharedChatRoom(users);
+        if (chatRoom == null) {
+            try {
+                setCurrentChatRoom(delegate.createNewChatRoom(users));
+                Session.getInstance().getUser().getChatRooms().add(currentChatRoom);
+
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            setCurrentChatRoom(chatRoom);
+
+        }
+    }
+
+    public ChatRoom getCurrentChatRoom() {
+        return currentChatRoom;
+    }
+
+    public void setCurrentChatRoom(ChatRoom currentChatRoom) {
+
+        this.currentChatRoom = currentChatRoom;
+        messagesVBox.getChildren().clear();
+
+        for (int i = 0; i < currentChatRoom.getMessages().size(); i++) {
+            Message msg = currentChatRoom.getMessages().get(i);
+            printMessageOnChatRoom(msg);
+
+        }
+
+    }
+
+    public VBox getMessagesVBox() {
+        return messagesVBox;
+    }
+
+    public void setMessagesVBox(VBox messagesVBox) {
+        this.messagesVBox = messagesVBox;
+    }
+
     public ContactBarController getContactBarController() {
         return contactBarController;
     }
 
     public void setContactBarController(ContactBarController contactBarController) {
         this.contactBarController = contactBarController;
-    }
-
-    public void setRichTextAreaController(RichTextAreaController richTextAreaController) {
-        this.richTextAreaController = richTextAreaController;
     }
 
     public VBox getMotherVBox() {
@@ -227,12 +294,11 @@ public class ChatRoomController implements Initializable{
         this.scrollPane = scrollPane;
     }
 
-    public VBox getMessagesVBox() {
-        return messagesVBox;
+    public ClientServiceProvider getModel() {
+        return model;
     }
 
-    public void setMessagesVBox(VBox messagesVBox) {
-        this.messagesVBox = messagesVBox;
+    public void setModel(ClientServiceProvider model) {
+        this.model = model;
     }
-
 }

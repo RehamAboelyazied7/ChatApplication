@@ -3,6 +3,7 @@ package com.iti.chat.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ChatRoom implements Serializable{
     private int id;
@@ -60,4 +61,14 @@ public class ChatRoom implements Serializable{
 
         this.users = users;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof ChatRoom) {
+            ChatRoom chatRoom = (ChatRoom) object;
+            return users.containsAll(chatRoom.getUsers()) && chatRoom.getUsers().containsAll(users);
+        }
+        return false;
+    }
+
 }

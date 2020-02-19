@@ -10,6 +10,7 @@ import com.iti.chat.model.Notification;
 import com.iti.chat.model.User;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
+import com.iti.chat.viewcontroller.PushNotification;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,7 +56,6 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
         this.controller = controller;
     }
-
 
     @Override
     public User getUser() {
@@ -104,7 +104,8 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void receiveMessage(Message message) {
-
+        //chatRoomController.receiveMessage(message);
+       // PushNotification.createNotify(message);
         //chatRoomController.receiveMessage(message);
         chatRoomDelegate.receiveMessage(message);
     }
