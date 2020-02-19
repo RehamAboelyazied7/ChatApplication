@@ -1,9 +1,7 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.delegate.ChatRoomDelegate;
-import com.iti.chat.model.ChatRoom;
-import com.iti.chat.model.Notification;
-import com.iti.chat.model.User;
+import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
 import com.iti.chat.util.SceneTransition;
@@ -16,48 +14,54 @@ import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.controlsfx.control.Notifications;
-
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 public class HomeController implements Initializable {
 
     @FXML
     private VBox rightVBox;
 
     @FXML
-    //ListView<User> listView;
-            ListView<Notification> listView;
+    ListView<User> listView;
+    //    ListView<Notification> listView;
     private GridPane motherGridPane;
 
 //    @FXML
 //    ListView<User> listView;
 
-    ClientServiceProvider model;
-    ChatRoom room;
-    Stage stage;
-    FileTransferProgressController fileTransferProgressController;
+    private ClientServiceProvider model;
+    private ChatRoom room;
+    private Stage stage;
+    private FileTransferProgressController fileTransferProgressController;
 
     @FXML
     private ChatRoomController chatRoomController;
 
     @FXML
-    private  SideBarController sideBarController;
+    private SideBarController sideBarController;
 
     @FXML
-    UserProfileController userProfileController;
+    private UserProfileController userProfileController;
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
@@ -76,14 +80,9 @@ public class HomeController implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
 
-
 //        stage.widthProperty().addListener((observableValue, number, t1) -> {
 //            chatRoomController.getMessagesVBox().requestLayout();
 //        });
-
-
-
-
     }
 
     public void acceptFriendRequest(User user) {
@@ -99,15 +98,65 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-//        listView.setCellFactory(listView -> new ContactListCell());
-//        for (int i = 0; i < 3; i++) {
-//            listView.getItems().add(Session.getInstance().getUser());
-//        }
-        listView.setCellFactory(listView -> new NotificationListCell());
-        ObservableList<Notification> notificationObservableList= FXCollections.observableArrayList();
-        notificationObservableList.add(new Notification(new User("shimaa","monuir","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),1));
-        notificationObservableList.add(new Notification(new User("esraa","mohamed","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),3));
-        listView.getItems().addAll(notificationObservableList);
+//<<<<<<< HEAD
+        //not clicked by default
+        Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+        Animator.setIconAnimation(sideBarController.getSignOutImageView());
+
+        //clicked by default
+        Animator.suspendIconAnimation(sideBarController.getProfileImageView());
+        Animator.suspendIconAnimation(sideBarController.getContactsImageView());
+
+        sideBarController.getProfileImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            try {
+
+                Animator.suspendIconAnimation(sideBarController.getProfileImageView());
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
+                Parent parent = loader.load();
+                rightVBox.getChildren().clear();
+                rightVBox.getChildren().add(parent);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        sideBarController.getContactsImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            Animator.suspendIconAnimation(sideBarController.getContactsImageView());
+            Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+
+
+        });
+
+        sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            Animator.suspendIconAnimation(sideBarController.getMagnifierImageView());
+            Animator.setIconAnimation(sideBarController.getContactsImageView());
+
+
+        });
+
+        sideBarController.getSignOutImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            SceneTransition.goToLoginScreen(stage);
+            Session.signOutInstance();
+
+        });
+
+//=======
+////        listView.setCellFactory(listView -> new ContactListCell());
+////        for (int i = 0; i < 3; i++) {
+////            listView.getItems().add(Session.getInstance().getUser());
+////        }
+//        listView.setCellFactory(listView -> new NotificationListCell());
+//        ObservableList<Notification> notificationObservableList= FXCollections.observableArrayList();
+//        notificationObservableList.add(new Notification(new User("shimaa","monuir","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),1));
+//        notificationObservableList.add(new Notification(new User("esraa","mohamed","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),3));
+//        listView.getItems().addAll(notificationObservableList);
+//>>>>>>> d71a691d8f9c274a94c3b80b210ac34fc7ea09d5
 
         try {
             model = new ClientServiceProvider();
@@ -117,6 +166,15 @@ public class HomeController implements Initializable {
 
         listView.setPlaceholder(new Label("No Content In List"));
         listView.setMinWidth(200);
+//<<<<<<< HEAD
+
+        model.setUser(Session.getInstance().getUser());
+
+        listView.setCellFactory(listView -> new ContactListCell(this));
+
+        ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
+        listView.setItems(userObservableList);
+//=======
 
 
 
@@ -132,12 +190,24 @@ public class HomeController implements Initializable {
 //
 //        ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
 //        listView.setItems(userObservableList);
+//>>>>>>> d71a691d8f9c274a94c3b80b210ac34fc7ea09d5
 
 //        listView.setCellFactory(listView -> new RequestContactCell(this));
 //        for (int i = 0; i < 3; i++) {
 //            listView.getItems().add(Session.getInstance().getUser());
 //        }
 
+
+//        chatRoomController.getRichTextAreaController().getSendButton().setOnAction(ae -> {
+//            try {
+//                model.sendMessage(chatRoomController.getRichTextAreaController().getMessage(), room);
+//                chatRoomController.getRichTextAreaController().clearText();
+//            } catch (RemoteException e) {
+//                e.printStackTrace();
+//            } catch (NotBoundException e) {
+//                e.printStackTrace();
+//            }
+//        });
 
 
 
@@ -147,19 +217,43 @@ public class HomeController implements Initializable {
         //sideBarVBox.minHeightProperty().bind(motherGridPane.heightProperty());
         //chatRoomController.getMessagesVBox().minHeightProperty().bind(motherGridPane.heightProperty());
         //sideBarController.getSignOutImageView().setOnMouseClicked(ae -> SceneTransition.loadProfileScene(rightVBox));
-        SceneTransition.loadChatRoom(rightVBox);
     }
 
 
+    //<<<<<<< HEAD
+    public void uploadFile(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if (selectedFile != null) {
+            fileTransferProgressController = createFileTransfer(selectedFile.length());
+            StackPane container = new StackPane();
+            chatRoomController.getMessagesVBox().getChildren().add(container);
+            fileTransferProgressController.willStartTransfer(container);
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.submit(() -> {
+                try {
+                    Message message = new Message(selectedFile.getName(), Session.getInstance().getUser(), MessageType.ATTACHMENT_MESSAGE);
+                    model.sendFile(message, selectedFile, room);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (NotBoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
 
     public void didSendNBytes(long n) {
         fileTransferProgressController.setCurrentBytes(n);
     }
 
     public void receiveNotification(Notification notification) {
-           PushNotification pushNotification=new PushNotification();
-           pushNotification.createNotify(notification);
-
+         PushNotification pushNotification=new PushNotification();
+         pushNotification.createNotify(notification);
     }
 
 
@@ -209,4 +303,37 @@ public class HomeController implements Initializable {
     public void setRightVBox(VBox rightVBox) {
         this.rightVBox = rightVBox;
     }
+
+    public UserProfileController getUserProfileController() {
+        return userProfileController;
+    }
+
+    public void setUserProfileController(UserProfileController userProfileController) {
+        this.userProfileController = userProfileController;
+    }
+
+    public ClientServiceProvider getModel() {
+        return model;
+    }
+
+    public ChatRoom getRoom() {
+        return room;
+    }
+
+    public void setRoom(ChatRoom room) {
+        this.room = room;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public FileTransferProgressController getFileTransferProgressController() {
+        return fileTransferProgressController;
+    }
+
+    public void setFileTransferProgressController(FileTransferProgressController fileTransferProgressController) {
+        this.fileTransferProgressController = fileTransferProgressController;
+    }
 }
+

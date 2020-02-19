@@ -25,7 +25,7 @@
             </Circle>
          </children>
       </StackPane>
-      <Label fx:id="nameLabel" prefHeight="27.0" prefWidth="84.0" text="nouran">
+      <Label fx:id="nameLabel" prefHeight="33.0" prefWidth="269.0" text="nouran">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>

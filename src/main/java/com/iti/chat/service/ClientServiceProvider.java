@@ -57,7 +57,6 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         this.controller = controller;
     }
 
-
     @Override
     public User getUser() {
 
@@ -107,6 +106,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void receiveMessage(Message message) {
         //chatRoomController.receiveMessage(message);
        // PushNotification.createNotify(message);
+        //chatRoomController.receiveMessage(message);
         chatRoomDelegate.receiveMessage(message);
     }
 

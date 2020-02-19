@@ -13,6 +13,8 @@ public class Animator {
      */
     public static void setIconAnimation(Node node) {
 
+        node.setOpacity(0.4);
+        node.setDisable(false);
         node.setOnMousePressed(mouseEvent -> {
 
             node.setOpacity(1.0);
@@ -30,13 +32,13 @@ public class Animator {
         node.setOnMouseEntered(mouseEvent -> {
 
             FadeTransition fadeTransition = new FadeTransition();
-            fadeTransition.setFromValue(1.0);
-            fadeTransition.setToValue(0.4);
+            fadeTransition.setFromValue(0.4);
+            fadeTransition.setToValue(1.0);
             fadeTransition.setCycleCount(1);
             fadeTransition.setNode(node);
             fadeTransition.setDuration(Duration.millis(100));
             fadeTransition.play();
-            node.setOpacity(0.4);
+            node.setOpacity(1.0);
 
 
         });
@@ -44,21 +46,22 @@ public class Animator {
         node.setOnMouseExited(mouseEvent -> {
 
             FadeTransition fadeTransition = new FadeTransition();
-            fadeTransition.setFromValue(0.4);
-            fadeTransition.setToValue(1.0);
+            fadeTransition.setFromValue(1.0);
+            fadeTransition.setToValue(0.4);
             fadeTransition.setCycleCount(1);
             fadeTransition.setNode(node);
             fadeTransition.setDuration(Duration.millis(300));
             fadeTransition.play();
-            node.setOpacity(1.0);
+            node.setOpacity(0.4);
 
         });
-
     }
 
 
     public static void suspendIconAnimation(Node node) {
 
+        node.setDisable(true);
+        node.setOpacity(1.0);
         node.setOnMouseExited(mouseEvent -> {
 
         });
