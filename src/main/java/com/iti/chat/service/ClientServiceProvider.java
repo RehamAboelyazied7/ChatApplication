@@ -11,6 +11,8 @@ import com.iti.chat.model.User;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
 
+
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -185,6 +187,12 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void didSendNBytes(long n) throws RemoteException {
         controller.didSendNBytes(n);
 
+    }
+
+    @Override
+    public void recieveAnnouncment(String announcment) throws RemoteException {
+        System.out.println("inside receive ann");
+        controller.receiveAnnouncment(announcment);
     }
 
 }

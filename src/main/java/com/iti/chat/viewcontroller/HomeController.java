@@ -335,4 +335,9 @@ public class HomeController implements Initializable {
     public void setFileTransferProgressController(FileTransferProgressController fileTransferProgressController) {
         this.fileTransferProgressController = fileTransferProgressController;
     }
+    
+    public void receiveAnnouncment (String announcment)
+    {
+        System.out.println("recieved announcment"+announcment);
+    }
 }

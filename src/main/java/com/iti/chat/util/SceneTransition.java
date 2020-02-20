@@ -37,7 +37,7 @@ public class SceneTransition {
             loader.setLocation(SceneTransition.class.getResource("/view/home.fxml"));
             Parent parent = loader.load();
             HomeController homeController = loader.getController();
-            //client.setController(homeController);
+            client.setController(homeController);
             //client.setChatRoomController(homeController.getChatRoomController());
             //homeController.getChatRoomController().setClient(client);
             homeController.setModel(client);
