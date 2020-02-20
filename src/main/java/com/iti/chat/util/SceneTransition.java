@@ -38,8 +38,6 @@ public class SceneTransition {
             Parent parent = loader.load();
             HomeController homeController = loader.getController();
             client.setController(homeController);
-            //client.setChatRoomController(homeController.getChatRoomController());
-            //homeController.getChatRoomController().setClient(client);
             homeController.setModel(client);
             homeController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));

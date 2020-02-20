@@ -1,9 +1,7 @@
 package com.iti.chat.viewcontroller;
 
-import com.iti.chat.model.Message;
 import com.iti.chat.model.Notification;
 import com.iti.chat.model.NotificationType;
-import com.iti.chat.model.UserStatus;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +14,7 @@ public class PushNotification {
         ImageView imageView=new ImageView(new Image(getClass().getResource("/view/sender.png").toExternalForm()));
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
+
         Platform.runLater(() -> {
             if(check==1) {
                 switch (notification.notificationType) {
@@ -31,7 +30,8 @@ public class PushNotification {
                     case NotificationType.MESSAGE_RECEIVED:
                         Notifications.create().graphic(imageView).title("MESSAGE_RECEIVED").text(notification.toString()).show();
                         break;
-
+                    case NotificationType.STATUS_UPDATE:
+//                        Notifications.create().owner(new Text()).graphic(imageView).title("FRIEND_STATUS_UPDATE").text(notification.toString()).show();
                 }
                 check=0;
             }
