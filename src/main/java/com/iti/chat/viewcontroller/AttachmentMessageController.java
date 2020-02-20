@@ -72,6 +72,6 @@ public class AttachmentMessageController implements Initializable {
         AnchorPane.setTopAnchor(chatVBox, 10.0);
         messageHBox.getChildren().remove(ImageStackPane);
         recieverName.setStyle("-fx-text-fill:#000000");
-        messageVbox.setStyle("-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;");
+        messageVbox.setStyle("-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #DCDCDC;");
     }
 }

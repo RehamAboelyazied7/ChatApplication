@@ -36,7 +36,6 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 public class HomeController implements Initializable {
 
     @FXML
@@ -44,7 +43,7 @@ public class HomeController implements Initializable {
 
     @FXML
     ListView<User> listView;
-//    ListView<Notification> listView;
+    //    ListView<Notification> listView;
     private GridPane motherGridPane;
 
 //    @FXML
@@ -221,7 +220,7 @@ public class HomeController implements Initializable {
     }
 
 
-//<<<<<<< HEAD
+    //<<<<<<< HEAD
     public void uploadFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
@@ -253,7 +252,8 @@ public class HomeController implements Initializable {
     }
 
     public void receiveNotification(Notification notification) {
-
+         PushNotification pushNotification=new PushNotification();
+         pushNotification.createNotify(notification);
     }
 
 
@@ -341,3 +341,4 @@ public class HomeController implements Initializable {
         System.out.println("recieved announcment"+announcment);
     }
 }
+

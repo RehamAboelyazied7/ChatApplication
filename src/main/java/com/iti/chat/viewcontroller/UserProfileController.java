@@ -95,7 +95,7 @@ public class UserProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentUser = Session.getInstance().getUser();
-        setUserInfo();
+        //setUserInfo();
         validation = new RegisterValidation();
         addCountries();
         setEditableFields();

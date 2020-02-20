@@ -1,6 +1,5 @@
 package com.iti.chat.model;
 
-import javax.xml.transform.sax.SAXResult;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -191,6 +190,15 @@ public class User implements Comparable<User>, Serializable {
             return id == user.getId();
         }
         return false;
+    }
+
+    public ChatRoom getSharedChatRoom(List<User> users) {
+        for(ChatRoom chatRoom : chatRooms) {
+            if(chatRoom.getUsers().containsAll(users) && users.containsAll(chatRoom.getUsers())) {
+                return chatRoom;
+            }
+        }
+        return null;
     }
 
     @Override

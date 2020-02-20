@@ -40,7 +40,7 @@
                         </StackPane>
                         <VBox id="message-view" fx:id="messageVbox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" styleClass="vbox_size" HBox.hgrow="ALWAYS" spacing="10" maxWidth="150" alignment="CENTER">
                             <children>
-                                <Label fx:id="recieverName" maxWidth="180.0" text="Shimaa" textFill="#f5f3f3">
+                                <Label fx:id="recieverName" maxWidth="180.0" text="Shimaa" textFill="#000000">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>
@@ -62,7 +62,7 @@
                                     </graphic>
                                 </JFXButton>
 
-                                <Label fx:id="fileName" text="Adele, Hello from the other side.mp4" textFill="#f5f3f3" wrapText="true">
+                                <Label fx:id="fileName" text="Adele, Hello from the other side.mp4" textFill="#000000" wrapText="true">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>

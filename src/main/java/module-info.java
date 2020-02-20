@@ -9,6 +9,7 @@ module com.jets {
     requires javafx.web;
     requires chatter.bot.api;
     requires rmiio;
+    requires org.controlsfx.controls;
 //    requires org.controlsfx.controls;
 //    requires org.controlsfx.samples;
 

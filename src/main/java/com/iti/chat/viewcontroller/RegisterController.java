@@ -41,7 +41,7 @@ public class RegisterController implements Initializable {
     @FXML
     private ImageView tempImageView;
 
-    @FXML
+   // @FXML
     private AnchorPane rootPane;
 
     @FXML

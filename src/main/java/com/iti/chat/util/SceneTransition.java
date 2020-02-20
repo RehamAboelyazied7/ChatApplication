@@ -64,7 +64,7 @@ public class SceneTransition {
         }
     }
 
-    public static void loadChatRoom(VBox rightVBox , ChatRoom room) {
+    public static ChatRoomController loadChatRoom(VBox rightVBox , ChatRoom room) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/Chat_Room.fxml"));
@@ -78,9 +78,11 @@ public class SceneTransition {
             rightVBox.getChildren().clear();
             rightVBox.getChildren().add(parent);
             VBox.setVgrow(parent, Priority.ALWAYS);
+            return chatRoomController;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public static void mainChatScene(Stage stage) {
@@ -162,13 +164,13 @@ public class SceneTransition {
             e.printStackTrace();
         }
     }
-   public static void goToNotification(Stage stage) {
-            stage.setTitle("Notification");
-            NotificationListController notificationListController=new NotificationListController();
-            Scene scene=new Scene(notificationListController.addList(),500,500);
-            stage.setScene(scene);
-            stage.setMinWidth(200);
-            stage.setMinHeight(100);
+    public static void goToNotification(Stage stage) {
+        stage.setTitle("Notification");
+        NotificationListController notificationListController=new NotificationListController();
+        Scene scene=new Scene(notificationListController.addList(),500,500);
+        stage.setScene(scene);
+        stage.setMinWidth(200);
+        stage.setMinHeight(100);
     }
 
 

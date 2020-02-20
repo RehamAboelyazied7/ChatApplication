@@ -3,13 +3,12 @@ package com.iti.chat.service;
 import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.healthmarketscience.rmiio.RemoteInputStreamServer;
 import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
+import com.iti.chat.dao.NotificationDAO;
 import com.iti.chat.delegate.ChatRoomDelegate;
-import com.iti.chat.model.ChatRoom;
-import com.iti.chat.model.Message;
-import com.iti.chat.model.Notification;
-import com.iti.chat.model.User;
+import com.iti.chat.model.*;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
+import com.iti.chat.viewcontroller.PushNotification;
 
 
 
@@ -74,6 +73,13 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendMessage(Message message, ChatRoom room) throws RemoteException, NotBoundException {
         initChatRoomService();
         chatRoomService.sendMessage(message, room);
+        for (int i = 0; i < room.getUsers().size(); i++) {
+            if (!message.getSender().equals(room.getUsers().get(i))) {
+                PushNotification pushNotification=new PushNotification();
+                Notification notification=new Notification(message.getSender(),room.getUsers().get(i),NotificationType.MESSAGE_RECEIVED);
+                pushNotification.createNotify(notification);
+            }
+        }
     }
 
     public void sendFile(Message message, File file, ChatRoom room) throws IOException, NotBoundException {
@@ -105,7 +111,8 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void receiveMessage(Message message) {
-
+        //chatRoomController.receiveMessage(message);
+       // PushNotification.createNotify(message);
         //chatRoomController.receiveMessage(message);
         chatRoomDelegate.receiveMessage(message);
     }
@@ -148,16 +155,28 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendFriendRequest(User receiver) throws RemoteException, NotBoundException {
         initFriendRequestService();
         friendRequestsService.sendFriendRequest(this, receiver);
-    }
+                PushNotification pushNotification=new PushNotification();
+                Notification notification=new Notification(this.currentUser,receiver,NotificationType.FRIENDSHIP_REQUEST_RECEIVED);
+                pushNotification.createNotify(notification);
+
+        }
+
+
 
     public void acceptFriendRequest(User sender) throws RemoteException, NotBoundException {
         initFriendRequestService();
         friendRequestsService.acceptFriendRequest(this, sender);
+        PushNotification pushNotification=new PushNotification();
+        Notification notification=new Notification(sender,this.currentUser,NotificationType.FRIENDSHIP_ACCEPTED);
+        pushNotification.createNotify(notification);
     }
 
     public void rejectFriendRequest(User sender) throws RemoteException, NotBoundException {
         initFriendRequestService();
         friendRequestsService.rejectFriendRequest(this, sender);
+        PushNotification pushNotification=new PushNotification();
+        Notification notification=new Notification(sender,this.currentUser,NotificationType.FRIENDSHIP_REJECTED);
+        pushNotification.createNotify(notification);
     }
 
     public List<User> pendingFriendRequests() throws RemoteException, NotBoundException {
