@@ -114,7 +114,12 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         //chatRoomController.receiveMessage(message);
        // PushNotification.createNotify(message);
         //chatRoomController.receiveMessage(message);
-        chatRoomDelegate.receiveMessage(message);
+        if(chatRoomDelegate == null) {
+            controller.receiveNotification(new Notification(message.getSender(), getUser(), NotificationType.MESSAGE_RECEIVED));
+        }
+        else {
+            chatRoomDelegate.receiveMessage(message);
+        }
     }
 
     public ChatRoom createNewChatRoom(List<User> users) throws RemoteException, NotBoundException {
