@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<VBox fx:id="sideBarVBox" alignment="TOP_CENTER" minWidth="64.0" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
+<VBox fx:id="sideBarVBox" alignment="TOP_CENTER" minWidth="64.0" prefHeight="357.0" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
    <children>
       <Circle fill="white" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0">
          <VBox.margin>
@@ -35,6 +33,14 @@
       <ImageView fx:id="magnifierImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/search.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="notificationImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/notification.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />

@@ -8,8 +8,9 @@ import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
+import com.iti.chat.viewcontroller.NotificationListController;
 import com.iti.chat.viewcontroller.PushNotification;
-
+import javafx.application.Platform;
 
 
 import java.io.File;
@@ -33,6 +34,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     SessionService sessionService;
     FileTransferService fileTransferService;
     ChatRoomDelegate chatRoomDelegate;
+    NotificationListController notificationListController=new NotificationListController();
     Registry registry;
 
     public ClientServiceProvider() throws RemoteException {
@@ -129,7 +131,17 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     @Override
     public void receiveNotification(Notification notification) {
 
+        NotificationListController.notifications.add(notification);
+
         controller.receiveNotification(notification);
+        if(controller.check!=0) {
+            Platform.runLater(
+                    () -> {
+                        // Update UI here.
+                        controller.notificationView();
+                    }
+            );
+        }
     }
 
     private void initFriendRequestService() throws RemoteException, NotBoundException {
@@ -214,8 +226,23 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void recieveAnnouncment(String announcment) throws RemoteException {
-        System.out.println("inside receive ann");
+      //  NotificationListController.notifications.add();
+      //  System.out.println("inside receive ann");
+        User user=new User("Server","","","",0,"");
+        NotificationListController.notifications.add(new Notification(user,this.getUser(),NotificationType.MESSAGE_RECEIVED));
         controller.receiveAnnouncment(announcment);
+        if(controller.check!=0) {
+            Platform.runLater(
+                    () -> {
+                        // Update UI here.
+                        controller.notificationView();
+                    }
+            );
+        }
+
+
+        //System.out.println( "announce addede"+ NotificationListController.notifications.size());
+
     }
 
 }

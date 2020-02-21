@@ -26,6 +26,9 @@ public class SideBarController implements Initializable {
     @FXML
     private ImageView signOutImageView;
 
+    @FXML
+    private  ImageView notificationImageView;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -84,6 +87,13 @@ public class SideBarController implements Initializable {
 
     public void setContactsImageView(ImageView contactsImageView) {
         this.contactsImageView = contactsImageView;
+    }
+    public void setNotificationImageView(ImageView notificationImageView) {
+        this.notificationImageView = notificationImageView;
+    }
+
+    public ImageView getNotificationImageView() {
+        return notificationImageView;
     }
 
     public ImageView getSignOutImageView() {

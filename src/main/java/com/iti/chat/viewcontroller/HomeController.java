@@ -6,14 +6,20 @@ import com.iti.chat.util.Animator;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -22,6 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 
 import java.io.File;
@@ -45,16 +52,21 @@ public class HomeController implements Initializable {
     @FXML
     ListView<User> listView;
     //    ListView<Notification> listView;
+    @FXML
     private GridPane motherGridPane;
 
 //    @FXML
 //    ListView<User> listView;
 
     private ClientServiceProvider model;
+    ObservableList<Notification> list ;
+    ListView<Notification> notificationListView=new ListView<>();
+    NotificationListController notificationListController=new NotificationListController();
     private ChatRoom room;
     private Stage stage;
     private FileTransferProgressController fileTransferProgressController;
-
+   public  int check=0;
+   public int changeList=0;
     @FXML
     private ChatRoomController chatRoomController;
 
@@ -98,63 +110,6 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        //not clicked by default
-        Animator.setIconAnimation(sideBarController.getMagnifierImageView());
-        Animator.setIconAnimation(sideBarController.getSignOutImageView());
-
-        //clicked by default
-        Animator.suspendIconAnimation(sideBarController.getProfileImageView());
-        Animator.suspendIconAnimation(sideBarController.getContactsImageView());
-
-        sideBarController.getProfileImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-
-            try {
-
-                Animator.suspendIconAnimation(sideBarController.getProfileImageView());
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
-                Parent parent = loader.load();
-                rightVBox.getChildren().clear();
-                rightVBox.getChildren().add(parent);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        sideBarController.getContactsImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-
-            Animator.suspendIconAnimation(sideBarController.getContactsImageView());
-            Animator.setIconAnimation(sideBarController.getMagnifierImageView());
-
-
-        });
-
-        sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-
-            Animator.suspendIconAnimation(sideBarController.getMagnifierImageView());
-            Animator.setIconAnimation(sideBarController.getContactsImageView());
-
-
-        });
-
-        sideBarController.getSignOutImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-
-            try {
-                SceneTransition.goToLoginScreen(stage);
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NotBoundException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Session.signOutInstance();
-
-        });
-
-
         try {
             model = new ClientServiceProvider();
         } catch (RemoteException e) {
@@ -173,8 +128,105 @@ public class HomeController implements Initializable {
 
         model.setUser(Session.getInstance().getUser());
 
-    }
+        //not clicked by default
+        Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+        Animator.setIconAnimation(sideBarController.getSignOutImageView());
+        Animator.setIconAnimation(sideBarController.getNotificationImageView());
 
+        //clicked by default
+        Animator.suspendIconAnimation(sideBarController.getProfileImageView());
+        Animator.suspendIconAnimation(sideBarController.getContactsImageView());
+
+        sideBarController.getProfileImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            try {
+
+                Animator.suspendIconAnimation(sideBarController.getProfileImageView());
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
+                Parent parent = loader.load();
+                rightVBox.getChildren().clear();
+                rightVBox.getChildren().add(parent);
+                notificationListView.setVisible(false);
+                listView.setVisible(true);
+                changeList=1;
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        sideBarController.getContactsImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            Animator.suspendIconAnimation(sideBarController.getContactsImageView());
+            Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+            notificationListView.setVisible(false);
+            listView.setVisible(true);
+            changeList=1;
+
+
+        });
+
+        sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            Animator.suspendIconAnimation(sideBarController.getMagnifierImageView());
+            Animator.setIconAnimation(sideBarController.getContactsImageView());
+            notificationListView.setVisible(false);
+            listView.setVisible(true);
+            changeList=1;
+
+
+
+        });
+
+
+        sideBarController.getNotificationImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            listView.setVisible(false);
+            if(changeList==1 && check!=0) {
+                notificationListView.setVisible(true);
+            }else{
+                motherGridPane.add(notificationListView, 1, 0);
+            }
+            notificationView();
+
+            ++check;
+        });
+
+        sideBarController.getSignOutImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            try {
+                SceneTransition.goToLoginScreen(stage);
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Session.signOutInstance();
+            notificationListView.setVisible(false);
+            listView.setVisible(true);
+
+        });
+
+
+    }
+    public void notificationView(){
+        notificationListView.setPlaceholder(new Label("No Content In List"));
+        NotificationListController notificationListController = new NotificationListController();
+         list = FXCollections.observableList(notificationListController.addList().getItems());
+         notificationListView.setCellFactory(new Callback<ListView<Notification>, ListCell<Notification>>() {
+            @Override
+            public ListCell<Notification> call(ListView<Notification> notificationListView) {
+                return new NotificationListCell();
+            }
+        });
+        notificationListView.setItems(list);
+        check++;
+        System.out.println(notificationListController.addList().getItems().size());
+    }
 
     public void uploadFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -208,6 +260,7 @@ public class HomeController implements Initializable {
 
     public void receiveNotification(Notification notification) {
         PushNotification pushNotification = new PushNotification();
+       // notificationView();
         pushNotification.initializeNotify(notification);
         System.out.println("recieve Notification");
         if (notification.notificationType == NotificationType.STATUS_UPDATE) {
@@ -306,9 +359,8 @@ public class HomeController implements Initializable {
     }
 
     public void receiveAnnouncment(String announcment) {
-          System.out.println("recieved announcment" + announcment);
-          PushNotification pushNotification=new PushNotification();
-          pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
+        PushNotification pushNotification=new PushNotification();
+        pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
     }
-}
 
+}

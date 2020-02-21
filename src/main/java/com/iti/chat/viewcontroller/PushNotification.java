@@ -17,6 +17,7 @@ import org.controlsfx.control.Notifications;
 public class PushNotification {
    public  int check=1;
    public int notificationNumber=0;
+   //HomeController homeController=new HomeController();
 
     public  void initializeNotify(Notification notification) {
         createNotify(notification.toString(),notification.notificationType);
@@ -75,8 +76,8 @@ public class PushNotification {
                                 break;
 
                         }
-                        check = 0;
 
+                        check = 0;
 
                     }
             PauseTransition delay = new PauseTransition(Duration.millis(1000));
