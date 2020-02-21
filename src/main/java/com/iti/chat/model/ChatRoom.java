@@ -1,15 +1,30 @@
 package com.iti.chat.model;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name = "ChatRoomType" , propOrder = {
+        "name",
+        "users",
+        "messages"
+})
 public class ChatRoom implements Serializable{
     private int id;
+
+    @XmlElement(name = "User")
     private List<User> users;
+
+    @XmlElement(name = "Message")
     private List<Message> messages;
+
+    @XmlElement(name = "Name")
     private String name;
+
     static int counter = 0;
 
     public ChatRoom() {

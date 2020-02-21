@@ -10,12 +10,15 @@ module com.jets {
     requires chatter.bot.api;
     requires rmiio;
     requires org.controlsfx.controls;
-//    requires org.controlsfx.controls;
-//    requires org.controlsfx.samples;
-
+    requires jakarta.activation;
+    requires java.xml.bind;
 
     //opens view to javafx.fxml;
     opens com.iti.chat.viewcontroller to javafx.fxml;
+
+    //opens model for JAXB API
+    opens com.iti.chat.model to java.xml.bind;
+
     exports com.iti.chat.service to java.rmi;
     exports com.iti.chat.viewcontroller;
     exports main;
