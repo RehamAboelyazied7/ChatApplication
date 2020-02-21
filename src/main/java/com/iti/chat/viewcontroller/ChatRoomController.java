@@ -48,6 +48,8 @@ public class ChatRoomController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
 
+    private HomeController homeController;
+
     private ClientServiceProvider model;
 
     private ChatRoom currentChatRoom;
@@ -299,5 +301,13 @@ public class ChatRoomController implements Initializable {
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
+    }
+
+    public HomeController getHomeController() {
+        return homeController;
+    }
+
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;
     }
 }

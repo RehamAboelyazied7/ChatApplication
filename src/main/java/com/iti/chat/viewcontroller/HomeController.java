@@ -1,8 +1,10 @@
 package com.iti.chat.viewcontroller;
 
+import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
+import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
@@ -21,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -70,8 +73,21 @@ public class HomeController implements Initializable {
     @FXML
     private UserProfileController userProfileController;
 
+
+
     public void setModel(ClientServiceProvider model) {
         this.model = model;
+
+        try {
+            System.out.println(model.getUser().getRemoteImagePath());
+            if(model.getUser().getRemoteImagePath() != null )
+            model.requestImageDownload(model.getUser().getRemoteImagePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+
 //        ChatRoomDelegate delegate = new ChatRoomDelegate(model, chatRoomController);
 //        chatRoomController.setDelegate(delegate);
 //        model.setChatRoomDelegate(delegate);
@@ -102,6 +118,12 @@ public class HomeController implements Initializable {
         }
     }
 
+    public void receiveImage(RemoteInputStream remoteInputStream) throws IOException {
+        Image image = FileTransfer.downloadImage(remoteInputStream);
+        sideBarController.getUserimage().setImage(image);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -121,6 +143,9 @@ public class HomeController implements Initializable {
         listView.setItems(userObservableList);
 
         model.setUser(Session.getInstance().getUser());
+
+
+
 
         //not clicked by default
         Animator.setIconAnimation(sideBarController.getMagnifierImageView());
@@ -161,7 +186,19 @@ public class HomeController implements Initializable {
             listView.setVisible(true);
             changeList=1;
              /* end*/
+            try {
 
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(SceneTransition.class.getResource("/view/groupChat.fxml"));
+                Parent parent = loader.load();
+                GroupChatController groupChatController = loader.getController();
+                groupChatController.setFriendsListView(listView);
+                rightVBox.getChildren().clear();
+                rightVBox.getChildren().add(parent);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {

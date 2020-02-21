@@ -5,14 +5,37 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name = "MessageStyleType" , propOrder = {
+        "fontFamily",
+        "size",
+        "color",
+        "fontWeight",
+        "fontPosture"
+})
 public class MessageStyle implements Serializable {
+
+    @XmlElement(name = "FontFamily")
     String fontFamily;
+
+    @XmlElement(name = "Size")
     int size;
+
+    @XmlElement(name = "Color")
     String color;
+
+    @XmlElement(name = "FontWeight")
     String fontWeight;
+
+    @XmlElement(name = "FontPosture")
     String fontPosture;
+
     {
         size = 15;
         color = ColorUtils.toRGB(Color.BLACK);

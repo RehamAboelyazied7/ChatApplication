@@ -74,13 +74,16 @@ public class SceneTransition {
         }
     }
 
-    public static ChatRoomController loadChatRoom(VBox rightVBox, ChatRoom room) {
+    public static ChatRoomController loadChatRoom(VBox rightVBox , ChatRoom room , HomeController homeController) {
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/Chat_Room.fxml"));
             Parent parent = loader.load();
             ChatRoomController chatRoomController = loader.getController();
+            chatRoomController.setHomeController(homeController);
             chatRoomController.getContactBarController().getNameLabel().setText(room.getName());
+            chatRoomController.getContactBarController().setChatRoomController(chatRoomController);
             ChatRoomDelegate delegate = new ChatRoomDelegate(client, chatRoomController);
             client.setChatRoomDelegate(delegate);
             chatRoomController.setDelegate(delegate);
