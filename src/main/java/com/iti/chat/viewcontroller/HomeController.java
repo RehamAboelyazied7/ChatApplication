@@ -57,6 +57,8 @@ public class HomeController implements Initializable {
     @FXML
     private UserProfileController userProfileController;
 
+
+
     public void setModel(ClientServiceProvider model) {
         this.model = model;
 //        ChatRoomDelegate delegate = new ChatRoomDelegate(model, chatRoomController);
@@ -120,8 +122,19 @@ public class HomeController implements Initializable {
 
             Animator.suspendIconAnimation(sideBarController.getContactsImageView());
             Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+            try {
 
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(SceneTransition.class.getResource("/view/groupChat.fxml"));
+                Parent parent = loader.load();
+                GroupChatController groupChatController = loader.getController();
+                groupChatController.setFriendsListView(listView);
+                rightVBox.getChildren().clear();
+                rightVBox.getChildren().add(parent);
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
