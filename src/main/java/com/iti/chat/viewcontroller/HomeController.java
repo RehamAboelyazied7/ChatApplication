@@ -51,13 +51,8 @@ public class HomeController implements Initializable {
 
     @FXML
     ListView<User> listView;
-    //    ListView<Notification> listView;
     @FXML
     private GridPane motherGridPane;
-
-//    @FXML
-//    ListView<User> listView;
-
     private ClientServiceProvider model;
     ObservableList<Notification> list ;
     ListView<Notification> notificationListView=new ListView<>();
@@ -65,8 +60,7 @@ public class HomeController implements Initializable {
     private ChatRoom room;
     private Stage stage;
     private FileTransferProgressController fileTransferProgressController;
-   public  int check=0;
-   public int changeList=0;
+   public  int check=0,changeList=0;
     @FXML
     private ChatRoomController chatRoomController;
 
@@ -147,10 +141,11 @@ public class HomeController implements Initializable {
                 Parent parent = loader.load();
                 rightVBox.getChildren().clear();
                 rightVBox.getChildren().add(parent);
+                /*add change*/
                 notificationListView.setVisible(false);
                 listView.setVisible(true);
                 changeList=1;
-
+                /* end*/
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -161,10 +156,11 @@ public class HomeController implements Initializable {
 
             Animator.suspendIconAnimation(sideBarController.getContactsImageView());
             Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+            /*add change*/
             notificationListView.setVisible(false);
             listView.setVisible(true);
             changeList=1;
-
+             /* end*/
 
         });
 
@@ -172,15 +168,17 @@ public class HomeController implements Initializable {
 
             Animator.suspendIconAnimation(sideBarController.getMagnifierImageView());
             Animator.setIconAnimation(sideBarController.getContactsImageView());
+            /*add change*/
             notificationListView.setVisible(false);
             listView.setVisible(true);
             changeList=1;
+            /*end*/
 
 
 
         });
 
-
+        /*add list*/
         sideBarController.getNotificationImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             listView.setVisible(false);
@@ -193,7 +191,7 @@ public class HomeController implements Initializable {
 
             ++check;
         });
-
+   /*end*/
         sideBarController.getSignOutImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             try {
@@ -206,6 +204,7 @@ public class HomeController implements Initializable {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
             Session.signOutInstance();
+            //switch  between lists
             notificationListView.setVisible(false);
             listView.setVisible(true);
 
@@ -213,6 +212,7 @@ public class HomeController implements Initializable {
 
 
     }
+    /*Start Method*/
     public void notificationView(){
         notificationListView.setPlaceholder(new Label("No Content In List"));
         NotificationListController notificationListController = new NotificationListController();
@@ -227,7 +227,7 @@ public class HomeController implements Initializable {
         check++;
         System.out.println(notificationListController.addList().getItems().size());
     }
-
+  /*end*/
     public void uploadFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);

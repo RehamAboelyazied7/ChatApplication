@@ -130,9 +130,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void receiveNotification(Notification notification) {
-
+    /*add*/
         NotificationListController.notifications.add(notification);
-
+ /*end*/
         controller.receiveNotification(notification);
         if(controller.check!=0) {
             Platform.runLater(
@@ -226,22 +226,18 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void recieveAnnouncment(String announcment) throws RemoteException {
-      //  NotificationListController.notifications.add();
-      //  System.out.println("inside receive ann");
         User user=new User("Server","","","",0,"");
+        /*notification*/
         NotificationListController.notifications.add(new Notification(user,this.getUser(),NotificationType.MESSAGE_RECEIVED));
         controller.receiveAnnouncment(announcment);
         if(controller.check!=0) {
             Platform.runLater(
                     () -> {
-                        // Update UI here.
                         controller.notificationView();
                     }
             );
         }
-
-
-        //System.out.println( "announce addede"+ NotificationListController.notifications.size());
+  /*end */
 
     }
 
