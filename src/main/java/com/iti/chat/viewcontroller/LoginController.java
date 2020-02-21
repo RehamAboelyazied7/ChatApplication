@@ -60,7 +60,7 @@ public class LoginController implements Initializable {
 
     public void setDelegate(LoginDelegate delegate) {
 
-        this.delegate = delegate;   
+        this.delegate = delegate;
     }
 
     public void setStage(Stage stage) {
@@ -97,7 +97,7 @@ public class LoginController implements Initializable {
 
                 }
 
-                try (PrintWriter writer1 = new PrintWriter("userAuthenticationInfo.txt")) {
+                try ( PrintWriter writer1 = new PrintWriter("userAuthenticationInfo.txt")) {
                     writer1.print("");
                     writer1.println(encrypt(phoneTextField.getText()));
                     writer1.println(encrypt(passwordField.getText()));
@@ -128,16 +128,6 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void relogin(String phoneNumber, String password) {
-        try {
-            User user = delegate.login(phoneNumber, password);
-            Session.getInstance().setUser(user);
-            SceneTransition.goToHomeScene(stage);
-        } catch (RemoteException | SQLException | NotBoundException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         File file = new File("rememberMeUserInfo.txt");
@@ -154,34 +144,5 @@ public class LoginController implements Initializable {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        File file1 = new File("userAuthenticationInfo.txt");
-//        if (!(file1.length() == 0)) {
-//            try {
-//                BufferedReader reader = null;
-//                reader = new BufferedReader(new FileReader(file1));
-//                System.out.println("heereeeeeeeeeeeeeeeeeeeeeeee2222ee");
-//                //relogin(decrypt(reader.readLine()), decrypt(reader.readLine()));
-//                
-//                
-//                User user = delegate.login(decrypt(reader.readLine()), decrypt(reader.readLine()));
-//
-//                if (user == null) {
-//                    System.out.println("heereeeeeeeeeeeeeeeeeeeeeeeeee");
-//                } else {
-//                    Session.getInstance().setUser(user);
-//                    SceneTransition.goToHomeScene(stage);
-//                }
-//                reader.close();
-//            } catch (FileNotFoundException ex) {
-//                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (IOException ex) {
-//                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (NotBoundException ex) {
-//                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        }
     }
 }
