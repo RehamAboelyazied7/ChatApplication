@@ -33,6 +33,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.scene.control.Button;
 
 public class RegisterController implements Initializable {
 
@@ -42,7 +43,7 @@ public class RegisterController implements Initializable {
     @FXML
     private ImageView tempImageView;
 
-    @FXML
+   // @FXML
     private AnchorPane rootPane;
 
     @FXML
@@ -87,6 +88,8 @@ public class RegisterController implements Initializable {
 
     private Stage stage;
 
+    @FXML
+    private Button cancelButton;
     //error tooltips to explain what is wrong with data validation
     Tooltip passwordTooltip = new Tooltip("Password must contains a small letter" +
             ", a capital letter, a number and a special character and must contains at least 8 characters.");
@@ -314,8 +317,9 @@ public class RegisterController implements Initializable {
     @FXML
     public void cancelButtonActionHandler(ActionEvent event) {
 
-        ((Stage) (rootPane.getScene().getWindow())).close();
-
+       // ((Stage) (rootPane.getScene().getWindow())).close();
+           Stage stage = (Stage) cancelButton.getScene().getWindow();
+           stage.close();
     }
 
     @FXML

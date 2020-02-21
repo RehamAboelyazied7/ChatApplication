@@ -26,7 +26,7 @@ import java.sql.SQLException;
  */
 public class App extends Application {
 
-    private static Scene scene;
+    public static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException, RemoteException, SQLException, NotBoundException {

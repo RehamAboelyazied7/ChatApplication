@@ -1,17 +1,10 @@
 package com.iti.chat.viewcontroller;
 
-import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-
-import javafx.application.Platform;
-
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,6 +32,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 public class HomeController implements Initializable {
 
     @FXML
@@ -101,7 +95,6 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-//<<<<<<< HEAD
         //not clicked by default
         Animator.setIconAnimation(sideBarController.getMagnifierImageView());
         Animator.setIconAnimation(sideBarController.getSignOutImageView());
@@ -157,17 +150,6 @@ public class HomeController implements Initializable {
 
         });
 
-//=======
-////        listView.setCellFactory(listView -> new ContactListCell());
-////        for (int i = 0; i < 3; i++) {
-////            listView.getItems().add(Session.getInstance().getUser());
-////        }
-//        listView.setCellFactory(listView -> new NotificationListCell());
-//        ObservableList<Notification> notificationObservableList= FXCollections.observableArrayList();
-//        notificationObservableList.add(new Notification(new User("shimaa","monuir","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),1));
-//        notificationObservableList.add(new Notification(new User("esraa","mohamed","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),3));
-//        listView.getItems().addAll(notificationObservableList);
-//>>>>>>> d71a691d8f9c274a94c3b80b210ac34fc7ea09d5
 
         try {
             model = new ClientServiceProvider();
@@ -177,7 +159,6 @@ public class HomeController implements Initializable {
 
         listView.setPlaceholder(new Label("No Content In List"));
         listView.setMinWidth(200);
-//<<<<<<< HEAD
 
         model.setUser(Session.getInstance().getUser());
 
@@ -185,53 +166,12 @@ public class HomeController implements Initializable {
 
         ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
         listView.setItems(userObservableList);
-//=======
-
-
 
         model.setUser(Session.getInstance().getUser());
 
-        sideBarController.getProfileImageView().setOpacity(0.4);
-        sideBarController.getContactsImageView().setOpacity(0.4);
-
-        Animator.setIconAnimation(sideBarController.getMagnifierImageView());
-        Animator.setIconAnimation(sideBarController.getSignOutImageView());
-
-//        listView.setCellFactory(listView -> new ContactListCell());
-//
-//        ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
-//        listView.setItems(userObservableList);
-//>>>>>>> d71a691d8f9c274a94c3b80b210ac34fc7ea09d5
-
-//        listView.setCellFactory(listView -> new RequestContactCell(this));
-//        for (int i = 0; i < 3; i++) {
-//            listView.getItems().add(Session.getInstance().getUser());
-//        }
-
-
-//        chatRoomController.getRichTextAreaController().getSendButton().setOnAction(ae -> {
-//            try {
-//                model.sendMessage(chatRoomController.getRichTextAreaController().getMessage(), room);
-//                chatRoomController.getRichTextAreaController().clearText();
-//            } catch (RemoteException e) {
-//                e.printStackTrace();
-//            } catch (NotBoundException e) {
-//                e.printStackTrace();
-//            }
-//        });
-
-
-
-        //richTextAreaController.sendButton.setOnAction(this::uploadFile);
-
-
-        //sideBarVBox.minHeightProperty().bind(motherGridPane.heightProperty());
-        //chatRoomController.getMessagesVBox().minHeightProperty().bind(motherGridPane.heightProperty());
-        //sideBarController.getSignOutImageView().setOnMouseClicked(ae -> SceneTransition.loadProfileScene(rightVBox));
     }
 
 
-    //<<<<<<< HEAD
     public void uploadFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
@@ -263,11 +203,25 @@ public class HomeController implements Initializable {
     }
 
     public void receiveNotification(Notification notification) {
-         PushNotification pushNotification=new PushNotification();
-         pushNotification.createNotify(notification);
+        PushNotification pushNotification = new PushNotification();
+        pushNotification.createNotify(notification);
+
+        if (notification.notificationType == NotificationType.STATUS_UPDATE) {
+
+            friendStatusChangeNotificationBehaviour(notification);
+
+        }
+
     }
 
+    private void friendStatusChangeNotificationBehaviour(Notification notification) {
 
+        listView.getItems().filtered(user -> user.getId() == notification.getSource().getId())
+                .get(0).setStatus(notification.source.getStatus());
+
+        listView.refresh();
+
+    }
 
     public FileTransferProgressController createFileTransfer(long bytes) {
         FXMLLoader loader = new FXMLLoader();
@@ -345,6 +299,10 @@ public class HomeController implements Initializable {
 
     public void setFileTransferProgressController(FileTransferProgressController fileTransferProgressController) {
         this.fileTransferProgressController = fileTransferProgressController;
+    }
+
+    public void receiveAnnouncment(String announcment) {
+        System.out.println("recieved announcment" + announcment);
     }
 }
 
