@@ -1,7 +1,9 @@
 package com.iti.chat.service;
 
+import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.model.User;
 
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -13,4 +15,6 @@ public interface SessionService extends Remote {
     ClientService getClient(User user) throws RemoteException;
     void updateInfo(User user) throws RemoteException;
     void updateUserPassword(User user) throws RemoteException;
-}
+    void uploadImage (RemoteInputStream remoteInputStream, ClientService clientService , User user) throws IOException, SQLException ;
+
+    }

@@ -1,10 +1,13 @@
 package com.iti.chat.viewcontroller;
 
+import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
+import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,12 +17,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.controlsfx.control.Notifications;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -60,8 +67,21 @@ public class HomeController implements Initializable {
     @FXML
     private UserProfileController userProfileController;
 
+
+
     public void setModel(ClientServiceProvider model) {
         this.model = model;
+
+        try {
+            System.out.println(model.getUser().getRemoteImagePath());
+            if(model.getUser().getRemoteImagePath() != null )
+            model.requestImageDownload(model.getUser().getRemoteImagePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+
 //        ChatRoomDelegate delegate = new ChatRoomDelegate(model, chatRoomController);
 //        chatRoomController.setDelegate(delegate);
 //        model.setChatRoomDelegate(delegate);
@@ -92,8 +112,17 @@ public class HomeController implements Initializable {
         }
     }
 
+    public void receiveImage(RemoteInputStream remoteInputStream) throws IOException {
+        Image image = FileTransfer.downloadImage(remoteInputStream);
+        sideBarController.getUserimage().setImage(image);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+
 
         //not clicked by default
         Animator.setIconAnimation(sideBarController.getMagnifierImageView());
@@ -204,8 +233,8 @@ public class HomeController implements Initializable {
 
     public void receiveNotification(Notification notification) {
         PushNotification pushNotification = new PushNotification();
-        pushNotification.createNotify(notification);
-
+        pushNotification.initializeNotify(notification);
+        System.out.println("recieve Notification");
         if (notification.notificationType == NotificationType.STATUS_UPDATE) {
 
             friendStatusChangeNotificationBehaviour(notification);
@@ -302,7 +331,9 @@ public class HomeController implements Initializable {
     }
 
     public void receiveAnnouncment(String announcment) {
-        System.out.println("recieved announcment" + announcment);
+          System.out.println("recieved announcment" + announcment);
+          PushNotification pushNotification=new PushNotification();
+          pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
     }
 }
 
