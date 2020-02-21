@@ -51,7 +51,7 @@ public class ContactListCell extends ListCell<User> {
             if (item != null) {
 
                 Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
-                ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room);
+                ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room , homeController);
                 chatRoomController.createOrSetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
 
             }
