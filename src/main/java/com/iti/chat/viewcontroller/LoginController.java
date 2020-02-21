@@ -56,9 +56,11 @@ public class LoginController implements Initializable {
 
     private boolean isRemembered = false;
 
+    private boolean isLogged = true;
+
     public void setDelegate(LoginDelegate delegate) {
 
-        this.delegate = delegate;
+        this.delegate = delegate;   
     }
 
     public void setStage(Stage stage) {
@@ -73,10 +75,6 @@ public class LoginController implements Initializable {
             if (user != null) {
                 Session.getInstance().setUser(user);
                 PrintWriter writer;
-//                writer = new PrintWriter("authenticationInfo2.txt", "UTF-8");
-//                writer.println(phoneTextField.getText());
-//                writer.println(passwordField.getText());
-//                writer.close();
                 try {
                     writer = new PrintWriter("rememberMeUserInfo.txt", "UTF-8");
                 } catch (FileNotFoundException | UnsupportedEncodingException ex) {
@@ -93,12 +91,18 @@ public class LoginController implements Initializable {
                     }
 
                 } else {
-                    PrintWriter writer1 = new PrintWriter("rememberMeUserInfo.txt");
-                    writer1.print("");
-                    writer1.close();
+                    writer = new PrintWriter("rememberMeUserInfo.txt");
+                    writer.print("");
+                    writer.close();
 
                 }
 
+                try (PrintWriter writer1 = new PrintWriter("userAuthenticationInfo.txt")) {
+                    writer1.print("");
+                    writer1.println(encrypt(phoneTextField.getText()));
+                    writer1.println(encrypt(passwordField.getText()));
+                    writer1.close();
+                }
                 SceneTransition.goToHomeScene(stage);
             } else {
                 System.out.println("invalid phone or password");
@@ -124,57 +128,50 @@ public class LoginController implements Initializable {
         }
     }
 
-//    public void login(String phoneNumber, String password) {
-//        try {
-//            User user = delegate.login(phoneNumber, password);
-//            Session.getInstance().setUser(user);
-//            SceneTransition.goToHomeScene(stage);
-//        } catch (RemoteException | SQLException | NotBoundException ex) {
-//            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public void relogin(String phoneNumber, String password) {
+        try {
+            User user = delegate.login(phoneNumber, password);
+            Session.getInstance().setUser(user);
+            SceneTransition.goToHomeScene(stage);
+        } catch (RemoteException | SQLException | NotBoundException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
         File file = new File("rememberMeUserInfo.txt");
-
         try {
-
             if (!(file.length() == 0)) {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 phoneTextField.setText(decrypt(reader.readLine()));
-                try {
-                    passwordField.setText(decrypt(reader.readLine()));
-                } catch (IOException ex) {
-
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-
-                } finally {
-                    reader.close();
-                }
-
+                passwordField.setText(decrypt(reader.readLine()));
+                reader.close();
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        reader = null;
-//        file = new File("authenticationInfo2.txt");;
-//
-//        if (!(file.length() == 0)) {
+
+//        File file1 = new File("userAuthenticationInfo.txt");
+//        if (!(file1.length() == 0)) {
 //            try {
-//                reader = new BufferedReader(new FileReader(file));
-//                String phone = reader.readLine();
-//                String password = reader.readLine();
+//                BufferedReader reader = null;
+//                reader = new BufferedReader(new FileReader(file1));
+//                System.out.println("heereeeeeeeeeeeeeeeeeeeeeeee2222ee");
+//                //relogin(decrypt(reader.readLine()), decrypt(reader.readLine()));
+//                
+//                
+//                User user = delegate.login(decrypt(reader.readLine()), decrypt(reader.readLine()));
 //
-//                User user = delegate.login(phone, password);
-//                if (user != null) {
+//                if (user == null) {
+//                    System.out.println("heereeeeeeeeeeeeeeeeeeeeeeeeee");
+//                } else {
 //                    Session.getInstance().setUser(user);
-//
 //                    SceneTransition.goToHomeScene(stage);
-//
 //                }
+//                reader.close();
 //            } catch (FileNotFoundException ex) {
 //                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
 //            } catch (IOException ex) {
@@ -183,12 +180,8 @@ public class LoginController implements Initializable {
 //                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
 //            } catch (NotBoundException ex) {
 //                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-//            } finally {
-//                try {
-//                    reader.close();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
 //            }
+//
+//        }
     }
 }

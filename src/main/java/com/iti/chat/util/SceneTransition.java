@@ -5,8 +5,14 @@ import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.delegate.RegisterDelegate;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.ChatRoom;
+import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
+import static com.iti.chat.util.Encryption.decrypt;
 import com.iti.chat.viewcontroller.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,9 +21,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SceneTransition {
+
     public static ClientServiceProvider client;
 
     static {
@@ -33,6 +44,7 @@ public class SceneTransition {
     public static void goToHomeScene(Stage stage) {
         stage.setTitle("Chat");
         try {
+            System.out.println("here 3");
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/home.fxml"));
             Parent parent = loader.load();
@@ -64,7 +76,7 @@ public class SceneTransition {
         }
     }
 
-    public static ChatRoomController loadChatRoom(VBox rightVBox , ChatRoom room) {
+    public static ChatRoomController loadChatRoom(VBox rightVBox, ChatRoom room) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/Chat_Room.fxml"));
@@ -96,19 +108,38 @@ public class SceneTransition {
         }
     }
 
-    public static void goToLoginScreen(Stage stage) {
+    public static void goToLoginScreen(Stage stage) throws IOException, RemoteException, SQLException, NotBoundException {
+        String phone = null;
+        String pass = null;
+        
         stage.setTitle("Chat Login");
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/LogIn.fxml"));
-            Parent parent = loader.load();
-            LoginController loginController = loader.getController();
-            LoginDelegate delegate = new LoginDelegate(client, loginController);
-            loginController.setDelegate(delegate);
-            loginController.setStage(stage);
-            stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(SceneTransition.class.getResource("/view/LogIn.fxml"));
+        Parent parent = loader.load();
+        LoginController loginController = loader.getController();
+        LoginDelegate delegate = new LoginDelegate(client, loginController);
+        loginController.setStage(stage);
+        loginController.setDelegate(delegate);
+
+        stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
+        File file1 = new File("userAuthenticationInfo.txt");
+        if ((!(file1.length() == 0)) && Session.getInstance().getUser() == null) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file1));
+                phone = decrypt(reader.readLine());
+                pass = decrypt(reader.readLine());
+                reader.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            User user = delegate.login(phone, pass);
+            if (user != null) {
+                Session.getInstance().setUser(user);
+                SceneTransition.goToHomeScene(stage);
+            }
         }
     }
 
@@ -164,14 +195,14 @@ public class SceneTransition {
             e.printStackTrace();
         }
     }
+
     public static void goToNotification(Stage stage) {
         stage.setTitle("Notification");
-        NotificationListController notificationListController=new NotificationListController();
-        Scene scene=new Scene(notificationListController.addList(),500,500);
+        NotificationListController notificationListController = new NotificationListController();
+        Scene scene = new Scene(notificationListController.addList(), 500, 500);
         stage.setScene(scene);
         stage.setMinWidth(200);
         stage.setMinHeight(100);
     }
-
 
 }

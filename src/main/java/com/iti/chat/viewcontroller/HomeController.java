@@ -33,9 +33,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class HomeController implements Initializable {
 
     @FXML
@@ -141,7 +144,15 @@ public class HomeController implements Initializable {
 
         sideBarController.getSignOutImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
-            SceneTransition.goToLoginScreen(stage);
+            try {
+                SceneTransition.goToLoginScreen(stage);
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             Session.signOutInstance();
 
         });
