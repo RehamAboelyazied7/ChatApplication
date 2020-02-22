@@ -35,11 +35,13 @@
 
 .combo-box .cell{
     -fx-text-fill: blue;
-    -fx-font: 10px "Arial";
+    -fx-font: 14px "Arial";
 }
 .my-list-cell {
     -fx-text-fill: blue;
-    -fx-font: 10px "Arial";
+    -fx-font: 14px "Arial";
     /* No alternate highlighting */
-    -fx-background-color: #FFF;
+}
+.text-field {
+    -fx-prompt-text-fill: blue;
 }

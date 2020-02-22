@@ -34,6 +34,8 @@ public class LoginDelegate {
     }
 
     public User login(String phone, String password) throws RemoteException, SQLException, NotBoundException {
-        return client.login(phone, password);
+        User user = client.login(phone, password);
+        client.setUser(user);
+        return user;
     }
 }

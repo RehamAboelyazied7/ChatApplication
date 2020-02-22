@@ -51,7 +51,7 @@ public class SceneTransition {
             HomeController homeController = loader.getController();
             client.setController(homeController);
             client.setUser(Session.getInstance().getUser());
-            homeController.setModel(client);
+            homeController.setClient(client);
             homeController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {

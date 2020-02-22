@@ -4,6 +4,7 @@ import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
+import com.iti.chat.util.ColorUtils;
 import com.iti.chat.util.JFXCountryComboBox;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
@@ -24,6 +25,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.net.URL;
@@ -113,11 +115,14 @@ public class UserProfileController implements Initializable {
                 userImage.setFill(new ImagePattern(image));
             }
         });
-        ObservableList<String> options =
-                FXCollections.observableArrayList(UserStatus.statusToString(0),UserStatus.statusToString(1),UserStatus.statusToString(2),UserStatus.statusToString(3));
-         status_combo_box.getItems().addAll(options);
-    }
+        status_combo_box.getItems().removeAll(status_combo_box.getItems());
+         status_combo_box.getItems().addAll(UserStatus.statusToString(0),UserStatus.statusToString(1),UserStatus.statusToString(2),UserStatus.statusToString(3));
+         status_combo_box.getSelectionModel().select(3);
+         int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
+        status_combo_box.getSelectionModel().select(selectedIndex);
+       // status_combo_box.getSelectionModel().
 
+    }
     public void setDelegate(UserInfoDelegate delegate) {
 
         this.delegate = delegate;
@@ -290,12 +295,13 @@ public class UserProfileController implements Initializable {
     }
 
     private void setUserStatus() {
-        if (currentUser.getStatus() == 1)
+        if (currentUser.getStatus() == UserStatus.BUSY)
             userStatus.setFill(Color.RED);
-        else if (currentUser.getStatus() == 0)
+        else if (currentUser.getStatus() == UserStatus.OFFLINE)
             userStatus.setFill(Color.GREY);
-        else if (currentUser.getStatus() == 3)
-            userStatus.setFill(Color.BLACK);
+        else if (currentUser.getStatus() == UserStatus.AWAY)
+            userStatus.setFill(Color.YELLOW);
+        else userStatus.setFill(Color.GREEN);
 
     }
 
