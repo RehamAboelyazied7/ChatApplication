@@ -3,11 +3,15 @@ package com.iti.chat.viewcontroller;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
+import com.iti.chat.model.UserStatus;
 import com.iti.chat.util.JFXCountryComboBox;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
 import com.iti.chat.validator.RegisterValidation;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -62,7 +66,8 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private TextField phoneField;
-
+    @FXML
+    private JFXComboBox<String> status_combo_box;
     @FXML
     private ComboBox<String> countryField;
 
@@ -108,7 +113,9 @@ public class UserProfileController implements Initializable {
                 userImage.setFill(new ImagePattern(image));
             }
         });
-
+        ObservableList<String> options =
+                FXCollections.observableArrayList(UserStatus.statusToString(0),UserStatus.statusToString(1),UserStatus.statusToString(2),UserStatus.statusToString(3));
+         status_combo_box.getItems().addAll(options);
     }
 
     public void setDelegate(UserInfoDelegate delegate) {

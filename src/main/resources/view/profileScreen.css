@@ -25,4 +25,21 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: left;
 }
+.jfx-autocomplete-popup .list-cell:filled:selected {
+    -fx-background-color: #64ffe6;
+}
+/*Change cells of autocomplete popup*/
+.jfx-autocomplete-popup .list-cell {
+    -fx-background-color: #5f68ff;
+}
 
+.combo-box .cell{
+    -fx-text-fill: blue;
+    -fx-font: 10px "Arial";
+}
+.my-list-cell {
+    -fx-text-fill: blue;
+    -fx-font: 10px "Arial";
+    /* No alternate highlighting */
+    -fx-background-color: #FFF;
+}

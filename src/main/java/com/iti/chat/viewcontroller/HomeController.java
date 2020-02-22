@@ -149,14 +149,15 @@ public class HomeController implements Initializable {
             try {
 
                 Animator.suspendIconAnimation(sideBarController.getProfileImageView());
+                notificationListView.setVisible(false);
+                listView.setVisible(true);
+                changeList=1;
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
                 Parent parent = loader.load();
                 rightVBox.getChildren().clear();
                 rightVBox.getChildren().add(parent);
-                notificationListView.setVisible(false);
-                listView.setVisible(true);
-                changeList=1;
+
 
 
             } catch (IOException e) {
