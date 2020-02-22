@@ -55,6 +55,17 @@ public class HomeController implements Initializable {
     private GridPane motherGridPane;
    // public  ServerServices serverServices;
 
+    @FXML
+    private VBox editableBox;
+
+    @FXML
+    private Label editableBoxLabel;
+
+    @FXML
+    private VBox listViewBox;
+
+    ListView<ChatRoom> chatRoomListView;
+
 //    @FXML
 //    ListView<User> listView;
 
@@ -62,12 +73,15 @@ public class HomeController implements Initializable {
     ObservableList<Notification> list ;
     ListView<Notification> notificationListView=new ListView<>();
     NotificationListController notificationListController=new NotificationListController();
+
     private ChatRoom room;
     private Stage stage;
     private FileTransferProgressController fileTransferProgressController;
+    
     public  int check=0;
     SessionService sessionService;
     public int changeList=0;
+
     @FXML
     private ChatRoomController chatRoomController;
 
@@ -76,7 +90,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private UserProfileController userProfileController;
-    public int click=0;
+    public int click = 0;
 
     public void setClient(ClientServiceProvider client) {
         this.client = client;
@@ -123,7 +137,7 @@ public class HomeController implements Initializable {
                 rightVBox.getChildren().add(parent);
                 notificationListView.setVisible(false);
                 listView.setVisible(true);
-                changeList=1;
+                changeList = 1;
 
 
             } catch (IOException e) {
@@ -132,13 +146,62 @@ public class HomeController implements Initializable {
         });
     }
 
+    private void setContactsImageHandler() {
+        sideBarController.getContactsImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            Animator.suspendIconAnimation(sideBarController.getContactsImageView());
+            Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+            Animator.setIconAnimation(sideBarController.getProfileImageView());
+            Animator.setIconAnimation(sideBarController.getNotificationImageView());
+            Animator.setIconAnimation(sideBarController.getChatImageView());
+            notificationListView.setVisible(false);
+            listView.setVisible(true);
+            changeList = 1;
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(SceneTransition.class.getResource("/view/groupChat.fxml"));
+                Parent parent = loader.load();
+                GroupChatController groupChatController = loader.getController();
+                chatRoomListView.setCellFactory(listView -> new ChatRoomCell(groupChatController));
+                listViewBox.getChildren().clear();
+                listViewBox.getChildren().add(chatRoomListView);
+                groupChatController.setHomeController(this);
+                rightVBox.getChildren().clear();
+                rightVBox.getChildren().add(parent);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void setChatRoomHandler() {
+        sideBarController.getChatImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            Animator.suspendIconAnimation(sideBarController.getChatImageView());
+            Animator.setIconAnimation(sideBarController.getContactsImageView());
+            Animator.setIconAnimation(sideBarController.getProfileImageView());
+            Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+            Animator.setIconAnimation(sideBarController.getNotificationImageView());
+            listView.setCellFactory(listView -> new ContactListCell(this));
+            listViewBox.getChildren().clear();
+            listViewBox.getChildren().add(listView);
+            editableBox.getChildren().clear();
+            editableBox.getChildren().add(new Label("list Of friends"));
+
+        });
+    }
+
     private void setMagnifierImageHandler() {
+
+
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             Animator.suspendIconAnimation(sideBarController.getMagnifierImageView());
             Animator.setIconAnimation(sideBarController.getContactsImageView());
             notificationListView.setVisible(false);
             listView.setVisible(true);
-            changeList=1;
+            changeList = 1;
+
         });
     }
 
@@ -146,13 +209,13 @@ public class HomeController implements Initializable {
         sideBarController.getNotificationImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             listView.setVisible(false);
-            if(changeList==1 && click==1){
+            if (changeList == 1 && click == 1) {
                 // notificationListController.getNotifications().size()!=0 ) {
                 notificationListView.setVisible(true);
-            }else{
+            } else {
                 motherGridPane.add(notificationListView, 1, 0);
-                changeList=1;
-                click=1;
+                changeList = 1;
+                click = 1;
             }
             notificationView();
 
@@ -199,15 +262,17 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        chatRoomListView = new ListView<>();
         listView.setPlaceholder(new Label("No Content In List"));
         listView.setMinWidth(200);
-
         listView.setCellFactory(listView -> new ContactListCell(this));
         setAnimations();
         setProfileImageHandler();
         setSignOutHandler();
         setMagnifierImageHandler();
         setNotificationsHandler();
+        setChatRoomHandler();
+        setContactsImageHandler();
     }
 
     public void receiveImage(RemoteInputStream remoteInputStream) throws IOException {
@@ -215,7 +280,8 @@ public class HomeController implements Initializable {
         sideBarController.getUserimage().setImage(image);
 
     }
-    public void notificationView(){
+
+    public void notificationView() {
         notificationListView.setPlaceholder(new Label("No Content In List"));
         //NotificationListController notificationListController = new NotificationListController();
         list = FXCollections.observableList(notificationListController.addList().getItems());
@@ -276,8 +342,11 @@ public class HomeController implements Initializable {
         }
 
     }
+
     public void refresh() {
         User currentUser =  Session.getInstance().getUser();
+        System.out.println("inside refresh");
+        System.out.println(currentUser.getFriends());
         Platform.runLater(() -> {
             listView.refresh();
             listView.setItems(FXCollections.observableList(currentUser.getFriends()));
@@ -373,8 +442,8 @@ public class HomeController implements Initializable {
     }
 
     public void receiveAnnouncment(String announcment) {
-        PushNotification pushNotification=new PushNotification();
-        pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
+        PushNotification pushNotification = new PushNotification();
+        pushNotification.createNotify(announcment, NotificationType.MESSAGE_RECEIVED);
         /*Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -385,5 +454,30 @@ public class HomeController implements Initializable {
 
          */
     }
+
+    public VBox getEditableBox() {
+        return editableBox;
+    }
+
+    public void setEditableBox(VBox editableBox) {
+        this.editableBox = editableBox;
+    }
+
+    public Label getEditableBoxLabel() {
+        return editableBoxLabel;
+    }
+
+    public void setEditableBoxLabel(Label editableBoxLabel) {
+        this.editableBoxLabel = editableBoxLabel;
+    }
+
+    public ListView<User> getListView() {
+        return listView;
+    }
+
+    public VBox getListViewBox() {
+        return listViewBox;
+    }
+
 
 }

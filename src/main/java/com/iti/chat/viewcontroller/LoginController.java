@@ -76,7 +76,7 @@ public class LoginController implements Initializable {
             User user = delegate.login(phoneTextField.getText(), passwordField.getText());
             if (user != null) {
                 Session.getInstance().setUser(user);
-                PrintWriter writer;
+                /*PrintWriter writer;
                 try {
                     writer = new PrintWriter("rememberMeUserInfo.txt", "UTF-8");
                 } catch (FileNotFoundException | UnsupportedEncodingException ex) {
@@ -105,6 +105,7 @@ public class LoginController implements Initializable {
                     writer1.println(encrypt(passwordField.getText()));
                     writer1.close();
                 }
+                 */
                 SceneTransition.goToHomeScene(stage);
             } else {
                 System.out.println("invalid phone or password");
