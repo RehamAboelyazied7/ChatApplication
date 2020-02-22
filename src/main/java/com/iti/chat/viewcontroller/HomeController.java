@@ -444,20 +444,11 @@ public class HomeController implements Initializable {
         this.fileTransferProgressController = fileTransferProgressController;
     }
 
-    public void receiveAnnouncment(String announcment) {
-        PushNotification pushNotification = new PushNotification();
-        pushNotification.createNotify(announcment, NotificationType.MESSAGE_RECEIVED);
-        /*Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                notificationView();
-
-            }
-        });
-
-         */
+    public void receiveAnnouncment(Message announcment) {
+        System.out.println("recieved announcment" + announcment.getContent());
+//          PushNotification pushNotification=new PushNotification();
+//          pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
     }
-
     public VBox getEditableBox() {
         return editableBox;
     }
