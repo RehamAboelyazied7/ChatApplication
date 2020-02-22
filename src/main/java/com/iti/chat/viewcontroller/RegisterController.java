@@ -90,11 +90,8 @@ public class RegisterController implements Initializable {
 
     @FXML
     private Button cancelButton;
-<<<<<<< HEAD
-=======
 
     File selectedFile ;
->>>>>>> 7f302264aa81bead4be2677be604cce788ef4441
     //error tooltips to explain what is wrong with data validation
     Tooltip passwordTooltip = new Tooltip("Password must contains a small letter" +
             ", a capital letter, a number and a special character and must contains at least 8 characters.");
