@@ -165,7 +165,7 @@ public class HomeController implements Initializable {
 
             try {
 
-                model.sessionService.logout(model.getUser());
+                client.sessionService.logout(client.getUser());
                 System.out.println("LogOut");
                 SceneTransition.goToLoginScreen(stage);
                 //serverServices.
