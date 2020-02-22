@@ -6,6 +6,7 @@ import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 import com.iti.chat.dao.NotificationDAO;
 import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.*;
+import com.iti.chat.util.Session;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
 import com.iti.chat.viewcontroller.PushNotification;
@@ -64,9 +65,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     @Override
-    public void setUser(User user) {
-
+    public void setUser(User user) throws RemoteException, NotBoundException {
         currentUser = user;
+        Session.getInstance().setUser(user);
     }
 
     @Override
@@ -125,7 +126,12 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         //chatRoomController.receiveMessage(message);
        // PushNotification.createNotify(message);
         //chatRoomController.receiveMessage(message);
-        chatRoomDelegate.receiveMessage(message);
+        if(chatRoomDelegate == null) {
+            controller.receiveNotification(new Notification(message.getSender(), getUser(), NotificationType.MESSAGE_RECEIVED));
+        }
+        else {
+            chatRoomDelegate.receiveMessage(message);
+        }
     }
 
     public ChatRoom createNewChatRoom(List<User> users) throws RemoteException, NotBoundException {
@@ -205,8 +211,18 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         sessionService.register(user, password);
     }
 
-    public void updateUserInfo(User user) throws RemoteException {
+    public void updateUserInfo(User user) throws RemoteException, NotBoundException {
+        initSessionService();
         sessionService.updateInfo(user);
+    }
+
+    public void userInfoDidChange(User user) {
+        if(currentUser.getFriends().contains(user)) {
+            currentUser.getFriends().remove(user);
+            currentUser.getFriends().add(user);
+            controller.refresh();
+        }
+
     }
 
     @Override

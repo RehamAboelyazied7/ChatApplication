@@ -1,6 +1,7 @@
 package com.iti.chat.viewcontroller;
 
 import com.healthmarketscience.rmiio.RemoteInputStream;
+import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
@@ -71,6 +72,8 @@ public class HomeController implements Initializable {
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
+        UserInfoDelegate infoDelegate = new UserInfoDelegate(model, userProfileController);
+        userProfileController.setDelegate(infoDelegate);
 
         try {
             System.out.println(model.getUser().getRemoteImagePath());
@@ -102,6 +105,16 @@ public class HomeController implements Initializable {
 //        });
     }
 
+    public void refresh() {
+        System.out.println("inside refresh");
+        User currentUser =  Session.getInstance().getUser();
+        System.out.println(currentUser.getFriends());
+        Platform.runLater(() -> {
+            listView.refresh();
+            listView.setItems(FXCollections.observableList(currentUser.getFriends()));
+        });
+    }
+
     public void acceptFriendRequest(User user) {
         try {
             model.acceptFriendRequest(user);
@@ -120,9 +133,6 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
 
         //not clicked by default
         Animator.setIconAnimation(sideBarController.getMagnifierImageView());
@@ -202,14 +212,18 @@ public class HomeController implements Initializable {
         listView.setPlaceholder(new Label("No Content In List"));
         listView.setMinWidth(200);
 
-        model.setUser(Session.getInstance().getUser());
+        try {
+            model.setUser(Session.getInstance().getUser());
+        } catch (RemoteException | NotBoundException e) {
+            e.printStackTrace();
+        }
 
         listView.setCellFactory(listView -> new ContactListCell(this));
 
         ObservableList<User> userObservableList = FXCollections.observableList(model.getUser().getFriends());
         listView.setItems(userObservableList);
 
-        model.setUser(Session.getInstance().getUser());
+        //model.setUser(Session.getInstance().getUser());
 
     }
 
