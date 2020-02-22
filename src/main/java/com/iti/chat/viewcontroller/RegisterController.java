@@ -26,6 +26,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -128,7 +129,7 @@ public class RegisterController implements Initializable {
     }
 
     @FXML
-    public void submitButtonHandler(ActionEvent event) {
+    public void submitButtonHandler(ActionEvent event) throws IOException, RemoteException, SQLException, NotBoundException {
 
         if (validateInputValues()) {
 

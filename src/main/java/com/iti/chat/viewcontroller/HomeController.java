@@ -7,6 +7,7 @@ import com.iti.chat.util.Animator;
 import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,17 +22,23 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.controlsfx.control.Notifications;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class HomeController implements Initializable {
 
@@ -157,7 +164,15 @@ public class HomeController implements Initializable {
 
         sideBarController.getSignOutImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
-            SceneTransition.goToLoginScreen(stage);
+            try {
+                SceneTransition.goToLoginScreen(stage);
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             Session.signOutInstance();
 
         });
@@ -216,8 +231,8 @@ public class HomeController implements Initializable {
 
     public void receiveNotification(Notification notification) {
         PushNotification pushNotification = new PushNotification();
-        pushNotification.createNotify(notification);
-
+        pushNotification.initializeNotify(notification);
+        System.out.println("recieve Notification");
         if (notification.notificationType == NotificationType.STATUS_UPDATE) {
 
             friendStatusChangeNotificationBehaviour(notification);
@@ -314,7 +329,9 @@ public class HomeController implements Initializable {
     }
 
     public void receiveAnnouncment(String announcment) {
-        System.out.println("recieved announcment" + announcment);
+          System.out.println("recieved announcment" + announcment);
+          PushNotification pushNotification=new PushNotification();
+          pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
     }
 }
 
