@@ -9,8 +9,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="442.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.GroupChatController">
+<StackPane prefHeight="505.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.GroupChatController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
          <children>
@@ -20,34 +21,37 @@
                   <Circle fx:id="groupImage" fill="DODGERBLUE" radius="55.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
                </children>
             </HBox>
-            <VBox prefHeight="269.0" prefWidth="600.0">
+            <VBox prefHeight="269.0" prefWidth="600.0" spacing="15.0">
                <children>
                   <HBox alignment="TOP_CENTER" prefHeight="42.0" prefWidth="600.0" spacing="10.0">
                      <children>
-                        <Label text="group name">
+                        <JFXTextField fx:id="groupName" alignment="CENTER" prefHeight="25.0" prefWidth="234.0" text="GroupName">
                            <HBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="4.0" />
                            </HBox.margin>
-                        </Label>
-                        <JFXTextField fx:id="groupName" text="chat group" />
+                           <font>
+                              <Font name="System Italic" size="14.0" />
+                           </font></JFXTextField>
                      </children>
                   </HBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="201.0" prefWidth="600.0" spacing="7.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="224.0" prefWidth="600.0" spacing="8.0">
                      <children>
                         <Label text="group members">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
                         </Label>
-                        <ScrollPane prefHeight="154.0" prefWidth="600.0">
+                        <ScrollPane prefHeight="138.0" prefWidth="600.0">
                            <content>
                               <HBox fx:id="membersBox" alignment="CENTER" prefHeight="129.0" prefWidth="595.0" spacing="9.0">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="90.0" prefWidth="91.0" spacing="6.0">
                                        <children>
                                           <Circle fill="DODGERBLUE" radius="32.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                                          <Label text="name" />
-                                          <JFXButton text="Remove" />
+                                          <Label fx:id="nameLabel" text="nameLabel" />
                                        </children>
                                        <padding>
                                           <Insets top="4.0" />
@@ -59,26 +63,29 @@
                                  </padding>
                               </HBox>
                            </content>
+                           <VBox.margin>
+                              <Insets top="2.0" />
+                           </VBox.margin>
                         </ScrollPane>
                      </children>
                      <padding>
                         <Insets top="15.0" />
                      </padding>
                   </VBox>
-                  <HBox alignment="CENTER" prefHeight="56.0" prefWidth="600.0">
-                     <children>
-                        <JFXButton fx:id="submitBtn" onAction="#submitGroup" text="Done">
-                           <HBox.margin>
-                              <Insets top="4.0" />
-                           </HBox.margin>
-                        </JFXButton>
-                     </children>
-                  </HBox>
                </children>
                <padding>
                   <Insets top="15.0" />
                </padding>
             </VBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="424.0">
+               <children>
+                  <JFXButton fx:id="submitBtn" onAction="#submitGroup" styleClass="blue_btn" stylesheets="@profileScreen.css" text="Done">
+                     <HBox.margin>
+                        <Insets top="4.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

@@ -25,6 +25,7 @@ public class ContactListCell extends ListCell<User> {
     public ContactListCell(HomeController homeController) {
         super();
         this.homeController = homeController;
+        this.homeController.getEditableBoxLabel().setText("List of friends");
         isGroupChatController = false;
     }
     public ContactListCell(GroupChatController groupChatController) {
@@ -45,6 +46,7 @@ public class ContactListCell extends ListCell<User> {
                 parent = loader.load();
                 ContactListController contactListController = loader.getController();
                 contactListController.setUserData(item);
+                setPrefWidth(200);
                 setGraphic(parent);
                 setPrefHeight(60);
             } catch (IOException e) {
@@ -61,10 +63,9 @@ public class ContactListCell extends ListCell<User> {
                     Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
                     ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room , homeController);
                     chatRoomController.createOrSetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
-
                 }
                 else{
-                    groupChatController.contactListAction(item);
+                    groupChatController.contactListAction(mouseEvent,item);
                 }
             }
         });

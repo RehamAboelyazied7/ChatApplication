@@ -56,18 +56,29 @@ public class HomeController implements Initializable {
     @FXML
     private GridPane motherGridPane;
 
+    @FXML
+    private VBox editableBox;
+
+    @FXML
+    private Label editableBoxLabel;
+
+    @FXML
+    private VBox listViewBox;
+
+    ListView<ChatRoom> chatRoomListView;
+
 //    @FXML
 //    ListView<User> listView;
 
     private ClientServiceProvider model;
-    ObservableList<Notification> list ;
-    ListView<Notification> notificationListView=new ListView<>();
-    NotificationListController notificationListController=new NotificationListController();
+    ObservableList<Notification> list;
+    ListView<Notification> notificationListView = new ListView<>();
+    NotificationListController notificationListController = new NotificationListController();
     private ChatRoom room;
     private Stage stage;
     private FileTransferProgressController fileTransferProgressController;
-    public  int check=0;
-    public int changeList=0;
+    public int check = 0;
+    public int changeList = 0;
     @FXML
     private ChatRoomController chatRoomController;
 
@@ -76,7 +87,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private UserProfileController userProfileController;
-    public int click=0;
+    public int click = 0;
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
@@ -112,6 +123,7 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        chatRoomListView = new ListView<>();
         try {
             model = new ClientServiceProvider();
         } catch (RemoteException e) {
@@ -119,7 +131,7 @@ public class HomeController implements Initializable {
         }
 
         listView.setPlaceholder(new Label("No Content In List"));
-        listView.setMinWidth(200);
+        listView.setMinWidth(250);
 
         model.setUser(Session.getInstance().getUser());
 
@@ -152,7 +164,7 @@ public class HomeController implements Initializable {
                 rightVBox.getChildren().add(parent);
                 notificationListView.setVisible(false);
                 listView.setVisible(true);
-                changeList=1;
+                changeList = 1;
 
 
             } catch (IOException e) {
@@ -160,30 +172,47 @@ public class HomeController implements Initializable {
             }
         });
 
-        /*sideBarController.getContactsImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+        sideBarController.getContactsImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             Animator.suspendIconAnimation(sideBarController.getContactsImageView());
             Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+            Animator.setIconAnimation(sideBarController.getProfileImageView());
+            Animator.setIconAnimation(sideBarController.getNotificationImageView());
+            Animator.setIconAnimation(sideBarController.getChatImageView());
             notificationListView.setVisible(false);
             listView.setVisible(true);
-            changeList=1;
-
+            changeList = 1;
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(SceneTransition.class.getResource("/view/groupChat.fxml"));
                 Parent parent = loader.load();
                 GroupChatController groupChatController = loader.getController();
-                //groupChatController.setFriendsListView(listView);
-                listView.setCellFactory(listView -> new ContactListCell(groupChatController));
+                chatRoomListView.setCellFactory(listView -> new ChatRoomCell(groupChatController));
+                listViewBox.getChildren().clear();
+                listViewBox.getChildren().add(chatRoomListView);
+                groupChatController.setHomeController(this);
                 rightVBox.getChildren().clear();
                 rightVBox.getChildren().add(parent);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });*/
+        });
 
+        sideBarController.getChatImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
+            Animator.suspendIconAnimation(sideBarController.getChatImageView());
+            Animator.setIconAnimation(sideBarController.getContactsImageView());
+            Animator.setIconAnimation(sideBarController.getProfileImageView());
+            Animator.setIconAnimation(sideBarController.getMagnifierImageView());
+            Animator.setIconAnimation(sideBarController.getNotificationImageView());
+            listView.setCellFactory(listView -> new ContactListCell(this));
+            listViewBox.getChildren().clear();
+            listViewBox.getChildren().add(listView);
+            editableBox.getChildren().clear();
+            editableBox.getChildren().add(new Label("list Of friends"));
 
+        });
 
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
@@ -191,8 +220,7 @@ public class HomeController implements Initializable {
             Animator.setIconAnimation(sideBarController.getContactsImageView());
             notificationListView.setVisible(false);
             listView.setVisible(true);
-            changeList=1;
-
+            changeList = 1;
 
 
         });
@@ -201,17 +229,17 @@ public class HomeController implements Initializable {
         sideBarController.getNotificationImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             listView.setVisible(false);
-            if(changeList==1 && click==1){
-            // notificationListController.getNotifications().size()!=0 ) {
+            if (changeList == 1 && click == 1) {
+                // notificationListController.getNotifications().size()!=0 ) {
                 notificationListView.setVisible(true);
-            }else{
+            } else {
                 motherGridPane.add(notificationListView, 1, 0);
-                changeList=1;
-                click=1;
+                changeList = 1;
+                click = 1;
             }
             notificationView();
 
-           // ++check;
+            // ++check;
         });
 
         sideBarController.getSignOutImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
@@ -233,7 +261,8 @@ public class HomeController implements Initializable {
 
 
     }
-    public void notificationView(){
+
+    public void notificationView() {
         notificationListView.setPlaceholder(new Label("No Content In List"));
         //NotificationListController notificationListController = new NotificationListController();
         list = FXCollections.observableList(notificationListController.addList().getItems());
@@ -294,9 +323,10 @@ public class HomeController implements Initializable {
         }
 
     }
+
     public void refresh() {
         System.out.println("inside refresh");
-        User currentUser =  Session.getInstance().getUser();
+        User currentUser = Session.getInstance().getUser();
         System.out.println(currentUser.getFriends());
         Platform.runLater(() -> {
             listView.refresh();
@@ -393,8 +423,8 @@ public class HomeController implements Initializable {
     }
 
     public void receiveAnnouncment(String announcment) {
-        PushNotification pushNotification=new PushNotification();
-        pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
+        PushNotification pushNotification = new PushNotification();
+        pushNotification.createNotify(announcment, NotificationType.MESSAGE_RECEIVED);
         /*Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -405,5 +435,30 @@ public class HomeController implements Initializable {
 
          */
     }
+
+    public VBox getEditableBox() {
+        return editableBox;
+    }
+
+    public void setEditableBox(VBox editableBox) {
+        this.editableBox = editableBox;
+    }
+
+    public Label getEditableBoxLabel() {
+        return editableBoxLabel;
+    }
+
+    public void setEditableBoxLabel(Label editableBoxLabel) {
+        this.editableBoxLabel = editableBoxLabel;
+    }
+
+    public ListView<User> getListView() {
+        return listView;
+    }
+
+    public VBox getListViewBox() {
+        return listViewBox;
+    }
+
 
 }
