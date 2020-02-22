@@ -1,8 +1,10 @@
 package com.iti.chat.viewcontroller;
 
+import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
+import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
@@ -21,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -231,6 +234,12 @@ public class HomeController implements Initializable {
 
         });
 
+
+    }
+
+    public void receiveImage(RemoteInputStream remoteInputStream) throws IOException {
+        Image image = FileTransfer.downloadImage(remoteInputStream);
+        sideBarController.getUserimage().setImage(image);
 
     }
     public void notificationView(){

@@ -100,8 +100,15 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         chatRoomDelegate.receiveFile(remoteInputStream);
     }
 
+    public void uploadImage(File file,User user) throws IOException, NotBoundException, SQLException {
+        initSessionService();
+        InputStream inputStream = new FileInputStream(file.getAbsolutePath());
+        RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
+        sessionService.uploadImage(remoteFileData ,this , user);
+    }
+
     public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
-        chatRoomController.receiveFile(remoteInputStream);
+        controller.receiveImage(remoteInputStream);
     }
 
     public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
