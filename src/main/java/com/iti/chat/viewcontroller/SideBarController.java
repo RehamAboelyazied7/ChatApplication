@@ -27,6 +27,8 @@ public class SideBarController implements Initializable {
     private ImageView signOutImageView;
 
     @FXML
+    private  ImageView notificationImageView;
+    @FXML
     private ImageView userimage ;
 
     @Override
@@ -87,6 +89,13 @@ public class SideBarController implements Initializable {
 
     public void setContactsImageView(ImageView contactsImageView) {
         this.contactsImageView = contactsImageView;
+    }
+    public void setNotificationImageView(ImageView notificationImageView) {
+        this.notificationImageView = notificationImageView;
+    }
+
+    public ImageView getNotificationImageView() {
+        return notificationImageView;
     }
 
     public ImageView getSignOutImageView() {

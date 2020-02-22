@@ -92,7 +92,6 @@ public class RegisterController implements Initializable {
     private Button cancelButton;
 
     File selectedFile ;
-
     //error tooltips to explain what is wrong with data validation
     Tooltip passwordTooltip = new Tooltip("Password must contains a small letter" +
             ", a capital letter, a number and a special character and must contains at least 8 characters.");

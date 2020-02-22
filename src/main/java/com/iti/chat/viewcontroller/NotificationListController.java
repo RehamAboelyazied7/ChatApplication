@@ -6,34 +6,43 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationListController  {
 
-    public VBox addList()//List<Notification> notificationList){
+
+    public static   List<Notification>notifications;
+    public NotificationListController(){
+         notifications=new ArrayList<>();
+    }
+    ObservableList<Notification> notificationObservableList;
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Notification notification) {
+        notifications.add(notification);
+    }
+
+    public ListView<Notification> addList()//List<Notification> notificationList){
 
     {
+        System.out.println(notifications.size());
         VBox notificationVbox=new VBox(5);
         notificationVbox.setPadding(new Insets(10));
         notificationVbox.setAlignment(Pos.CENTER);
         ObservableList<Notification> notificationObservableList=FXCollections.observableArrayList();
-        notificationObservableList.add(new Notification(new User("shimaa","monuir","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),1));
-        notificationObservableList.add(new Notification(new User("esraa","mohamed","028282882","shhshs",1,"sjsj"),new User("esraa","ali","9373773","333",1,"d"),3));
-     /*   for(Notification notifyItem  : notificationList) {
-
-             notificationObservableList.add(notifyItem);
-
+        for (int i=0;i<notifications.size();i++){
+            System.out.println("size of list "+notifications.size());
+            notificationObservableList.add(notifications.get(i));
         }
-        */
+
         ListView<Notification> notificationListView = new ListView<Notification>();
         notificationListView.setCellFactory(new Callback<ListView<Notification>, ListCell<Notification>>() {
             @Override
@@ -41,12 +50,10 @@ public class NotificationListController  {
                 return new NotificationListCell();
             }
         });
-        notificationVbox.setStyle("-fx-background: #4c84ff");
-       // notificationListView.setStyle("-fx-background: #4c84ff");
+        //notificationVbox.setStyle("-fx-background: #4c84ff");
+
         notificationListView.setItems(notificationObservableList);
         notificationVbox.getChildren().addAll(notificationListView);
-        return notificationVbox;
+        return notificationListView;
     }
 }
-
-

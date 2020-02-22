@@ -54,7 +54,7 @@ public class SceneTransition {
             homeController.setModel(client);
             homeController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
-        } catch (IOException | NotBoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -198,7 +198,7 @@ public class SceneTransition {
         }
     }
 
-    public static void goToNotification(Stage stage) {
+  /*  public static void goToNotification(Stage stage) {
         stage.setTitle("Notification");
         NotificationListController notificationListController = new NotificationListController();
         Scene scene = new Scene(notificationListController.addList(), 500, 500);
@@ -206,5 +206,9 @@ public class SceneTransition {
         stage.setMinWidth(200);
         stage.setMinHeight(100);
     }
+
+
+   */
+
 
 }
