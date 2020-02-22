@@ -4,6 +4,8 @@ import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
+import com.iti.chat.service.ServerServices;
+import com.iti.chat.service.SessionService;
 import com.iti.chat.util.Animator;
 import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.SceneTransition;
@@ -51,6 +53,7 @@ public class HomeController implements Initializable {
     //    ListView<Notification> listView;
     @FXML
     private GridPane motherGridPane;
+   // public  ServerServices serverServices;
 
 //    @FXML
 //    ListView<User> listView;
@@ -63,6 +66,7 @@ public class HomeController implements Initializable {
     private Stage stage;
     private FileTransferProgressController fileTransferProgressController;
     public  int check=0;
+    SessionService sessionService;
     public int changeList=0;
     @FXML
     private ChatRoomController chatRoomController;
@@ -160,7 +164,11 @@ public class HomeController implements Initializable {
         sideBarController.getSignOutImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             try {
+
+                model.sessionService.logout(model.getUser());
+                System.out.println("LogOut");
                 SceneTransition.goToLoginScreen(stage);
+                //serverServices.
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {

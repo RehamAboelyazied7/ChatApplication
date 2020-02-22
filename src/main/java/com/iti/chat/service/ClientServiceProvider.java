@@ -31,7 +31,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     ChatRoomController chatRoomController;
     FriendRequestsService friendRequestsService;
     ChatRoomService chatRoomService;
-    SessionService sessionService;
+   public SessionService sessionService;
     FileTransferService fileTransferService;
     ChatRoomDelegate chatRoomDelegate;
     NotificationListController notificationListController=new NotificationListController();
