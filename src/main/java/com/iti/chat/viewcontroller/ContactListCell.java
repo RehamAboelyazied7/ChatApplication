@@ -17,12 +17,20 @@ import java.util.Arrays;
 public class ContactListCell extends ListCell<User> {
 
     private HomeController homeController;
+    private GroupChatController groupChatController;
     private ChatRoom room = new ChatRoom();
     private User user;
+    boolean isGroupChatController;
 
     public ContactListCell(HomeController homeController) {
         super();
         this.homeController = homeController;
+        isGroupChatController = false;
+    }
+    public ContactListCell(GroupChatController groupChatController) {
+        super();
+        this.groupChatController = groupChatController;
+        isGroupChatController = true;
     }
 
     @Override
@@ -48,14 +56,17 @@ public class ContactListCell extends ListCell<User> {
         }
         setOnMouseClicked(mouseEvent -> {
 
-            if (item != null) {
+            if (item != null ) {
+                if(!isGroupChatController){
+                    Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
+                    ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room , homeController);
+                    chatRoomController.createOrSetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
 
-                Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
-                ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room , homeController);
-                chatRoomController.createOrSetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
-
+                }
+                else{
+                    groupChatController.contactListAction(item);
+                }
             }
-
         });
 
     }

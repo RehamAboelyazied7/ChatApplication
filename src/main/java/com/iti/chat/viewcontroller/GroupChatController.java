@@ -63,9 +63,15 @@ public class GroupChatController implements Initializable {
 
     @FXML
     public void submitGroup() {
-
+        ObservableList<Node> groupMembers = membersBox.getChildren();
+        System.out.println(groupMembers);
+        for (int i = 0; i < groupMembers.size(); i++) {
+            if (groupMembers.get(i) instanceof GroupMemberBox) {
+                groupMembersList.add(((GroupMemberBox) groupMembers.get(i)).getUser());
+            }
             System.out.println(groupMembersList);
         }
+    }
 
     public void setFriendsListView(ListView friendsListView) {
         this.friendsListView = friendsListView;
@@ -89,6 +95,20 @@ public class GroupChatController implements Initializable {
             }
             //System.out.println(groupMembersList);
         });
+    }
+    public void contactListAction(User user){
+
+        if (groupMembersList.contains(user)) {
+            //event.consume();
+        } else {
+            groupMembersList.add(user);
+            GroupMemberBox member = new GroupMemberBox(user);
+            membersBox.getChildren().add(member);
+            member.getRemoveBtn().setOnAction((actionEvent) -> {
+                membersBox.getChildren().remove(member);
+                groupMembersList.remove(member.getUser());
+            });
+        }
     }
 
 }
