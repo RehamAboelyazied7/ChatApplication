@@ -1,3 +1,5 @@
+/src/main/resources/view/rememberMeUserInfo.txt
+/src/main/resources/view/userAuthenticationInfo.txt
 .idea/
 target/
 pom.xml.tag
@@ -11,3 +13,6 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 *.iml
+/authenticationInfo.txt
+/rememberMeUserInfo.txt
+/userAuthenticationInfo.txt

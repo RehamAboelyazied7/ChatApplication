@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -95,7 +96,7 @@ public class UserProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentUser = Session.getInstance().getUser();
-        //setUserInfo();
+        setUserInfo();
         validation = new RegisterValidation();
         addCountries();
         setEditableFields();
@@ -175,6 +176,8 @@ public class UserProfileController implements Initializable {
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
                 e.printStackTrace();
             }
             collectData();

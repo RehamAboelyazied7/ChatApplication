@@ -1,17 +1,23 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.util.Animator;
+//import com.iti.chat.util.XMLUtil;
+import com.iti.chat.util.XMLUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class ContactBarController implements Initializable {
+
 
     @FXML
     private HBox motherHBox;
@@ -28,11 +34,25 @@ public class ContactBarController implements Initializable {
     @FXML
     private ImageView saveImageView;
 
+    private ChatRoomController chatRoomController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         Animator.setIconAnimation(saveImageView);
+
+        getSaveImageView().setOnMouseClicked(mouseEvent -> {
+
+            FileChooser fileChooser = new FileChooser();
+
+            File file = fileChooser.showSaveDialog(saveImageView.getScene().getWindow());
+
+            if (file != null) {
+
+                XMLUtil.saveRoomToXML(chatRoomController.getCurrentChatRoom(), file);
+
+            }
+        });
 
     }
 
@@ -76,5 +96,11 @@ public class ContactBarController implements Initializable {
         this.motherHBox = motherHBox;
     }
 
+    public ChatRoomController getChatRoomController() {
+        return chatRoomController;
+    }
 
+    public void setChatRoomController(ChatRoomController chatRoomController) {
+        this.chatRoomController = chatRoomController;
+    }
 }

@@ -26,6 +26,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -89,6 +90,11 @@ public class RegisterController implements Initializable {
 
     @FXML
     private Button cancelButton;
+<<<<<<< HEAD
+=======
+
+    File selectedFile ;
+>>>>>>> 7f302264aa81bead4be2677be604cce788ef4441
     //error tooltips to explain what is wrong with data validation
     Tooltip passwordTooltip = new Tooltip("Password must contains a small letter" +
             ", a capital letter, a number and a special character and must contains at least 8 characters.");
@@ -128,7 +134,7 @@ public class RegisterController implements Initializable {
     }
 
     @FXML
-    public void submitButtonHandler(ActionEvent event) {
+    public void submitButtonHandler(ActionEvent event) throws IOException, RemoteException, SQLException, NotBoundException {
 
         if (validateInputValues()) {
 
@@ -151,6 +157,9 @@ public class RegisterController implements Initializable {
             user.setEmail("a@a.com");
             try {
                 delegate.register(user, passwordTextField.getText());
+                if(selectedFile != null) {
+                    delegate.uploadImage(selectedFile,user);
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (DuplicatePhoneException e) {
@@ -328,7 +337,8 @@ public class RegisterController implements Initializable {
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
-        File selectedFile = fileChooser.showOpenDialog(((Stage) (rootPane.getScene().getWindow())));
+         selectedFile = fileChooser.showOpenDialog(stage);
+
         if (selectedFile != null) {
 
             URI uri = selectedFile.toURI();
