@@ -75,7 +75,6 @@ public class LoginController implements Initializable {
         try {
             User user = delegate.login(phoneTextField.getText(), passwordField.getText());
             if (user != null) {
-                user.setStatus(UserStatus.ONLINE);
                 Session.getInstance().setUser(user);
                 PrintWriter writer;
                 try {

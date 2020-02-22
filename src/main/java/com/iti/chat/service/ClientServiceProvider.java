@@ -96,7 +96,6 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     public void downloadFile(RemoteInputStream remoteInputStream) throws IOException {
-        //chatRoomController.receiveFile(remoteInputStream);
         chatRoomDelegate.receiveFile(remoteInputStream);
     }
 
