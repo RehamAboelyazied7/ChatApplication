@@ -101,14 +101,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
-        controller.receiveImage(remoteInputStream);
-    }
-
-    public void uploadImage(File file,User user) throws IOException, NotBoundException, SQLException {
-        initSessionService();
-        InputStream inputStream = new FileInputStream(file.getAbsolutePath());
-        RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
-        sessionService.uploadImage(remoteFileData ,this , user);
+        chatRoomController.receiveFile(remoteInputStream);
     }
 
     public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
@@ -125,7 +118,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     @Override
     public void receiveMessage(Message message) {
         //chatRoomController.receiveMessage(message);
-       // PushNotification.createNotify(message);
+        // PushNotification.createNotify(message);
         //chatRoomController.receiveMessage(message);
         chatRoomDelegate.receiveMessage(message);
     }
@@ -137,18 +130,20 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void receiveNotification(Notification notification) {
-    /*add*/
-        NotificationListController.notifications.add(notification);
- /*end*/
+
         controller.receiveNotification(notification);
-        if(controller.check!=0) {
-            Platform.runLater(
-                    () -> {
-                        // Update UI here.
-                        controller.notificationView();
-                    }
-            );
-        }
+     /*   notificationListController.setNotifications(notification);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controller.notificationView();
+
+            }
+        });
+
+      */
+
+
     }
 
     private void initFriendRequestService() throws RemoteException, NotBoundException {
@@ -178,11 +173,11 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendFriendRequest(User receiver) throws RemoteException, NotBoundException {
         initFriendRequestService();
         friendRequestsService.sendFriendRequest(this, receiver);
-                PushNotification pushNotification=new PushNotification();
-                Notification notification=new Notification(this.currentUser,receiver,NotificationType.FRIENDSHIP_REQUEST_RECEIVED);
-                pushNotification.initializeNotify(notification);
+        PushNotification pushNotification=new PushNotification();
+        Notification notification=new Notification(this.currentUser,receiver,NotificationType.FRIENDSHIP_REQUEST_RECEIVED);
+        pushNotification.initializeNotify(notification);
 
-        }
+    }
 
 
 
@@ -233,18 +228,30 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void recieveAnnouncment(String announcment) throws RemoteException {
-        User user=new User("Server","","","",0,"");
-        /*notification*/
-        NotificationListController.notifications.add(new Notification(user,this.getUser(),NotificationType.MESSAGE_RECEIVED));
+        //User user=new User("Server","","","",0,"");
+        //Notification notification=new Notification(user,this.getUser(),NotificationType.MESSAGE_RECEIVED);
+        //notificationListController.setNotifications(notification);
+        //System.out.println("announce "+notificationListController.getNotifications().size());
+        //System.out.println("inside receive ann");
         controller.receiveAnnouncment(announcment);
-        if(controller.check!=0) {
-            Platform.runLater(
-                    () -> {
-                        controller.notificationView();
-                    }
-            );
+      /*  Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controller.notificationView();
+
+            }
+        });
+
+       */
+    }
+
+
+    public void userInfoDidChange(User user) {
+        if(currentUser.getFriends().contains(user)) {
+            currentUser.getFriends().remove(user);
+            currentUser.getFriends().add(user);
+            controller.refresh();
         }
-  /*end */
 
     }
 

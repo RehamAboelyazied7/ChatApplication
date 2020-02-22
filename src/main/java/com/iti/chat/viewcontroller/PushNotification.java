@@ -72,7 +72,8 @@ public class PushNotification {
                                 notificationNumber += 1;
                                 break;
                             case NotificationType.STATUS_UPDATE:
-//                        Notifications.create().owner(new Text()).graphic(imageView).title("FRIEND_STATUS_UPDATE").text(notification.toString()).show();
+                                owner.show();
+                        Notifications.create().graphic(imageView).title("FRIEND_STATUS_UPDATE").text(message.toString()).show();
                                 break;
 
                         }
@@ -92,5 +93,6 @@ public class PushNotification {
 
 
     }
+
 
 }

@@ -16,8 +16,20 @@ import java.util.List;
 
 public class NotificationListController  {
 
-   public static List<Notification>notifications=new ArrayList<>();
+
+    public static   List<Notification>notifications;
+    public NotificationListController(){
+         notifications=new ArrayList<>();
+    }
     ObservableList<Notification> notificationObservableList;
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Notification notification) {
+        notifications.add(notification);
+    }
+
     public ListView<Notification> addList()//List<Notification> notificationList){
 
     {

@@ -1,10 +1,8 @@
 package com.iti.chat.viewcontroller;
 
-import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.Animator;
-import com.iti.chat.util.FileTransfer;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
 import javafx.application.Platform;
@@ -23,7 +21,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -41,6 +38,7 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,8 +52,13 @@ public class HomeController implements Initializable {
 
     @FXML
     ListView<User> listView;
+    //    ListView<Notification> listView;
     @FXML
     private GridPane motherGridPane;
+
+//    @FXML
+//    ListView<User> listView;
+
     private ClientServiceProvider model;
     ObservableList<Notification> list ;
     ListView<Notification> notificationListView=new ListView<>();
@@ -63,7 +66,8 @@ public class HomeController implements Initializable {
     private ChatRoom room;
     private Stage stage;
     private FileTransferProgressController fileTransferProgressController;
-   public  int check=0,changeList=0;
+    public  int check=0;
+    public int changeList=0;
     @FXML
     private ChatRoomController chatRoomController;
 
@@ -72,22 +76,10 @@ public class HomeController implements Initializable {
 
     @FXML
     private UserProfileController userProfileController;
-
-
+    public int click=0;
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
-
-        try {
-            System.out.println(model.getUser().getRemoteImagePath());
-            if(model.getUser().getRemoteImagePath() != null )
-            model.requestImageDownload(model.getUser().getRemoteImagePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        }
-
 //        ChatRoomDelegate delegate = new ChatRoomDelegate(model, chatRoomController);
 //        chatRoomController.setDelegate(delegate);
 //        model.setChatRoomDelegate(delegate);
@@ -118,12 +110,6 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void receiveImage(RemoteInputStream remoteInputStream) throws IOException {
-        Image image = FileTransfer.downloadImage(remoteInputStream);
-        sideBarController.getUserimage().setImage(image);
-
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -144,9 +130,6 @@ public class HomeController implements Initializable {
 
         model.setUser(Session.getInstance().getUser());
 
-
-
-
         //not clicked by default
         Animator.setIconAnimation(sideBarController.getMagnifierImageView());
         Animator.setIconAnimation(sideBarController.getSignOutImageView());
@@ -166,11 +149,10 @@ public class HomeController implements Initializable {
                 Parent parent = loader.load();
                 rightVBox.getChildren().clear();
                 rightVBox.getChildren().add(parent);
-                /*add change*/
                 notificationListView.setVisible(false);
                 listView.setVisible(true);
                 changeList=1;
-                /* end*/
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -181,54 +163,42 @@ public class HomeController implements Initializable {
 
             Animator.suspendIconAnimation(sideBarController.getContactsImageView());
             Animator.setIconAnimation(sideBarController.getMagnifierImageView());
-            /*add change*/
             notificationListView.setVisible(false);
             listView.setVisible(true);
             changeList=1;
-             /* end*/
-            try {
 
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(SceneTransition.class.getResource("/view/groupChat.fxml"));
-                Parent parent = loader.load();
-                GroupChatController groupChatController = loader.getController();
-                groupChatController.setFriendsListView(listView);
-                rightVBox.getChildren().clear();
-                rightVBox.getChildren().add(parent);
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         });
 
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             Animator.suspendIconAnimation(sideBarController.getMagnifierImageView());
             Animator.setIconAnimation(sideBarController.getContactsImageView());
-            /*add change*/
             notificationListView.setVisible(false);
             listView.setVisible(true);
             changeList=1;
-            /*end*/
 
 
 
         });
 
-        /*add list*/
+
         sideBarController.getNotificationImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             listView.setVisible(false);
-            if(changeList==1 && check!=0) {
+            if(changeList==1 && click==1){
+            // notificationListController.getNotifications().size()!=0 ) {
                 notificationListView.setVisible(true);
             }else{
                 motherGridPane.add(notificationListView, 1, 0);
+                changeList=1;
+                click=1;
             }
             notificationView();
 
-            ++check;
+           // ++check;
         });
-   /*end*/
+
         sideBarController.getSignOutImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             try {
@@ -241,7 +211,6 @@ public class HomeController implements Initializable {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
             Session.signOutInstance();
-            //switch  between lists
             notificationListView.setVisible(false);
             listView.setVisible(true);
 
@@ -249,22 +218,25 @@ public class HomeController implements Initializable {
 
 
     }
-    /*Start Method*/
     public void notificationView(){
         notificationListView.setPlaceholder(new Label("No Content In List"));
-        NotificationListController notificationListController = new NotificationListController();
-         list = FXCollections.observableList(notificationListController.addList().getItems());
-         notificationListView.setCellFactory(new Callback<ListView<Notification>, ListCell<Notification>>() {
+        //NotificationListController notificationListController = new NotificationListController();
+        list = FXCollections.observableList(notificationListController.addList().getItems());
+        //System.out.println("size"+notificationListController.getNotifications().size());
+        notificationListView.setCellFactory(new Callback<ListView<Notification>, ListCell<Notification>>() {
             @Override
             public ListCell<Notification> call(ListView<Notification> notificationListView) {
                 return new NotificationListCell();
             }
         });
-        notificationListView.setItems(list);
+       /* notificationListView.setItems(list);
+//        NotificationListController.notifications.clear();
         check++;
-        System.out.println(notificationListController.addList().getItems().size());
+        System.out.println("add items"+notificationListController.addList().getItems().size());
+
+        */
     }
-  /*end*/
+
     public void uploadFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
@@ -297,7 +269,7 @@ public class HomeController implements Initializable {
 
     public void receiveNotification(Notification notification) {
         PushNotification pushNotification = new PushNotification();
-       // notificationView();
+        // notificationView();
         pushNotification.initializeNotify(notification);
         System.out.println("recieve Notification");
         if (notification.notificationType == NotificationType.STATUS_UPDATE) {
@@ -307,6 +279,16 @@ public class HomeController implements Initializable {
         }
 
     }
+    public void refresh() {
+        System.out.println("inside refresh");
+        User currentUser =  Session.getInstance().getUser();
+        System.out.println(currentUser.getFriends());
+        Platform.runLater(() -> {
+            listView.refresh();
+            listView.setItems(FXCollections.observableList(currentUser.getFriends()));
+        });
+    }
+
 
     private void friendStatusChangeNotificationBehaviour(Notification notification) {
 
@@ -398,6 +380,15 @@ public class HomeController implements Initializable {
     public void receiveAnnouncment(String announcment) {
         PushNotification pushNotification=new PushNotification();
         pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
+        /*Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                notificationView();
+
+            }
+        });
+
+         */
     }
 
 }

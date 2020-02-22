@@ -4,6 +4,8 @@ import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.model.User;
 import static com.iti.chat.util.Encryption.encrypt;
 import static com.iti.chat.util.Encryption.decrypt;
+
+import com.iti.chat.model.UserStatus;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
@@ -73,6 +75,7 @@ public class LoginController implements Initializable {
         try {
             User user = delegate.login(phoneTextField.getText(), passwordField.getText());
             if (user != null) {
+                user.setStatus(UserStatus.ONLINE);
                 Session.getInstance().setUser(user);
                 PrintWriter writer;
                 try {

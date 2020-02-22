@@ -79,7 +79,8 @@ public class ChatPageController implements Initializable {
         AnchorPane.setRightAnchor(chatVBox, 10.0);
         AnchorPane.setTopAnchor(chatVBox, 10.0);
         messageHBox.getChildren().remove(ImageStackPane);
-        recieverName.setStyle("-fx-text-fill:#000000");
+        messageVbox.getChildren().remove(recieverName);
+        recieverName.setVisible(false);
         if(ColorUtils.areSimilarColors(RIGHT_MESSAGE_BUBBLE_COLOR, message.getStyle().getColor())) {
             bubbleColor = ColorUtils.invertedColor(message.getStyle().getColor());
         }
@@ -97,7 +98,7 @@ public class ChatPageController implements Initializable {
         recieverName.setText(message.getSender().getFirstName());
         recieverMessage.setText(message.getContent());
         recieverMessage.setStyle(message.getStyle().toString());
-        if(!Session.getInstance().getUser().equals(message.getSender())) {
+        if(Session.getInstance().getUser().equals(message.getSender())) {
             displayOnRight(message);
         }
         else {

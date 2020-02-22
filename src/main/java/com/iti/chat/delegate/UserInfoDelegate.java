@@ -4,6 +4,7 @@ import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.viewcontroller.UserProfileController;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 
@@ -32,7 +33,7 @@ public class UserInfoDelegate {
         this.viewController = viewController;
     }
 
-    public void updateUserInfo(User user) throws RemoteException, SQLException {
+    public void updateUserInfo(User user) throws RemoteException, SQLException, NotBoundException {
         client.updateUserInfo(user);
     }
 
