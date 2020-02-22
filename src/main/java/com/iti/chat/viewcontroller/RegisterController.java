@@ -154,7 +154,9 @@ public class RegisterController implements Initializable {
             user.setEmail("a@a.com");
             try {
                 delegate.register(user, passwordTextField.getText());
-                delegate.uploadImage(selectedFile,user);
+                if(selectedFile != null) {
+                    delegate.uploadImage(selectedFile,user);
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (DuplicatePhoneException e) {
