@@ -71,14 +71,16 @@ public class HomeController implements Initializable {
 
     public void setModel(ClientServiceProvider model) {
         this.model = model;
-//
-//        try {
-//            model.requestImageDownload("C:\\Users\\Mac\\Desktop\\newball.gif");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (NotBoundException e) {
-//            e.printStackTrace();
-//        }
+
+        try {
+            System.out.println(model.getUser().getRemoteImagePath());
+            if(model.getUser().getRemoteImagePath() != null )
+            model.requestImageDownload(model.getUser().getRemoteImagePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
 
 //        ChatRoomDelegate delegate = new ChatRoomDelegate(model, chatRoomController);
 //        chatRoomController.setDelegate(delegate);
