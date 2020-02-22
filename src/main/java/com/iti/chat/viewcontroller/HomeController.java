@@ -141,7 +141,8 @@ public class HomeController implements Initializable {
 
         //clicked by default
         Animator.suspendIconAnimation(sideBarController.getProfileImageView());
-        Animator.suspendIconAnimation(sideBarController.getContactsImageView());
+        //Animator.suspendIconAnimation(sideBarController.getContactsImageView());
+        Animator.setIconAnimation(sideBarController.getContactsImageView());
 
         sideBarController.getProfileImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
@@ -163,7 +164,7 @@ public class HomeController implements Initializable {
             }
         });
 
-        sideBarController.getContactsImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+        /*sideBarController.getContactsImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             Animator.suspendIconAnimation(sideBarController.getContactsImageView());
             Animator.setIconAnimation(sideBarController.getMagnifierImageView());
@@ -171,8 +172,22 @@ public class HomeController implements Initializable {
             listView.setVisible(true);
             changeList=1;
 
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(SceneTransition.class.getResource("/view/groupChat.fxml"));
+                Parent parent = loader.load();
+                GroupChatController groupChatController = loader.getController();
+                //groupChatController.setFriendsListView(listView);
+                listView.setCellFactory(listView -> new ContactListCell(groupChatController));
+                rightVBox.getChildren().clear();
+                rightVBox.getChildren().add(parent);
 
-        });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });*/
+
+
+
 
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
