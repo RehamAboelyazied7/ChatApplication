@@ -73,7 +73,9 @@ public class PushNotification {
                                 break;
                             case NotificationType.STATUS_UPDATE:
                                 owner.show();
-                        Notifications.create().graphic(imageView).title("FRIEND_STATUS_UPDATE").text(message.toString()).show();
+                        Notifications.create().graphic(imageView).title("FRIEND_STATUS_UPDATE").text(message).show();
+                                notificationNumber += 1;
+
                                 break;
 
                         }
