@@ -95,7 +95,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
-        chatRoomController.receiveFile(remoteInputStream);
+        controller.receiveImage(remoteInputStream);
     }
 
     public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
