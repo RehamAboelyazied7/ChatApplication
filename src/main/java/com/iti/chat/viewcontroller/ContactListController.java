@@ -40,8 +40,10 @@ public class ContactListController implements Initializable {
             userStatus.setFill(Color.GREEN);
         } else if (status == UserStatus.BUSY) {
             userStatus.setFill(Color.RED);
-        } else {
+        } else if(status==UserStatus.OFFLINE){
             userStatus.setFill(Color.GREY);
+        }else{
+            userStatus.setFill(Color.YELLOW);
         }
     }
 

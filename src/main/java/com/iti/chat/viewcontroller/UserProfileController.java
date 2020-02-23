@@ -1,9 +1,7 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.delegate.UserInfoDelegate;
-import com.iti.chat.model.Gender;
-import com.iti.chat.model.User;
-import com.iti.chat.model.UserStatus;
+import com.iti.chat.model.*;
 import com.iti.chat.util.ColorUtils;
 import com.iti.chat.util.JFXCountryComboBox;
 import com.iti.chat.util.JFXDialogFactory;
@@ -120,7 +118,34 @@ public class UserProfileController implements Initializable {
          status_combo_box.getSelectionModel().select(3);
          int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
         status_combo_box.getSelectionModel().select(selectedIndex);
-       // status_combo_box.getSelectionModel().
+        status_combo_box.setOnAction(e->{
+            switch (status_combo_box.getValue()){
+                case "offline":
+                    currentUser.setStatus(UserStatus.OFFLINE);
+                    break;
+                case "busy":
+                    currentUser.setStatus(UserStatus.BUSY);
+                    break;
+                case "away":
+                    currentUser.setStatus(UserStatus.AWAY);
+                    break;
+                default:
+                    currentUser.setStatus(UserStatus.ONLINE);
+                    break;
+            }
+
+
+            try {
+                delegate.updateUserInfo(currentUser);
+                setUserStatus();
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } catch (NotBoundException ex) {
+                ex.printStackTrace();
+            }
+        });
 
     }
     public void setDelegate(UserInfoDelegate delegate) {
@@ -297,11 +322,12 @@ public class UserProfileController implements Initializable {
     private void setUserStatus() {
         if (currentUser.getStatus() == UserStatus.BUSY)
             userStatus.setFill(Color.RED);
-        else if (currentUser.getStatus() == UserStatus.OFFLINE)
+        else if (currentUser.getStatus() == UserStatus.OFFLINE) {
             userStatus.setFill(Color.GREY);
-        else if (currentUser.getStatus() == UserStatus.AWAY)
+        } else if (currentUser.getStatus() == UserStatus.AWAY)
             userStatus.setFill(Color.YELLOW);
-        else userStatus.setFill(Color.GREEN);
+        else
+            userStatus.setFill(Color.GREEN);
 
     }
 
