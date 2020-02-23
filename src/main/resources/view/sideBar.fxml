@@ -5,13 +5,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<?import javafx.scene.layout.StackPane?>
-<VBox fx:id="sideBarVBox" alignment="TOP_CENTER" minWidth="64.0" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
+<VBox fx:id="sideBarVBox" alignment="TOP_CENTER" minWidth="64.0" prefHeight="389.0" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
    <children>
-      <StackPane >
+      <StackPane>
          <Circle fill="white" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0">
             <VBox.margin>
                <Insets top="15.0" />
@@ -31,6 +31,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <ImageView fx:id="chatImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/speech.png" />
+         </image>
+      </ImageView>
       <ImageView fx:id="contactsImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/group.png" />
@@ -42,6 +47,14 @@
       <ImageView fx:id="magnifierImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/search.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="notificationImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/notification.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -59,4 +72,7 @@
          </VBox.margin>
       </ImageView>
    </children>
+   <padding>
+      <Insets top="10.0" />
+   </padding>
 </VBox>

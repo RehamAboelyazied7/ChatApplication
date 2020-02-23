@@ -6,11 +6,11 @@ import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 import com.iti.chat.dao.NotificationDAO;
 import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.*;
-import com.iti.chat.util.Session;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
+import com.iti.chat.viewcontroller.NotificationListController;
 import com.iti.chat.viewcontroller.PushNotification;
-
+import javafx.application.Platform;
 
 
 import java.io.File;
@@ -31,9 +31,10 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     ChatRoomController chatRoomController;
     FriendRequestsService friendRequestsService;
     ChatRoomService chatRoomService;
-    SessionService sessionService;
+   public SessionService sessionService;
     FileTransferService fileTransferService;
     ChatRoomDelegate chatRoomDelegate;
+    NotificationListController notificationListController=new NotificationListController();
     Registry registry;
 
     public ClientServiceProvider() throws RemoteException {
@@ -65,9 +66,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     @Override
-    public void setUser(User user) throws RemoteException, NotBoundException {
+    public void setUser(User user) {
+
         currentUser = user;
-        Session.getInstance().setUser(user);
     }
 
     @Override
@@ -95,12 +96,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     public void downloadFile(RemoteInputStream remoteInputStream) throws IOException {
-        //chatRoomController.receiveFile(remoteInputStream);
         chatRoomDelegate.receiveFile(remoteInputStream);
-    }
-
-    public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
-        controller.receiveImage(remoteInputStream);
     }
 
     public void uploadImage(File file,User user) throws IOException, NotBoundException, SQLException {
@@ -108,6 +104,10 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         InputStream inputStream = new FileInputStream(file.getAbsolutePath());
         RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
         sessionService.uploadImage(remoteFileData ,this , user);
+    }
+
+    public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
+        controller.receiveImage(remoteInputStream);
     }
 
     public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
@@ -124,14 +124,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     @Override
     public void receiveMessage(Message message) {
         //chatRoomController.receiveMessage(message);
-       // PushNotification.createNotify(message);
+        // PushNotification.createNotify(message);
         //chatRoomController.receiveMessage(message);
-        if(chatRoomDelegate == null) {
-            controller.receiveNotification(new Notification(message.getSender(), getUser(), NotificationType.MESSAGE_RECEIVED));
-        }
-        else {
-            chatRoomDelegate.receiveMessage(message);
-        }
+        chatRoomDelegate.receiveMessage(message);
     }
 
     public ChatRoom createNewChatRoom(List<User> users) throws RemoteException, NotBoundException {
@@ -143,6 +138,18 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void receiveNotification(Notification notification) {
 
         controller.receiveNotification(notification);
+     /*   notificationListController.setNotifications(notification);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controller.notificationView();
+
+            }
+        });
+
+      */
+
+
     }
 
     private void initFriendRequestService() throws RemoteException, NotBoundException {
@@ -172,11 +179,11 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendFriendRequest(User receiver) throws RemoteException, NotBoundException {
         initFriendRequestService();
         friendRequestsService.sendFriendRequest(this, receiver);
-                PushNotification pushNotification=new PushNotification();
-                Notification notification=new Notification(this.currentUser,receiver,NotificationType.FRIENDSHIP_REQUEST_RECEIVED);
-                pushNotification.initializeNotify(notification);
+        PushNotification pushNotification=new PushNotification();
+        Notification notification=new Notification(this.currentUser,receiver,NotificationType.FRIENDSHIP_REQUEST_RECEIVED);
+        pushNotification.initializeNotify(notification);
 
-        }
+    }
 
 
 
@@ -211,18 +218,8 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         sessionService.register(user, password);
     }
 
-    public void updateUserInfo(User user) throws RemoteException, NotBoundException {
-        initSessionService();
+    public void updateUserInfo(User user) throws RemoteException {
         sessionService.updateInfo(user);
-    }
-
-    public void userInfoDidChange(User user) {
-        if(currentUser.getFriends().contains(user)) {
-            currentUser.getFriends().remove(user);
-            currentUser.getFriends().add(user);
-            controller.refresh();
-        }
-
     }
 
     @Override
@@ -238,7 +235,27 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     @Override
     public void recieveAnnouncment(Message announcment) throws RemoteException {
         System.out.println("inside receive ann");
+
         controller.receiveAnnouncment(announcment);
+      /*  Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controller.notificationView();
+
+            }
+        });
+
+       */
+    }
+
+
+    public void userInfoDidChange(User user) {
+        if(currentUser.getFriends().contains(user)) {
+            currentUser.getFriends().remove(user);
+            currentUser.getFriends().add(user);
+            controller.refresh();
+        }
+
     }
 
 }

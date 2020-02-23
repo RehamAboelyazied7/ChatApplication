@@ -41,6 +41,6 @@ public class RegisterDelegate {
     }
 
     public void uploadImage(File file , User user) throws NotBoundException, SQLException, IOException {
-        client.uploadImage(file,user);
+      //  client.uploadImage(file,user);
     }
 }

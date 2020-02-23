@@ -3,6 +3,8 @@ package com.iti.chat.viewcontroller;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
+import com.iti.chat.model.UserStatus;
+import com.iti.chat.util.ColorUtils;
 import com.iti.chat.util.JFXCountryComboBox;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
@@ -283,12 +285,13 @@ public class UserProfileController implements Initializable {
     }
 
     private void setUserStatus() {
-        if (currentUser.getStatus() == 1)
+        if (currentUser.getStatus() == UserStatus.BUSY)
             userStatus.setFill(Color.RED);
-        else if (currentUser.getStatus() == 0)
+        else if (currentUser.getStatus() == UserStatus.OFFLINE)
             userStatus.setFill(Color.GREY);
-        else if (currentUser.getStatus() == 3)
-            userStatus.setFill(Color.BLACK);
+        else if (currentUser.getStatus() == UserStatus.AWAY)
+            userStatus.setFill(Color.YELLOW);
+        else userStatus.setFill(Color.GREEN);
 
     }
 

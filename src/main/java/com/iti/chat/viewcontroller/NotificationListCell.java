@@ -14,8 +14,14 @@ import javafx.scene.shape.StrokeLineCap;
 
 public class NotificationListCell extends ListCell<Notification> {
 
-    public NotificationListCell() {
+    private HomeController homeController;
+    public NotificationListCell(HomeController homeController) {
         super();
+        this.homeController = homeController;
+    }
+
+    public NotificationListCell() {
+
     }
 
     @Override
@@ -33,11 +39,12 @@ public class NotificationListCell extends ListCell<Notification> {
             //  CircleImageView.setStroke(Color.BLUEVIOLET);
             CircleImageView.setStrokeLineCap(StrokeLineCap.ROUND);
             CircleImageView.setStrokeWidth(4.0);
-            Image image = new Image(getClass().getResource("/view/sender-icon.png").toExternalForm());
+            Image image = new Image(getClass().getResource("/view/sender.png").toExternalForm());
             CircleImageView.setFill(new ImagePattern(image));
             Label notificationTitle = new Label("");
             notificationTitle.setAlignment(Pos.CENTER);
             notificationTitle.setWrapText(true);
+            hBox.setStyle("-fx-font-size: 10;-fx-alignment:  center");
             hBox.getChildren().addAll(CircleImageView, new Label(notification.toString()));
             setGraphic(hBox);
 
