@@ -50,7 +50,8 @@ public class SceneTransition {
             Parent parent = loader.load();
             HomeController homeController = loader.getController();
             client.setController(homeController);
-            homeController.setModel(client);
+            client.setUser(Session.getInstance().getUser());
+            homeController.setClient(client);
             homeController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
         } catch (IOException e) {
@@ -74,17 +75,20 @@ public class SceneTransition {
         }
     }
 
-    public static ChatRoomController loadChatRoom(VBox rightVBox, ChatRoom room) {
+    public static ChatRoomController loadChatRoom(VBox rightVBox , ChatRoom room , HomeController homeController) {
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/Chat_Room.fxml"));
             Parent parent = loader.load();
             ChatRoomController chatRoomController = loader.getController();
+            chatRoomController.setHomeController(homeController);
             chatRoomController.getContactBarController().getNameLabel().setText(room.getName());
+            chatRoomController.getContactBarController().setChatRoomController(chatRoomController);
             ChatRoomDelegate delegate = new ChatRoomDelegate(client, chatRoomController);
             client.setChatRoomDelegate(delegate);
             chatRoomController.setDelegate(delegate);
-            chatRoomController.setCurrentChatRoom(room);
+            //chatRoomController.setCurrentChatRoom(room);
             rightVBox.getChildren().clear();
             rightVBox.getChildren().add(parent);
             VBox.setVgrow(parent, Priority.ALWAYS);
@@ -194,7 +198,7 @@ public class SceneTransition {
         }
     }
 
-    public static void goToNotification(Stage stage) {
+  /*  public static void goToNotification(Stage stage) {
         stage.setTitle("Notification");
         NotificationListController notificationListController = new NotificationListController();
         Scene scene = new Scene(notificationListController.addList(), 500, 500);
@@ -202,5 +206,9 @@ public class SceneTransition {
         stage.setMinWidth(200);
         stage.setMinHeight(100);
     }
+
+
+   */
+
 
 }

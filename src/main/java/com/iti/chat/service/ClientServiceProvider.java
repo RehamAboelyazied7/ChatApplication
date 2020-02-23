@@ -8,8 +8,9 @@ import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
+import com.iti.chat.viewcontroller.NotificationListController;
 import com.iti.chat.viewcontroller.PushNotification;
-
+import javafx.application.Platform;
 
 
 import java.io.File;
@@ -30,13 +31,14 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     ChatRoomController chatRoomController;
     FriendRequestsService friendRequestsService;
     ChatRoomService chatRoomService;
-    SessionService sessionService;
+   public SessionService sessionService;
     FileTransferService fileTransferService;
     ChatRoomDelegate chatRoomDelegate;
+    NotificationListController notificationListController=new NotificationListController();
     Registry registry;
 
     public ClientServiceProvider() throws RemoteException {
-        registry = LocateRegistry.getRegistry(4000);
+        registry = LocateRegistry.getRegistry( 4000);
     }
 
     public void setChatRoomDelegate(ChatRoomDelegate chatRoomDelegate) {
@@ -70,9 +72,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     @Override
-    public void sendMessage(Message message, ChatRoom room) throws RemoteException, NotBoundException {
+    public void sendMessage(Message message, int roomId) throws RemoteException, NotBoundException {
         initChatRoomService();
-        chatRoomService.sendMessage(message, room);
+        chatRoomService.sendMessage(message, roomId);
        /*  System.out.println("recieve");
        for (int i = 0; i < room.getUsers().size(); i++) {
             if (!message.getSender().equals(room.getUsers().get(i))) {
@@ -86,20 +88,26 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         */
     }
 
-    public void sendFile(Message message, File file, ChatRoom room) throws IOException, NotBoundException {
+    public void sendFile(Message message, File file, int roomId) throws IOException, NotBoundException {
         initChatRoomService();
         InputStream inputStream = new FileInputStream(file.getAbsolutePath());
         RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
-        chatRoomService.sendFile(message, room, remoteFileData);
+        chatRoomService.sendFile(message, roomId, remoteFileData);
     }
 
     public void downloadFile(RemoteInputStream remoteInputStream) throws IOException {
-        //chatRoomController.receiveFile(remoteInputStream);
         chatRoomDelegate.receiveFile(remoteInputStream);
     }
 
+    public void uploadImage(File file,User user) throws IOException, NotBoundException, SQLException {
+        initSessionService();
+        InputStream inputStream = new FileInputStream(file.getAbsolutePath());
+        RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
+        sessionService.uploadImage(remoteFileData ,this , user);
+    }
+
     public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
-        chatRoomController.receiveFile(remoteInputStream);
+        controller.receiveImage(remoteInputStream);
     }
 
     public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
@@ -116,9 +124,11 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     @Override
     public void receiveMessage(Message message) {
         //chatRoomController.receiveMessage(message);
-       // PushNotification.createNotify(message);
+        // PushNotification.createNotify(message);
         //chatRoomController.receiveMessage(message);
-        chatRoomDelegate.receiveMessage(message);
+        if(chatRoomDelegate != null) {
+            chatRoomDelegate.receiveMessage(message);
+        }
     }
 
     public ChatRoom createNewChatRoom(List<User> users) throws RemoteException, NotBoundException {
@@ -130,6 +140,18 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void receiveNotification(Notification notification) {
 
         controller.receiveNotification(notification);
+     /*   notificationListController.setNotifications(notification);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controller.notificationView();
+
+            }
+        });
+
+      */
+
+
     }
 
     private void initFriendRequestService() throws RemoteException, NotBoundException {
@@ -159,11 +181,11 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendFriendRequest(User receiver) throws RemoteException, NotBoundException {
         initFriendRequestService();
         friendRequestsService.sendFriendRequest(this, receiver);
-                PushNotification pushNotification=new PushNotification();
-                Notification notification=new Notification(this.currentUser,receiver,NotificationType.FRIENDSHIP_REQUEST_RECEIVED);
-                pushNotification.initializeNotify(notification);
+        PushNotification pushNotification=new PushNotification();
+        Notification notification=new Notification(this.currentUser,receiver,NotificationType.FRIENDSHIP_REQUEST_RECEIVED);
+        pushNotification.initializeNotify(notification);
 
-        }
+    }
 
 
 
@@ -213,9 +235,19 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     @Override
-    public void recieveAnnouncment(String announcment) throws RemoteException {
+    public void recieveAnnouncment(Message announcment) throws RemoteException {
         System.out.println("inside receive ann");
+
         controller.receiveAnnouncment(announcment);
+      /*  Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controller.notificationView();
+
+            }
+        });
+
+       */
     }
 
     public List<User> searchByphone(String phone) throws RemoteException, SQLException, NotBoundException {
@@ -223,4 +255,16 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         return friendRequestsService.searchByPhone(phone);
     }
 
+    public void userInfoDidChange(User user) {
+        if(currentUser.getFriends().contains(user)) {
+            currentUser.getFriends().remove(user);
+            currentUser.getFriends().add(user);
+            controller.refresh();
+        }
+
+    }
+
+    public ChatRoom getChatRoom(int roomId) throws RemoteException {
+        return chatRoomService.getChatRoom(roomId);
+    }
 }

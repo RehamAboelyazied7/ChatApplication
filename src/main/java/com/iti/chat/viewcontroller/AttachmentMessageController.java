@@ -62,7 +62,7 @@ public class AttachmentMessageController implements Initializable {
         this.message = message;
         recieverName.setText(message.getSender().getFirstName());
         fileName.setText(message.getContent());
-        if(!Session.getInstance().getUser().equals(message.getSender())) {
+        if(Session.getInstance().getUser().equals(message.getSender())) {
             displayOnRight(message);
         }
     }

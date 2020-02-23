@@ -91,15 +91,8 @@ public class RichTextAreaController implements Initializable {
         Message message = new Message();
         message.setStyle(style);
         message.setContent(msgTxtField.getText());
-        message.setSender(Session.getInstance().getUser());
+        message.setSender(Session.getInstance().getUser() );
         return message;
-    }
-
-    public void diff(Color color1, Color color2) {
-        double red = Math.abs(color1.getRed() - color2.getRed()) * 255;
-        double green = Math.abs(color1.getGreen() - color2.getGreen()) * 255;
-        double blue = Math.abs(color1.getBlue() - color2.getBlue()) * 255;
-        System.out.println("diff is " + (red + green + blue));
     }
 
     public void clearText() {
@@ -110,7 +103,6 @@ public class RichTextAreaController implements Initializable {
         fontColorPicker.valueProperty().addListener((observableValue, color, t1) -> {
             Color col = (Color) t1;
             Color old = Color.web(style.getColor());
-            diff(old, col);
             String rgb = ColorUtils.toRGB(col);
             style.setColor(rgb);
             applyStyle();

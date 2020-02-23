@@ -17,12 +17,21 @@ import java.util.Arrays;
 public class ContactListCell extends ListCell<User> {
 
     private HomeController homeController;
+    private GroupChatController groupChatController;
     private ChatRoom room = new ChatRoom();
     private User user;
+    boolean isGroupChatController;
 
     public ContactListCell(HomeController homeController) {
         super();
         this.homeController = homeController;
+        this.homeController.getEditableBoxLabel().setText("List of friends");
+        isGroupChatController = false;
+    }
+    public ContactListCell(GroupChatController groupChatController) {
+        super();
+        this.groupChatController = groupChatController;
+        isGroupChatController = true;
     }
 
     @Override
@@ -37,6 +46,7 @@ public class ContactListCell extends ListCell<User> {
                 parent = loader.load();
                 ContactListController contactListController = loader.getController();
                 contactListController.setUserData(item);
+                setPrefWidth(200);
                 setGraphic(parent);
                 setPrefHeight(60);
             } catch (IOException e) {
@@ -48,14 +58,17 @@ public class ContactListCell extends ListCell<User> {
         }
         setOnMouseClicked(mouseEvent -> {
 
-            if (item != null) {
-
-                Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
-                ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room);
-                chatRoomController.createOrSetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
-
+            if (item != null ) {
+                if(!isGroupChatController){
+                    Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
+                    ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room , homeController);
+                    ChatRoom chatRoom = chatRoomController.createOrGetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
+                    chatRoomController.loadChatRoom(chatRoom);
+                }
+                else{
+                    groupChatController.contactListAction(mouseEvent,item);
+                }
             }
-
         });
 
     }

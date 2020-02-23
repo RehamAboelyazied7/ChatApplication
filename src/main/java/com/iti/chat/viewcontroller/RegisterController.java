@@ -90,6 +90,8 @@ public class RegisterController implements Initializable {
 
     @FXML
     private Button cancelButton;
+
+    File selectedFile ;
     //error tooltips to explain what is wrong with data validation
     Tooltip passwordTooltip = new Tooltip("Password must contains a small letter" +
             ", a capital letter, a number and a special character and must contains at least 8 characters.");
@@ -152,6 +154,9 @@ public class RegisterController implements Initializable {
             user.setEmail("a@a.com");
             try {
                 delegate.register(user, passwordTextField.getText());
+                if(selectedFile != null) {
+                    delegate.uploadImage(selectedFile,user);
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (DuplicatePhoneException e) {
@@ -329,7 +334,8 @@ public class RegisterController implements Initializable {
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
-        File selectedFile = fileChooser.showOpenDialog(((Stage) (rootPane.getScene().getWindow())));
+         selectedFile = fileChooser.showOpenDialog(stage);
+
         if (selectedFile != null) {
 
             URI uri = selectedFile.toURI();

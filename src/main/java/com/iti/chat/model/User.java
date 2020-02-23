@@ -1,14 +1,27 @@
 package com.iti.chat.model;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name = "UserType" , propOrder = {
+        "firstName",
+        "lastName",
+        "email",
+        "phone"
+})
 public class User implements Comparable<User>, Serializable {
+
+    @XmlElement(name = "FirstName")
     private String firstName;
+    @XmlElement(name = "LastName")
     private String lastName;
     private int id;
+    @XmlElement(name = "Email")
     private String email;
+    @XmlElement(name = "Phone")
     private String phone;
     private int status;
     private int gender;
@@ -25,7 +38,6 @@ public class User implements Comparable<User>, Serializable {
         chatRooms = new ArrayList<>();
         country = "Egypt";
         status = UserStatus.OFFLINE;
-        remoteImagePath = "/Users/Hossiny/Downloads/blue-background.jpg";
     }
 
     public User (String firstName, String lastName, String phone, String email, int gender, String country){

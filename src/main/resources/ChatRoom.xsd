@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+  <xs:element name="chatRoom" type="ChatRoomType"/>
+
+  <xs:complexType name="ChatRoomType">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string" minOccurs="0"/>
+      <xs:element name="User" type="UserType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="Message" type="MessageType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserType">
+    <xs:sequence>
+      <xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+      <xs:element name="LastName" type="xs:string" minOccurs="0"/>
+      <xs:element name="Email" type="xs:string" minOccurs="0"/>
+      <xs:element name="Phone" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MessageType">
+    <xs:sequence>
+      <xs:element name="Sender" type="UserType" minOccurs="0"/>
+      <xs:element name="Content" type="xs:string" minOccurs="0"/>
+      <xs:element name="Style" type="MessageStyleType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MessageStyleType">
+    <xs:sequence>
+      <xs:element name="FontFamily" type="xs:string" minOccurs="0"/>
+      <xs:element name="Size" type="xs:int"/>
+      <xs:element name="Color" type="xs:string" minOccurs="0"/>
+      <xs:element name="FontWeight" type="xs:string" minOccurs="0"/>
+      <xs:element name="FontPosture" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
