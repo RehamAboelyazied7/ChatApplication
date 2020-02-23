@@ -22,11 +22,11 @@ public class ChatRoomDelegate {
         this.clientServiceProvider = client;
     }
 
-    public void sendMessage(Message message, ChatRoom room) throws RemoteException, NotBoundException {
-        clientServiceProvider.sendMessage(message, room);
+    public void sendMessage(Message message, int roomId) throws RemoteException, NotBoundException {
+        clientServiceProvider.sendMessage(message, roomId);
     }
-    public void sendFile(Message message, File file, ChatRoom room) throws IOException, NotBoundException {
-        clientServiceProvider.sendFile(message, file, room);
+    public void sendFile(Message message, File file, int roomId) throws IOException, NotBoundException {
+        clientServiceProvider.sendFile(message, file, roomId);
     }
     public void receiveFile(RemoteInputStream remoteInputStream) throws IOException {
         chatRoomController.receiveFile(remoteInputStream);
@@ -43,5 +43,9 @@ public class ChatRoomDelegate {
 
     public ChatRoom createNewChatRoom(List<User> users) throws RemoteException, NotBoundException {
         return clientServiceProvider.createNewChatRoom(users);
+    }
+
+    public ChatRoom getChatRoom(int roomId) throws RemoteException {
+        return clientServiceProvider.getChatRoom(roomId);
     }
 }

@@ -25,7 +25,7 @@ public class ChatRoom implements Serializable{
     @XmlElement(name = "Name")
     private String name;
 
-    static int counter = 0;
+    static int counter = 1;
 
     public ChatRoom() {
         id = counter++;

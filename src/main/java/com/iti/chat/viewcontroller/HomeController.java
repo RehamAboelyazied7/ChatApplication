@@ -4,7 +4,6 @@ import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.service.ServerServices;
 import com.iti.chat.service.SessionService;
 import com.iti.chat.util.Animator;
 import com.iti.chat.util.FileTransfer;
@@ -13,7 +12,6 @@ import com.iti.chat.util.Session;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,22 +22,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -301,32 +293,6 @@ public class HomeController implements Initializable {
         System.out.println("add items"+notificationListController.addList().getItems().size());
 
         */
-    }
-
-    public void uploadFile(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        File selectedFile = fileChooser.showOpenDialog(stage);
-        if (selectedFile != null) {
-            fileTransferProgressController = createFileTransfer(selectedFile.length());
-            StackPane container = new StackPane();
-            chatRoomController.getMessagesVBox().getChildren().add(container);
-            fileTransferProgressController.willStartTransfer(container);
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            executorService.submit(() -> {
-                try {
-                    Message message = new Message(selectedFile.getName(), Session.getInstance().getUser(), MessageType.ATTACHMENT_MESSAGE);
-                    client.sendFile(message, selectedFile, room);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (NotBoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
     }
 
     public void didSendNBytes(long n) {

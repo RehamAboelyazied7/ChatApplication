@@ -88,7 +88,7 @@ public class SceneTransition {
             ChatRoomDelegate delegate = new ChatRoomDelegate(client, chatRoomController);
             client.setChatRoomDelegate(delegate);
             chatRoomController.setDelegate(delegate);
-            chatRoomController.setCurrentChatRoom(room);
+            //chatRoomController.setCurrentChatRoom(room);
             rightVBox.getChildren().clear();
             rightVBox.getChildren().add(parent);
             VBox.setVgrow(parent, Priority.ALWAYS);

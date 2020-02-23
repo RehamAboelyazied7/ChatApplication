@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public interface ClientService extends Remote {
     User getUser() throws RemoteException;
     void setUser(User user) throws RemoteException, NotBoundException;
-    void sendMessage(Message message, ChatRoom room) throws RemoteException, NotBoundException;
+    void sendMessage(Message message, int roomId) throws RemoteException, NotBoundException;
     void receiveMessage(Message message) throws RemoteException;
     void receiveNotification(Notification notification) throws RemoteException;
     void updateUserInfo(User user) throws RemoteException, SQLException, NotBoundException;

@@ -52,17 +52,15 @@ public class ChatRoomController implements Initializable {
 
     private ClientServiceProvider model;
 
-    private ChatRoom currentChatRoom;
     Stage stage;
-
-
-    ClientServiceProvider client;
 
     ChatRoomDelegate delegate;
 
     File savePath;
 
     ExecutorService executorService;
+
+    int roomId;
 
     public RichTextAreaController getRichTextAreaController() {
         return richTextAreaController;
@@ -81,7 +79,7 @@ public class ChatRoomController implements Initializable {
         });
         richTextAreaController.getSendButton().setOnAction(as -> {
             try {
-                delegate.sendMessage(getRichTextAreaController().getMessage(), currentChatRoom);
+                delegate.sendMessage(getRichTextAreaController().getMessage(), roomId);
                 getRichTextAreaController().clearText();
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -103,17 +101,12 @@ public class ChatRoomController implements Initializable {
 
     public void setDelegate(ChatRoomDelegate delegate) {
         this.delegate = delegate;
-        currentChatRoom = new ChatRoom();
-        currentChatRoom.addUser(Session.getInstance().getUser());
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    public void setClient(ClientServiceProvider client) {
-        //this.client = client;
-    }
 
     public void receiveFile(RemoteInputStream remoteInputStream) {
         initThreadPool();
@@ -183,9 +176,9 @@ public class ChatRoomController implements Initializable {
     }
 
     public void receiveMessage(Message message) {
-        currentChatRoom.getMessages().add(message);
-        printMessageOnChatRoom(message);
-
+        if(message.getChatRoom().getId() == roomId) {
+            printMessageOnChatRoom(message);
+        }
     }
 
     public void printMessageOnChatRoom(Message message) {
@@ -211,7 +204,7 @@ public class ChatRoomController implements Initializable {
             executorService.submit(() -> {
                 try {
                     Message message = new Message(selectedFile.getName(), Session.getInstance().getUser(), MessageType.ATTACHMENT_MESSAGE);
-                    delegate.sendFile(message, selectedFile, currentChatRoom);
+                    delegate.sendFile(message, selectedFile, roomId);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (FileNotFoundException e) {
@@ -226,42 +219,43 @@ public class ChatRoomController implements Initializable {
     }
 
 
-    public void createOrSetChatRoom(List<User> users) {
-        User currentUser = Session.getInstance().getUser();
-        ChatRoom chatRoom = currentUser.getSharedChatRoom(users);
-        if (chatRoom == null) {
-            try {
-                setCurrentChatRoom(delegate.createNewChatRoom(users));
-                Session.getInstance().getUser().getChatRooms().add(currentChatRoom);
+    public ChatRoom createOrGetChatRoom(List<User> users) {
+        try {
+            return delegate.createNewChatRoom(users);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (NotBoundException e) {
-                e.printStackTrace();
-            }
-        } else {
+    public void refresh() {
+        messagesVBox.getChildren().clear();
+        loadChatRoom(getCurrentChatRoom());
+    }
 
-            setCurrentChatRoom(chatRoom);
+    public void loadChatRoom(ChatRoom chatRoom) {
+        roomId = chatRoom.getId();
+        messagesVBox.getChildren().clear();
+
+        for (int i = 0; i < chatRoom.getMessages().size(); i++) {
+            Message msg = chatRoom.getMessages().get(i);
+            printMessageOnChatRoom(msg);
 
         }
     }
 
     public ChatRoom getCurrentChatRoom() {
-        return currentChatRoom;
-    }
-
-    public void setCurrentChatRoom(ChatRoom currentChatRoom) {
-
-        this.currentChatRoom = currentChatRoom;
-        messagesVBox.getChildren().clear();
-
-        for (int i = 0; i < currentChatRoom.getMessages().size(); i++) {
-            Message msg = currentChatRoom.getMessages().get(i);
-            printMessageOnChatRoom(msg);
-
+        try {
+            return delegate.getChatRoom(roomId);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
-
+        return null;
     }
+
+
 
     public VBox getMessagesVBox() {
         return messagesVBox;

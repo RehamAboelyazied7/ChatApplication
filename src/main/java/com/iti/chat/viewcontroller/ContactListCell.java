@@ -62,7 +62,8 @@ public class ContactListCell extends ListCell<User> {
                 if(!isGroupChatController){
                     Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
                     ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room , homeController);
-                    chatRoomController.createOrSetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
+                    ChatRoom chatRoom = chatRoomController.createOrGetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
+                    chatRoomController.loadChatRoom(chatRoom);
                 }
                 else{
                     groupChatController.contactListAction(mouseEvent,item);
