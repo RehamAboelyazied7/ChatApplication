@@ -446,8 +446,8 @@ public class HomeController implements Initializable {
 
     public void receiveAnnouncment(Message announcment) {
         System.out.println("recieved announcment" + announcment.getContent());
-//          PushNotification pushNotification=new PushNotification();
-//          pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
+          PushNotification pushNotification=new PushNotification();
+          pushNotification.createNotify(announcment,6);
     }
     public VBox getEditableBox() {
         return editableBox;

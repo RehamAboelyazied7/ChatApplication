@@ -9,4 +9,5 @@ public class NotificationType implements Serializable{
     public static final int MESSAGE_RECEIVED = 4;
     public static final int STATUS_UPDATE = 5;
 
+
 }
