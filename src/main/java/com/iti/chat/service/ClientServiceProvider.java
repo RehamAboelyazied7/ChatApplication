@@ -38,7 +38,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     Registry registry;
 
     public ClientServiceProvider() throws RemoteException {
-        registry = LocateRegistry.getRegistry(4000);
+        registry = LocateRegistry.getRegistry( 4000);
     }
 
     public void setChatRoomDelegate(ChatRoomDelegate chatRoomDelegate) {
@@ -72,9 +72,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     @Override
-    public void sendMessage(Message message, ChatRoom room) throws RemoteException, NotBoundException {
+    public void sendMessage(Message message, int roomId) throws RemoteException, NotBoundException {
         initChatRoomService();
-        chatRoomService.sendMessage(message, room);
+        chatRoomService.sendMessage(message, roomId);
        /*  System.out.println("recieve");
        for (int i = 0; i < room.getUsers().size(); i++) {
             if (!message.getSender().equals(room.getUsers().get(i))) {
@@ -88,11 +88,11 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         */
     }
 
-    public void sendFile(Message message, File file, ChatRoom room) throws IOException, NotBoundException {
+    public void sendFile(Message message, File file, int roomId) throws IOException, NotBoundException {
         initChatRoomService();
         InputStream inputStream = new FileInputStream(file.getAbsolutePath());
         RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
-        chatRoomService.sendFile(message, room, remoteFileData);
+        chatRoomService.sendFile(message, roomId, remoteFileData);
     }
 
     public void downloadFile(RemoteInputStream remoteInputStream) throws IOException {
@@ -126,7 +126,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         //chatRoomController.receiveMessage(message);
         // PushNotification.createNotify(message);
         //chatRoomController.receiveMessage(message);
-        chatRoomDelegate.receiveMessage(message);
+        if(chatRoomDelegate != null) {
+            chatRoomDelegate.receiveMessage(message);
+        }
     }
 
     public ChatRoom createNewChatRoom(List<User> users) throws RemoteException, NotBoundException {
@@ -258,4 +260,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     }
 
+    public ChatRoom getChatRoom(int roomId) throws RemoteException {
+        return chatRoomService.getChatRoom(roomId);
+    }
 }
