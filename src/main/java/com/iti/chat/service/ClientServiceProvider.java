@@ -218,4 +218,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         controller.receiveAnnouncment(announcment);
     }
 
+    public List<User> searchByphone(String phone) throws RemoteException, SQLException, NotBoundException {
+        initFriendRequestService();
+        return friendRequestsService.searchByPhone(phone);
+    }
+
 }
