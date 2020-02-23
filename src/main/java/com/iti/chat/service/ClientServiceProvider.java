@@ -236,7 +236,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     @Override
-    public void recieveAnnouncment(String announcment) throws RemoteException {
+    public void recieveAnnouncment(Message announcment) throws RemoteException {
         System.out.println("inside receive ann");
         controller.receiveAnnouncment(announcment);
     }

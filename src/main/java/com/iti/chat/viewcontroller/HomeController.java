@@ -355,10 +355,10 @@ public class HomeController implements Initializable {
         this.fileTransferProgressController = fileTransferProgressController;
     }
 
-    public void receiveAnnouncment(String announcment) {
-          System.out.println("recieved announcment" + announcment);
-          PushNotification pushNotification=new PushNotification();
-          pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
+    public void receiveAnnouncment(Message announcment) {
+          System.out.println("recieved announcment" + announcment.getContent());
+//          PushNotification pushNotification=new PushNotification();
+//          pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
     }
 }
 
