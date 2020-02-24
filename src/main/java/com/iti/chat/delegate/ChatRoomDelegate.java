@@ -45,7 +45,9 @@ public class ChatRoomDelegate {
         return clientServiceProvider.createNewChatRoom(users);
     }
 
-    public ChatRoom getChatRoom(int roomId) throws RemoteException {
+    public ChatRoom getChatRoom(int roomId) throws RemoteException, NotBoundException {
         return clientServiceProvider.getChatRoom(roomId);
     }
+
+
 }

@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -61,6 +62,18 @@
                           </HBox.margin>
                       </JFXButton>
                   <JFXToggleButton fx:id="chatBot" onAction="#enableChatBot" text="ChatBot" textFill="#1a0be1" />
+                  <JFXComboBox id="status_combo_box" fx:id="status_combo_box" blendMode="SRC_ATOP" focusColor="#575757" prefHeight="26.0" prefWidth="148.0" unFocusColor="#1a0be1">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </opaqueInsets>
+                     <styleClass>
+                        <String fx:value="my-list-cell" />
+                        <String fx:value="text-field" />
+                     </styleClass>
+                  </JFXComboBox>
                </children>
                <VBox.margin>
                   <Insets />

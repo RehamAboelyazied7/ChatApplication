@@ -4,11 +4,12 @@ import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
-import com.iti.chat.util.ColorUtils;
+import com.iti.chat.util.ImageCache;
 import com.iti.chat.util.JFXCountryComboBox;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
 import com.iti.chat.validator.RegisterValidation;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,10 +25,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class UserProfileController implements Initializable {
@@ -64,7 +66,8 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private TextField phoneField;
-
+    @FXML
+    private JFXComboBox<String> status_combo_box;
     @FXML
     private ComboBox<String> countryField;
 
@@ -94,6 +97,7 @@ public class UserProfileController implements Initializable {
     private String country;
 
     User currentUser;
+    File selectedImage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -110,12 +114,50 @@ public class UserProfileController implements Initializable {
                 userImage.setFill(new ImagePattern(image));
             }
         });
+        status_combo_box.getItems().removeAll(status_combo_box.getItems());
+         status_combo_box.getItems().addAll(UserStatus.statusToString(0),UserStatus.statusToString(1),UserStatus.statusToString(2),UserStatus.statusToString(3));
+         status_combo_box.getSelectionModel().select(3);
+         int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
+        status_combo_box.getSelectionModel().select(selectedIndex);
 
+
+    }
+
+
+    public void setImage(Image image) {
+        userImage.setFill(new ImagePattern(image));
     }
 
     public void setDelegate(UserInfoDelegate delegate) {
 
         this.delegate = delegate;
+        status_combo_box.setOnAction(e->{
+            switch (status_combo_box.getValue()){
+                case "offline":
+                    currentUser.setStatus(UserStatus.OFFLINE);
+                    break;
+                case "busy":
+                    currentUser.setStatus(UserStatus.BUSY);
+                    break;
+                case "away":
+                    currentUser.setStatus(UserStatus.AWAY);
+                    break;
+                default:
+                    currentUser.setStatus(UserStatus.ONLINE);
+                    break;
+            }
+            try {
+                delegate.getClient().updateUserInfo(currentUser);
+                delegate.getClient().sessionService.userInfoDidChange(currentUser);
+                setUserStatus();
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+
+            }
+
+
+        });
+
     }
 
     public void setStage(Stage stage) {
@@ -165,8 +207,6 @@ public class UserProfileController implements Initializable {
                 lastName += tempName[i];
             }
 
-
-            //User currentUser = new User();
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
             currentUser.setBio(bio);
@@ -175,11 +215,17 @@ public class UserProfileController implements Initializable {
             currentUser.setCountry(country);
             try {
                 delegate.updateUserInfo(currentUser);
+                if(selectedImage != null) {
+                    delegate.uploadImage(selectedImage, currentUser);
+                    delegate.imageChanged();
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             collectData();
@@ -260,9 +306,10 @@ public class UserProfileController implements Initializable {
     private Image selectImage() {
         Image image = null;
         FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            image = new Image(file.toURI().toString());
+        selectedImage = fileChooser.showOpenDialog(stage);
+        if (selectedImage != null) {
+            image = new Image(selectedImage.toURI().toString());
+            ImageCache.getInstance().setImage(currentUser, image);
         }
         return image;
 
@@ -287,21 +334,22 @@ public class UserProfileController implements Initializable {
     private void setUserStatus() {
         if (currentUser.getStatus() == UserStatus.BUSY)
             userStatus.setFill(Color.RED);
-        else if (currentUser.getStatus() == UserStatus.OFFLINE)
+        else if (currentUser.getStatus() == UserStatus.OFFLINE) {
             userStatus.setFill(Color.GREY);
-        else if (currentUser.getStatus() == UserStatus.AWAY)
+        } else if (currentUser.getStatus() == UserStatus.AWAY)
             userStatus.setFill(Color.YELLOW);
-        else userStatus.setFill(Color.GREEN);
+        else
+            userStatus.setFill(Color.GREEN);
 
     }
 
     private void setUserGender() {
         if (currentUser.getGender() == Gender.FEMALE)
             genderImage.setImage(new Image(getClass().getResource("/view/icons/Female.png").toExternalForm()));
-            //System.out.println("Femlae");
+
         else if (currentUser.getGender() == Gender.MALE)
             genderImage.setImage(new Image(getClass().getResource("/view/icons/Male.png").toExternalForm()));
-        //System.out.println("male");
+
 
     }
 }

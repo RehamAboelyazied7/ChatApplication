@@ -1,7 +1,10 @@
 package com.iti.chat.viewcontroller;
 
+import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.User;
+import com.iti.chat.util.Animator;
 import com.iti.chat.util.GroupMemberBox;
+import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -21,6 +24,7 @@ import javafx.scene.shape.Circle;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -71,10 +75,15 @@ public class GroupChatController implements Initializable {
         groupMembersBoxList = new ArrayList<>();
     }
 
+    private ChatRoom room = new ChatRoom();
+
     @FXML
     public void submitGroup() {
 
         System.out.println(groupMembersList);
+        ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room, homeController);
+        ChatRoom chatRoom = chatRoomController.createOrGetChatRoom(groupMembersList);
+        chatRoomController.loadChatRoom(chatRoom);
     }
 
     public void contactListAction(Event mouseEvent, User user) {
@@ -97,16 +106,15 @@ public class GroupChatController implements Initializable {
 
     public void setHomeController(HomeController homeController) {
 
-            //this.homeController = homeController;
-            homeController.getEditableBox().getChildren().clear();
-            JFXButton createGroupBtn = new JFXButton("create Group chat");
-            homeController.getEditableBox().getChildren().add(createGroupBtn);
-            createGroupBtn.setOnAction((event)->{
-
-                homeController.getListView().setCellFactory(listView -> new ContactListCell(this));
-                homeController.getListViewBox().getChildren().clear();
-                homeController.getListViewBox().getChildren().add(homeController.getListView());
-            });
+        this.homeController = homeController;
+        homeController.getEditableBox().getChildren().clear();
+        JFXButton createGroupBtn = new JFXButton("create Group chat");
+        homeController.getEditableBox().getChildren().add(createGroupBtn);
+        createGroupBtn.setOnAction((event) -> {
+            homeController.getListView().setCellFactory(listView -> new ContactListCell(this));
+            homeController.getListViewBox().getChildren().clear();
+            homeController.getListViewBox().getChildren().add(homeController.getListView());
+        });
 
 
     }
