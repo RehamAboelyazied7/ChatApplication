@@ -33,6 +33,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
 import javafx.scene.control.Button;
 
 public class RegisterController implements Initializable {
@@ -43,7 +44,7 @@ public class RegisterController implements Initializable {
     @FXML
     private ImageView tempImageView;
 
-   // @FXML
+    // @FXML
     private AnchorPane rootPane;
 
     @FXML
@@ -91,19 +92,13 @@ public class RegisterController implements Initializable {
     @FXML
     private Button cancelButton;
 
-    File selectedFile ;
+    File selectedFile;
     //error tooltips to explain what is wrong with data validation
     Tooltip passwordTooltip = new Tooltip("Password must contains a small letter" +
             ", a capital letter, a number and a special character and must contains at least 8 characters.");
     Tooltip nameTooltip = new Tooltip("Please enter only characters");
     Tooltip phoneTooltip = new Tooltip("Please enter a valid number");
 
-    //Validation variables 0 -> empty , 1 -> valid -1 -> invalid
-    private int firstNameValidation;
-    private int lastNameValidation;
-    private int phoneValidation;
-    private int passwordValidation;
-    private boolean passwordMatchValidation;
     private RegisterDelegate delegate;
 
     SimpleBooleanProperty isMale = new SimpleBooleanProperty();
@@ -120,7 +115,6 @@ public class RegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-//        imageCircle.setFill(new ImagePattern(new Image("userIcon.png")));
         imageCircle.setFill(new ImagePattern(tempImageView.getImage()));
 
         firstNameTextField.setTooltip(nameTooltip);
@@ -135,27 +129,16 @@ public class RegisterController implements Initializable {
 
         if (validateInputValues()) {
 
-//            UserDAO userDAO = new UserDAOImpl();
-//            try {
-//
-//                System.out.println("B register");
-////                userDAO.register(firstNameTextField.getText(), lastNameTextField.getText(), phoneTextField.getText(),
-////                        passwordTextField.getText(), "");
-//
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            System.out.println("B register");
             User user = new User();
             user.setFirstName(firstNameTextField.getText());
             user.setLastName(lastNameTextField.getText());
             user.setGender(Gender.MALE);
             user.setPhone(phoneTextField.getText());
-            user.setEmail("a@a.com");
+            user.setEmail("");
             try {
                 delegate.register(user, passwordTextField.getText());
-                if(selectedFile != null) {
-                    delegate.uploadImage(selectedFile,user);
+                if (selectedFile != null) {
+                    delegate.uploadImage(selectedFile, user);
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -174,18 +157,51 @@ public class RegisterController implements Initializable {
 
     private boolean validateInputValues() {
 
+        //Validation variables 0 -> empty , 1 -> valid -1 -> invalid
+        int firstNameValidation;
+        int lastNameValidation;
+        int phoneValidation;
+        int passwordValidation;
+
         RegisterValidation validator = new RegisterValidation();
         boolean isValid = true;
-        boolean isPasswordValid = true;
 
         firstNameValidation = validator.checkName(firstNameTextField.getText());
         lastNameValidation = validator.checkName(lastNameTextField.getText());
         phoneValidation = validator.checkPhone(phoneTextField.getText());
         passwordValidation = validator.checkPass(passwordTextField.getText());
-        passwordMatchValidation = passwordTextField.getText().equals(confirmPasswordTextField.getText());
+
+        lastNameValidationBehaviour(lastNameValidation);
+        firstNameValidationBehaviour(firstNameValidation);
+        phoneValidationBehaviour(phoneValidation);
+        genderValidationBehaviour();
+        passwordValidationBehaviour(passwordValidation);
+
+        if (lastNameValidationBehaviour(lastNameValidation) &&
+                firstNameValidationBehaviour(firstNameValidation)
+                && phoneValidationBehaviour(phoneValidation) &&
+                genderValidationBehaviour()
+                && passwordValidationBehaviour(passwordValidation)) {
+
+            isValid = true;
+
+        } else {
+
+            isValid = false;
+
+        }
+
+        return isValid;
+
+    }
+
+    //validation behaviours
+    private boolean firstNameValidationBehaviour(int firstNameValidationParameter) {
+
+        boolean isValid;
 
         //validation conditions
-        switch (firstNameValidation) {
+        switch (firstNameValidationParameter) {
 
             case 0:
                 firstNameError.setFont(new Font(15));
@@ -201,10 +217,19 @@ public class RegisterController implements Initializable {
                 break;
             default:
                 firstNameError.setVisible(false);
+                isValid = true;
         }
 
-        //last name
-        switch (lastNameValidation) {
+        return isValid;
+
+    }
+
+
+    private boolean lastNameValidationBehaviour(int lastNameValidationParameter) {
+
+        boolean isValid;
+
+        switch (lastNameValidationParameter) {
 
             case 0:
                 lastNameError.setFont(new Font(15));
@@ -220,11 +245,41 @@ public class RegisterController implements Initializable {
                 break;
             default:
                 lastNameError.setVisible(false);
+                isValid = true;
 
         }
 
+        return isValid;
+
+    }
+
+    private boolean genderValidationBehaviour() {
+
+        boolean isValid = !(maleRadioButton.selectedProperty().getValue() == false
+                && femaleRadioButton.selectedProperty().getValue() == false);
+
+        //gender checking
+        if (!isValid) {
+
+            genderError.setText("Select gender");
+            genderError.setFont(new Font(15));
+            genderError.setVisible(true);
+
+        } else {
+
+            genderError.setVisible(false);
+
+        }
+        return isValid;
+
+    }
+
+    private boolean phoneValidationBehaviour(int phoneValidationParameter) {
+
+        boolean isValid;
+
         //Phone Number
-        switch (phoneValidation) {
+        switch (phoneValidationParameter) {
 
             case 0:
                 phoneNumberError.setFont(new Font(15));
@@ -240,24 +295,19 @@ public class RegisterController implements Initializable {
                 break;
             default:
                 phoneNumberError.setVisible(false);
+                isValid = true;
         }
 
-        //gender checking
-        if (maleRadioButton.selectedProperty().getValue() == false
-                && femaleRadioButton.selectedProperty().getValue() == false) {
+        return isValid;
 
-            genderError.setText("Select gender");
-            genderError.setFont(new Font(15));
-            genderError.setVisible(true);
+    }
 
-        } else {
 
-            genderError.setVisible(false);
+    private boolean passwordValidationBehaviour(int passwordValidationParameter) {
 
-        }
+        boolean isValid;
 
-        //password validation
-        switch (passwordValidation) {
+        switch (passwordValidationParameter) {
 
             case 0:
                 passwordError.setFont(new Font(15));
@@ -265,23 +315,21 @@ public class RegisterController implements Initializable {
                 passwordError.setVisible(true);
                 confirmPasswordError.setVisible(false);
                 isValid = false;
-                isPasswordValid = false;
                 break;
             case -1:
-                System.out.println("password validation " + passwordValidation);
                 passwordError.setFont(new Font(15));
                 passwordError.setText("Password is invalid!");
                 passwordError.setVisible(true);
                 confirmPasswordError.setVisible(false);
                 isValid = false;
-                isPasswordValid = false;
                 break;
             default:
                 passwordError.setVisible(false);
+                isValid = true;
 
         }
 
-        if (!passwordTextField.getText().isEmpty() && isPasswordValid) {
+        if (!passwordTextField.getText().isEmpty() && isValid) {
             if (!passwordTextField.getText().equals(confirmPasswordTextField.getText())) {
 
                 confirmPasswordError.setFont(new Font(15));
@@ -295,10 +343,10 @@ public class RegisterController implements Initializable {
 
             }
         }
-        System.out.println(isValid);
-        return isValid;
-    }
 
+        return isValid;
+
+    }
 
     //handlers
     @FXML
@@ -322,9 +370,17 @@ public class RegisterController implements Initializable {
     @FXML
     public void cancelButtonActionHandler(ActionEvent event) {
 
-       // ((Stage) (rootPane.getScene().getWindow())).close();
-           Stage stage = (Stage) cancelButton.getScene().getWindow();
-           stage.close();
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        try {
+            SceneTransition.goToLoginScreen(stage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -334,19 +390,13 @@ public class RegisterController implements Initializable {
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
-         selectedFile = fileChooser.showOpenDialog(stage);
+        selectedFile = fileChooser.showOpenDialog(stage);
 
         if (selectedFile != null) {
 
             URI uri = selectedFile.toURI();
-//            imageCircle.setFill(new ImagePattern(new Image(selectedFile.getPath())));
-
-//            pictureImage.setImage(new Image());
-            System.out.println(selectedFile.toURI().toString());
-//            imageCircle.setFill(new ImagePattern(new Image(selectedFile.toURI().toString())));
             imageCircle.setFill(new ImagePattern(new Image(selectedFile.toURI().toString())));
 
-//
         }
 
     }

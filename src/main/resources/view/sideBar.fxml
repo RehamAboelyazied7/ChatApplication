@@ -12,14 +12,12 @@
 <VBox fx:id="sideBarVBox" alignment="TOP_CENTER" minWidth="64.0" prefHeight="389.0" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
    <children>
       <StackPane>
-         <Circle fill="white" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0">
+         <Circle fill="white" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0" fx:id="userImage">
             <VBox.margin>
                <Insets top="15.0" />
             </VBox.margin>
          </Circle>
-         <ImageView fx:id="userimage" fitHeight="40" fitWidth="40">
 
-         </ImageView>
       </StackPane>
 
       <HBox prefHeight="24.0" prefWidth="64.0" />

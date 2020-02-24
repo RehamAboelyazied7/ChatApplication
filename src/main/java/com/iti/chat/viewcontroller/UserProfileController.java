@@ -1,16 +1,16 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.delegate.UserInfoDelegate;
-import com.iti.chat.model.*;
-import com.iti.chat.util.ColorUtils;
+import com.iti.chat.model.Gender;
+import com.iti.chat.model.User;
+import com.iti.chat.model.UserStatus;
+import com.iti.chat.util.ImageCache;
 import com.iti.chat.util.JFXCountryComboBox;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
 import com.iti.chat.validator.RegisterValidation;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -23,13 +23,13 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class UserProfileController implements Initializable {
@@ -97,6 +97,7 @@ public class UserProfileController implements Initializable {
     private String country;
 
     User currentUser;
+    File selectedImage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -133,8 +134,6 @@ public class UserProfileController implements Initializable {
                     currentUser.setStatus(UserStatus.ONLINE);
                     break;
             }
-
-
             try {
                 delegate.getClient().sessionService.userInfoDidChange(currentUser);
                 delegate.getClient().updateUserInfo(currentUser);
@@ -148,6 +147,12 @@ public class UserProfileController implements Initializable {
         });
 
     }
+
+
+    public void setImage(Image image) {
+        userImage.setFill(new ImagePattern(image));
+    }
+
     public void setDelegate(UserInfoDelegate delegate) {
 
         this.delegate = delegate;
@@ -210,11 +215,17 @@ public class UserProfileController implements Initializable {
             currentUser.setCountry(country);
             try {
                 delegate.updateUserInfo(currentUser);
+                if(selectedImage != null) {
+                    delegate.uploadImage(selectedImage, currentUser);
+                    delegate.imageChanged();
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             collectData();
@@ -295,9 +306,10 @@ public class UserProfileController implements Initializable {
     private Image selectImage() {
         Image image = null;
         FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            image = new Image(file.toURI().toString());
+        selectedImage = fileChooser.showOpenDialog(stage);
+        if (selectedImage != null) {
+            image = new Image(selectedImage.toURI().toString());
+            ImageCache.getInstance().setImage(currentUser, image);
         }
         return image;
 

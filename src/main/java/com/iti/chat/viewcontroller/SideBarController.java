@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,7 +31,7 @@ public class SideBarController implements Initializable {
     private ImageView notificationImageView;
 
     @FXML
-    private ImageView userimage;
+    private Circle userImage;
 
     @FXML
     private ImageView chatImageView;
@@ -111,8 +112,8 @@ public class SideBarController implements Initializable {
         this.signOutImageView = signOutImageView;
     }
 
-    public ImageView getUserimage() {
-        return userimage;
+    public Circle getUserimage() {
+        return userImage;
     }
 
     public ImageView getChatImageView() {

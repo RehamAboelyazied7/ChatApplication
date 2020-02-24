@@ -2,10 +2,12 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
+import com.iti.chat.util.ImageCache;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -44,6 +46,10 @@ public class ContactListController implements Initializable {
             userStatus.setFill(Color.GREY);
         }else{
             userStatus.setFill(Color.YELLOW);
+        }
+        Image image = ImageCache.getInstance().getImage(user);
+        if(image != null) {
+            userImage.setFill(new ImagePattern(image));
         }
     }
 
