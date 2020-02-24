@@ -4,8 +4,12 @@ import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
-import com.iti.chat.util.*;
+import com.iti.chat.util.ImageCache;
+import com.iti.chat.util.JFXCountryComboBox;
+import com.iti.chat.util.JFXDialogFactory;
+import com.iti.chat.util.Session;
 import com.iti.chat.validator.RegisterValidation;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class UserProfileController implements Initializable {
@@ -62,7 +66,8 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private TextField phoneField;
-
+    @FXML
+    private JFXComboBox<String> status_combo_box;
     @FXML
     private ComboBox<String> countryField;
 
@@ -109,8 +114,40 @@ public class UserProfileController implements Initializable {
                 userImage.setFill(new ImagePattern(image));
             }
         });
+        status_combo_box.getItems().removeAll(status_combo_box.getItems());
+         status_combo_box.getItems().addAll(UserStatus.statusToString(0),UserStatus.statusToString(1),UserStatus.statusToString(2),UserStatus.statusToString(3));
+         status_combo_box.getSelectionModel().select(3);
+         int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
+        status_combo_box.getSelectionModel().select(selectedIndex);
+        status_combo_box.setOnAction(e->{
+            switch (status_combo_box.getValue()){
+                case "offline":
+                    currentUser.setStatus(UserStatus.OFFLINE);
+                    break;
+                case "busy":
+                    currentUser.setStatus(UserStatus.BUSY);
+                    break;
+                case "away":
+                    currentUser.setStatus(UserStatus.AWAY);
+                    break;
+                default:
+                    currentUser.setStatus(UserStatus.ONLINE);
+                    break;
+            }
+            try {
+                delegate.updateUserInfo(currentUser);
+                setUserStatus();
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } catch (NotBoundException ex) {
+                ex.printStackTrace();
+            }
+        });
 
     }
+
 
     public void setImage(Image image) {
         userImage.setFill(new ImagePattern(image));
@@ -297,11 +334,12 @@ public class UserProfileController implements Initializable {
     private void setUserStatus() {
         if (currentUser.getStatus() == UserStatus.BUSY)
             userStatus.setFill(Color.RED);
-        else if (currentUser.getStatus() == UserStatus.OFFLINE)
+        else if (currentUser.getStatus() == UserStatus.OFFLINE) {
             userStatus.setFill(Color.GREY);
-        else if (currentUser.getStatus() == UserStatus.AWAY)
+        } else if (currentUser.getStatus() == UserStatus.AWAY)
             userStatus.setFill(Color.YELLOW);
-        else userStatus.setFill(Color.GREEN);
+        else
+            userStatus.setFill(Color.GREEN);
 
     }
 

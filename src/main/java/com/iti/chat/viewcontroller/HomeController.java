@@ -148,6 +148,9 @@ public class HomeController implements Initializable {
             try {
 
                 Animator.suspendIconAnimation(sideBarController.getProfileImageView());
+                notificationListView.setVisible(false);
+                listView.setVisible(true);
+                changeList=1;
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
                 Parent parent = loader.load();
@@ -444,8 +447,8 @@ public class HomeController implements Initializable {
 
     public void receiveAnnouncment(Message announcment) {
         System.out.println("recieved announcment" + announcment.getContent());
-//          PushNotification pushNotification=new PushNotification();
-//          pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
+          PushNotification pushNotification=new PushNotification();
+          pushNotification.createNotify(announcment,6);
     }
     public VBox getEditableBox() {
         return editableBox;
