@@ -19,11 +19,11 @@ public interface ClientService extends Remote {
     void sendMessage(Message message, int roomId) throws RemoteException, NotBoundException;
     void receiveMessage(Message message) throws RemoteException;
     void receiveNotification(Notification notification) throws RemoteException;
-    void updateUserInfo(User user) throws RemoteException, SQLException, NotBoundException;
+    void updateUserInfo(User user) throws RemoteException, SQLException;
     void updateUserPassword(User user) throws RemoteException, SQLException;
     void didSendNBytes(long n) throws RemoteException;
     void downloadFile(RemoteInputStream remoteInputStream) throws IOException;
-    void downloadImage(RemoteInputStream remoteInputStream) throws IOException;
+    void downloadImage(User user, RemoteInputStream remoteInputStream) throws IOException;
     void recieveAnnouncment (Message announcment)throws RemoteException;
     void userInfoDidChange(User user) throws RemoteException;
     void uploadImage(File file, User user) throws IOException, NotBoundException, SQLException;

@@ -5,10 +5,7 @@ import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.service.SessionService;
-import com.iti.chat.util.Animator;
-import com.iti.chat.util.FileTransfer;
-import com.iti.chat.util.SceneTransition;
-import com.iti.chat.util.Session;
+import com.iti.chat.util.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -91,30 +89,55 @@ public class HomeController implements Initializable {
     }
 
     private void didSetClient() {
+        UserInfoDelegate infoDelegate = new UserInfoDelegate(client, userProfileController);
+        userProfileController.setDelegate(infoDelegate);
+        ObservableList<User> userObservableList = FXCollections.observableList(client.getUser().getFriends());
+        listView.setItems(userObservableList);
+        setImage();
+        loadFriendsImages();
+        ObservableList<ChatRoom> chatRooms = null;
         try {
-            if (client.getUser().getRemoteImagePath() != null) {
-                client.requestImageDownload(client.getUser().getRemoteImagePath());
-            }
-            UserInfoDelegate infoDelegate = new UserInfoDelegate(client, userProfileController);
-            userProfileController.setDelegate(infoDelegate);
-            ObservableList<User> userObservableList = FXCollections.observableList(client.getUser().getFriends());
-            listView.setItems(userObservableList);
-            try {
-                System.out.println(client);
-                System.out.println(client.getUser());
-                System.out.println(client.getGroupChatRooms(client.getUser()));
-                ObservableList<ChatRoom> chatRooms = FXCollections.observableList(client.getGroupChatRooms(client.getUser()));
+            chatRooms = FXCollections.observableList(client.getGroupChatRooms(client.getUser()));
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        } catch (NotBoundException ex) {
+            ex.printStackTrace();
+        }
+        chatRoomListView = new ListView<ChatRoom>(chatRooms);
+    }
 
+    private void loadFriendsImages() {
+        client.getUser().getFriends().stream().filter(user -> user.getRemoteImagePath() != null)
+                .forEach(user -> {
+                    Image image = ImageCache.getInstance().getImage(user);
+                    if(image == null) {
+                        try {
+                            client.requestImageDownload(user);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (NotBoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
-                System.out.println(chatRooms);
-                chatRoomListView = new ListView<ChatRoom>(chatRooms);
-            } catch (RemoteException e) {
-                e.printStackTrace();
+    public void setImage() {
+        if(client.getUser().getRemoteImagePath() != null) {
+            Image image = ImageCache.getInstance().getImage(client.getUser());
+            if(image == null) {
+                try {
+                    client.requestImageDownload(client.getUser());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (NotBoundException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
+            else {
+                sideBarController.getUserimage().setFill(new ImagePattern(image));
+                userProfileController.setImage(image);
+            }
         }
     }
 
@@ -135,6 +158,9 @@ public class HomeController implements Initializable {
             try {
 
                 Animator.suspendIconAnimation(sideBarController.getProfileImageView());
+                notificationListView.setVisible(false);
+                listView.setVisible(true);
+                changeList=1;
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
                 Parent parent = loader.load();
@@ -280,9 +306,18 @@ public class HomeController implements Initializable {
         setContactsImageHandler();
     }
 
-    public void receiveImage(RemoteInputStream remoteInputStream) throws IOException {
+    public void receiveImage(User user, RemoteInputStream remoteInputStream) throws IOException {
         Image image = FileTransfer.downloadImage(remoteInputStream);
-        sideBarController.getUserimage().setImage(image);
+        ImageCache.getInstance().setImage(user, image);
+        if(client.getUser().equals(user)) {
+            sideBarController.getUserimage().setFill(new ImagePattern(image));
+            if(userProfileController != null) {
+                userProfileController.setImage(image);
+            }
+        }
+        else {
+            refresh();
+        }
 
     }
 
@@ -313,7 +348,8 @@ public class HomeController implements Initializable {
         PushNotification pushNotification = new PushNotification();
         // notificationView();
         pushNotification.initializeNotify(notification);
-        System.out.println("recieve Notification");
+        System.out.println("recieve Notification"+"source "+notification.getSource()+"reciever"+notification.getReceiver());
+
         if (notification.notificationType == NotificationType.STATUS_UPDATE) {
 
             friendStatusChangeNotificationBehaviour(notification);
@@ -422,8 +458,8 @@ public class HomeController implements Initializable {
 
     public void receiveAnnouncment(Message announcment) {
         System.out.println("recieved announcment" + announcment.getContent());
-//          PushNotification pushNotification=new PushNotification();
-//          pushNotification.createNotify(announcment,NotificationType.MESSAGE_RECEIVED);
+          PushNotification pushNotification=new PushNotification();
+          pushNotification.createNotify(announcment,6);
     }
 
     public VBox getEditableBox() {

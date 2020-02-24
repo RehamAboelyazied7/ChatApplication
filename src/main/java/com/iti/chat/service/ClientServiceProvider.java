@@ -3,16 +3,12 @@ package com.iti.chat.service;
 import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.healthmarketscience.rmiio.RemoteInputStreamServer;
 import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
-import com.iti.chat.dao.NotificationDAO;
 import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
 import com.iti.chat.viewcontroller.NotificationListController;
 import com.iti.chat.viewcontroller.PushNotification;
-import javafx.application.Platform;
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -75,17 +71,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendMessage(Message message, int roomId) throws RemoteException, NotBoundException {
         initChatRoomService();
         chatRoomService.sendMessage(message, roomId);
-       /*  System.out.println("recieve");
-       for (int i = 0; i < room.getUsers().size(); i++) {
-            if (!message.getSender().equals(room.getUsers().get(i))) {
-                System.out.println("loop notification");
-                PushNotification pushNotification=new PushNotification();
-                Notification notification=new Notification(message.getSender(),room.getUsers().get(i),NotificationType.MESSAGE_RECEIVED);
-                pushNotification.createNotify(notification);
-            }
-        }
+         System.out.println("recieve");
 
-        */
+
     }
 
     public void sendFile(Message message, File file, int roomId) throws IOException, NotBoundException {
@@ -106,8 +94,8 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         sessionService.uploadImage(remoteFileData ,this , user);
     }
 
-    public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
-        controller.receiveImage(remoteInputStream);
+    public void downloadImage(User user, RemoteInputStream remoteInputStream) throws IOException {
+        controller.receiveImage(user, remoteInputStream);
     }
 
     public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
@@ -115,10 +103,14 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         fileTransferService.downloadFile(remotePath, this);
     }
 
+    public void imageChanged() {
+        controller.setImage();
+    }
 
-    public void requestImageDownload(String remotePath) throws IOException, NotBoundException {
+
+    public void requestImageDownload(User user) throws IOException, NotBoundException {
         initFileTransferService();
-        fileTransferService.downloadImage(remotePath, this);
+        fileTransferService.downloadImage(user, this);
     }
 
     @Override
@@ -138,7 +130,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void receiveNotification(Notification notification) {
-
+        System.out.println("sender"+notification.getSource()+"reciever"+notification.getReceiver());
         controller.receiveNotification(notification);
      /*   notificationListController.setNotifications(notification);
         Platform.runLater(new Runnable() {
