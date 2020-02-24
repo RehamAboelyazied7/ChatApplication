@@ -251,6 +251,8 @@ public class ChatRoomController implements Initializable {
             return delegate.getChatRoom(roomId);
         } catch (RemoteException e) {
             e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
         }
         return null;
     }

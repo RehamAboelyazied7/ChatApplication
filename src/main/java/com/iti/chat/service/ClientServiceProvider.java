@@ -3,16 +3,12 @@ package com.iti.chat.service;
 import com.healthmarketscience.rmiio.RemoteInputStream;
 import com.healthmarketscience.rmiio.RemoteInputStreamServer;
 import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
-import com.iti.chat.dao.NotificationDAO;
 import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
 import com.iti.chat.viewcontroller.NotificationListController;
 import com.iti.chat.viewcontroller.PushNotification;
-import javafx.application.Platform;
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -75,17 +71,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendMessage(Message message, int roomId) throws RemoteException, NotBoundException {
         initChatRoomService();
         chatRoomService.sendMessage(message, roomId);
-       /*  System.out.println("recieve");
-       for (int i = 0; i < room.getUsers().size(); i++) {
-            if (!message.getSender().equals(room.getUsers().get(i))) {
-                System.out.println("loop notification");
-                PushNotification pushNotification=new PushNotification();
-                Notification notification=new Notification(message.getSender(),room.getUsers().get(i),NotificationType.MESSAGE_RECEIVED);
-                pushNotification.createNotify(notification);
-            }
-        }
+         System.out.println("recieve");
 
-        */
+
     }
 
     public void sendFile(Message message, File file, int roomId) throws IOException, NotBoundException {
@@ -142,7 +130,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void receiveNotification(Notification notification) {
-
+        System.out.println("sender"+notification.getSource()+"reciever"+notification.getReceiver());
         controller.receiveNotification(notification);
      /*   notificationListController.setNotifications(notification);
         Platform.runLater(new Runnable() {
@@ -154,8 +142,6 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         });
 
       */
-
-
     }
 
     private void initFriendRequestService() throws RemoteException, NotBoundException {
@@ -264,7 +250,12 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     }
 
-    public ChatRoom getChatRoom(int roomId) throws RemoteException {
+    public ChatRoom getChatRoom(int roomId) throws RemoteException, NotBoundException {
+        initChatRoomService();
         return chatRoomService.getChatRoom(roomId);
+    }
+    public List<ChatRoom> getGroupChatRooms(User user) throws RemoteException, NotBoundException {
+        initChatRoomService();
+        return chatRoomService.getGroupChatRooms(user);
     }
 }

@@ -135,15 +135,15 @@ public class UserProfileController implements Initializable {
                     break;
             }
             try {
-                delegate.updateUserInfo(currentUser);
+                delegate.getClient().sessionService.userInfoDidChange(currentUser);
+                delegate.getClient().updateUserInfo(currentUser);
                 setUserStatus();
             } catch (RemoteException ex) {
                 ex.printStackTrace();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            } catch (NotBoundException ex) {
-                ex.printStackTrace();
+
             }
+
+
         });
 
     }
@@ -205,8 +205,6 @@ public class UserProfileController implements Initializable {
                 lastName += tempName[i];
             }
 
-
-            //User currentUser = new User();
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
             currentUser.setBio(bio);
@@ -346,10 +344,10 @@ public class UserProfileController implements Initializable {
     private void setUserGender() {
         if (currentUser.getGender() == Gender.FEMALE)
             genderImage.setImage(new Image(getClass().getResource("/view/icons/Female.png").toExternalForm()));
-            //System.out.println("Femlae");
+
         else if (currentUser.getGender() == Gender.MALE)
             genderImage.setImage(new Image(getClass().getResource("/view/icons/Male.png").toExternalForm()));
-        //System.out.println("male");
+
 
     }
 }
