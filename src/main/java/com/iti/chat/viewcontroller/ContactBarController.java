@@ -1,7 +1,11 @@
 package com.iti.chat.viewcontroller;
 
+import com.iti.chat.model.ChatRoom;
+import com.iti.chat.model.Message;
 import com.iti.chat.util.Animator;
 //import com.iti.chat.util.XMLUtil;
+import com.iti.chat.util.ColorUtils;
+import com.iti.chat.util.Session;
 import com.iti.chat.util.XMLUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,7 +54,40 @@ public class ContactBarController implements Initializable {
 
             if (file != null) {
 
-                XMLUtil.saveRoomToXML(chatRoomController.getCurrentChatRoom(), file);
+                ChatRoom chatRoom = chatRoomController.getCurrentChatRoom();
+                for (Message message : chatRoom.getMessages()) {
+
+                    if (message.getSender().equals(Session.getInstance().getUser())) {
+
+                        message.setInRightDirection(true);
+                        if (ColorUtils.areSimilarColors(message.getStyle().getColor(), ChatPageController.RIGHT_MESSAGE_BUBBLE_COLOR)) {
+
+                            message.setBubbleColor(ColorUtils.invertedColor(ChatPageController.RIGHT_MESSAGE_BUBBLE_COLOR));
+
+                        } else {
+
+                            message.setBubbleColor(ChatPageController.RIGHT_MESSAGE_BUBBLE_COLOR);
+
+                        }
+
+                    } else {
+
+                        message.setInRightDirection(false);
+                        if (ColorUtils.areSimilarColors(message.getStyle().getColor(), ChatPageController.LEFT_MESSAGE_BUBBLE_COLOR)) {
+
+                            message.setBubbleColor(ColorUtils.invertedColor(ChatPageController.LEFT_MESSAGE_BUBBLE_COLOR));
+
+                        } else {
+
+                            message.setBubbleColor(ChatPageController.LEFT_MESSAGE_BUBBLE_COLOR);
+
+                        }
+
+                    }
+
+                }
+
+                XMLUtil.saveRoomToXML(chatRoom, file);
 
             }
         });
