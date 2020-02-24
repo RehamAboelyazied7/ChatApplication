@@ -119,6 +119,18 @@ public class UserProfileController implements Initializable {
          status_combo_box.getSelectionModel().select(3);
          int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
         status_combo_box.getSelectionModel().select(selectedIndex);
+
+
+    }
+
+
+    public void setImage(Image image) {
+        userImage.setFill(new ImagePattern(image));
+    }
+
+    public void setDelegate(UserInfoDelegate delegate) {
+
+        this.delegate = delegate;
         status_combo_box.setOnAction(e->{
             switch (status_combo_box.getValue()){
                 case "offline":
@@ -135,8 +147,8 @@ public class UserProfileController implements Initializable {
                     break;
             }
             try {
-                delegate.getClient().sessionService.userInfoDidChange(currentUser);
                 delegate.getClient().updateUserInfo(currentUser);
+                delegate.getClient().sessionService.userInfoDidChange(currentUser);
                 setUserStatus();
             } catch (RemoteException ex) {
                 ex.printStackTrace();
@@ -146,16 +158,6 @@ public class UserProfileController implements Initializable {
 
         });
 
-    }
-
-
-    public void setImage(Image image) {
-        userImage.setFill(new ImagePattern(image));
-    }
-
-    public void setDelegate(UserInfoDelegate delegate) {
-
-        this.delegate = delegate;
     }
 
     public void setStage(Stage stage) {

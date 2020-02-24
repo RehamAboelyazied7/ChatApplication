@@ -154,6 +154,9 @@ public class HomeController implements Initializable {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
                 Parent parent = loader.load();
+                userProfileController = loader.getController();
+                UserInfoDelegate infoDelegate = new UserInfoDelegate(client, userProfileController);
+                userProfileController.setDelegate(infoDelegate);
                 rightVBox.getChildren().clear();
                 rightVBox.getChildren().add(parent);
                 notificationListView.setVisible(false);
