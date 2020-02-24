@@ -1,6 +1,7 @@
 package com.iti.chat.viewcontroller;
 
 import com.healthmarketscience.rmiio.RemoteInputStream;
+import com.iti.chat.delegate.FriendRequestDelegate;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
@@ -31,6 +32,7 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,6 +59,7 @@ public class HomeController implements Initializable {
     private VBox listViewBox;
 
     ListView<ChatRoom> chatRoomListView;
+
 
 //    @FXML
 //    ListView<User> listView;
@@ -184,7 +187,7 @@ public class HomeController implements Initializable {
         });
     }
 
-    private void setMagnifierImageHandler() {
+    private void setMagnifierImageHandler() { //heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeere
 
 
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
@@ -192,6 +195,14 @@ public class HomeController implements Initializable {
             Animator.setIconAnimation(sideBarController.getContactsImageView());
             notificationListView.setVisible(false);
             listView.setVisible(true);
+            editableBox.getChildren().clear();
+            editableBox.getChildren().add(new Label("Add Friends"));
+            ContactsSearchBox contactsSearchBox= new ContactsSearchBox();
+            editableBox.getChildren().add(contactsSearchBox);
+            FriendRequestDelegate friendRequestDelegate = new FriendRequestDelegate(contactsSearchBox,client);
+            contactsSearchBox.setFriendRequestDelegate(friendRequestDelegate);
+            client.setFriendRequestDelegate(friendRequestDelegate);
+            //listViewBox.getChildren().add();
             changeList = 1;
 
         });

@@ -5,6 +5,7 @@ import com.healthmarketscience.rmiio.RemoteInputStreamServer;
 import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 import com.iti.chat.dao.NotificationDAO;
 import com.iti.chat.delegate.ChatRoomDelegate;
+import com.iti.chat.delegate.FriendRequestDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
@@ -34,6 +35,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
    public SessionService sessionService;
     FileTransferService fileTransferService;
     ChatRoomDelegate chatRoomDelegate;
+    FriendRequestDelegate friendRequestDelegate;
     NotificationListController notificationListController=new NotificationListController();
     Registry registry;
 
@@ -266,5 +268,13 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     public ChatRoom getChatRoom(int roomId) throws RemoteException {
         return chatRoomService.getChatRoom(roomId);
+    }
+
+    public FriendRequestDelegate getFriendRequestDelegate() {
+        return friendRequestDelegate;
+    }
+
+    public void setFriendRequestDelegate(FriendRequestDelegate friendRequestDelegate) {
+        this.friendRequestDelegate = friendRequestDelegate;
     }
 }

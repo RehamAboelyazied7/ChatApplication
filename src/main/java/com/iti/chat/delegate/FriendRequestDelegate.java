@@ -9,6 +9,7 @@ import com.iti.chat.model.User;
 import com.iti.chat.service.ClientService;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.service.FriendRequestsService;
+import com.iti.chat.viewcontroller.ContactsSearchBox;
 import com.iti.chat.viewcontroller.HomeController;
 import com.iti.chat.viewcontroller.UserProfileController;
 
@@ -20,10 +21,10 @@ import java.util.List;
 
 
 public class FriendRequestDelegate {
-    HomeController viewController;
+    ContactsSearchBox viewController;
     ClientServiceProvider client;
 
-    public FriendRequestDelegate(HomeController view,ClientServiceProvider client) {
+    public FriendRequestDelegate(ContactsSearchBox view,ClientServiceProvider client) {
         this.viewController = view;
         this.client = client;
     }
@@ -36,11 +37,11 @@ public class FriendRequestDelegate {
         this.client = client;
     }
 
-    public HomeController getViewController() {
+    public ContactsSearchBox getViewController() {
         return viewController;
     }
 
-    public void setViewController(HomeController viewController) {
+    public void setViewController(ContactsSearchBox viewController) {
         this.viewController = viewController;
     }
 
