@@ -136,15 +136,15 @@ public class UserProfileController implements Initializable {
 
 
             try {
-                delegate.updateUserInfo(currentUser);
+                delegate.getClient().sessionService.userInfoDidChange(currentUser);
+                delegate.getClient().updateUserInfo(currentUser);
                 setUserStatus();
             } catch (RemoteException ex) {
                 ex.printStackTrace();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            } catch (NotBoundException ex) {
-                ex.printStackTrace();
+
             }
+
+
         });
 
     }

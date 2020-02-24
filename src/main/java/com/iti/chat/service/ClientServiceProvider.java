@@ -75,17 +75,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendMessage(Message message, int roomId) throws RemoteException, NotBoundException {
         initChatRoomService();
         chatRoomService.sendMessage(message, roomId);
-       /*  System.out.println("recieve");
-       for (int i = 0; i < room.getUsers().size(); i++) {
-            if (!message.getSender().equals(room.getUsers().get(i))) {
-                System.out.println("loop notification");
-                PushNotification pushNotification=new PushNotification();
-                Notification notification=new Notification(message.getSender(),room.getUsers().get(i),NotificationType.MESSAGE_RECEIVED);
-                pushNotification.createNotify(notification);
-            }
-        }
+         System.out.println("recieve");
 
-        */
+
     }
 
     public void sendFile(Message message, File file, int roomId) throws IOException, NotBoundException {
@@ -138,7 +130,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void receiveNotification(Notification notification) {
-
+        System.out.println("sender"+notification.getSource()+"reciever"+notification.getReceiver());
         controller.receiveNotification(notification);
      /*   notificationListController.setNotifications(notification);
         Platform.runLater(new Runnable() {

@@ -303,7 +303,8 @@ public class HomeController implements Initializable {
         PushNotification pushNotification = new PushNotification();
         // notificationView();
         pushNotification.initializeNotify(notification);
-        System.out.println("recieve Notification");
+        System.out.println("recieve Notification"+"source "+notification.getSource()+"reciever"+notification.getReceiver());
+
         if (notification.notificationType == NotificationType.STATUS_UPDATE) {
 
             friendStatusChangeNotificationBehaviour(notification);
