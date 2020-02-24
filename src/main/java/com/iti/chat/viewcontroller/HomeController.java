@@ -29,6 +29,7 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +44,7 @@ public class HomeController implements Initializable {
     //    ListView<Notification> listView;
     @FXML
     private GridPane motherGridPane;
-   // public  ServerServices serverServices;
+    // public  ServerServices serverServices;
 
     @FXML
     private VBox editableBox;
@@ -60,17 +61,17 @@ public class HomeController implements Initializable {
 //    ListView<User> listView;
 
     private ClientServiceProvider client;
-    ObservableList<Notification> list ;
-    ListView<Notification> notificationListView=new ListView<>();
-    NotificationListController notificationListController=new NotificationListController();
+    ObservableList<Notification> list;
+    ListView<Notification> notificationListView = new ListView<>();
+    NotificationListController notificationListController = new NotificationListController();
 
     private ChatRoom room;
     private Stage stage;
     private FileTransferProgressController fileTransferProgressController;
-    
-    public  int check=0;
+
+    public int check = 0;
     SessionService sessionService;
-    public int changeList=0;
+    public int changeList = 0;
 
     @FXML
     private ChatRoomController chatRoomController;
@@ -94,6 +95,15 @@ public class HomeController implements Initializable {
         listView.setItems(userObservableList);
         setImage();
         loadFriendsImages();
+        ObservableList<ChatRoom> chatRooms = null;
+        try {
+            chatRooms = FXCollections.observableList(client.getGroupChatRooms(client.getUser()));
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        } catch (NotBoundException ex) {
+            ex.printStackTrace();
+        }
+        chatRoomListView = new ListView<ChatRoom>(chatRooms);
     }
 
     private void loadFriendsImages() {
@@ -186,7 +196,7 @@ public class HomeController implements Initializable {
                 loader.setLocation(SceneTransition.class.getResource("/view/groupChat.fxml"));
                 Parent parent = loader.load();
                 GroupChatController groupChatController = loader.getController();
-                chatRoomListView.setCellFactory(listView -> new ChatRoomCell(groupChatController));
+                chatRoomListView.setCellFactory(listView -> new ChatRoomCell(groupChatController, this));
                 listViewBox.getChildren().clear();
                 listViewBox.getChildren().add(chatRoomListView);
                 groupChatController.setHomeController(this);
@@ -286,7 +296,7 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        chatRoomListView = new ListView<>();
+
         listView.setPlaceholder(new Label("No Content In List"));
         listView.setMinWidth(200);
         listView.setCellFactory(listView -> new ContactListCell(this));
@@ -352,7 +362,7 @@ public class HomeController implements Initializable {
     }
 
     public void refresh() {
-        User currentUser =  Session.getInstance().getUser();
+        User currentUser = Session.getInstance().getUser();
         System.out.println("inside refresh");
         System.out.println(currentUser.getFriends());
         Platform.runLater(() -> {
@@ -454,6 +464,7 @@ public class HomeController implements Initializable {
           PushNotification pushNotification=new PushNotification();
           pushNotification.createNotify(announcment,6);
     }
+
     public VBox getEditableBox() {
         return editableBox;
     }

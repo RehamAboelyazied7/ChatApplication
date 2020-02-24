@@ -142,8 +142,6 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         });
 
       */
-
-
     }
 
     private void initFriendRequestService() throws RemoteException, NotBoundException {
@@ -252,7 +250,12 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     }
 
-    public ChatRoom getChatRoom(int roomId) throws RemoteException {
+    public ChatRoom getChatRoom(int roomId) throws RemoteException, NotBoundException {
+        initChatRoomService();
         return chatRoomService.getChatRoom(roomId);
+    }
+    public List<ChatRoom> getGroupChatRooms(User user) throws RemoteException, NotBoundException {
+        initChatRoomService();
+        return chatRoomService.getGroupChatRooms(user);
     }
 }

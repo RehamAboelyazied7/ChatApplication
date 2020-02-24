@@ -207,8 +207,6 @@ public class UserProfileController implements Initializable {
                 lastName += tempName[i];
             }
 
-
-            //User currentUser = new User();
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
             currentUser.setBio(bio);
@@ -348,10 +346,10 @@ public class UserProfileController implements Initializable {
     private void setUserGender() {
         if (currentUser.getGender() == Gender.FEMALE)
             genderImage.setImage(new Image(getClass().getResource("/view/icons/Female.png").toExternalForm()));
-            //System.out.println("Femlae");
+
         else if (currentUser.getGender() == Gender.MALE)
             genderImage.setImage(new Image(getClass().getResource("/view/icons/Male.png").toExternalForm()));
-        //System.out.println("male");
+
 
     }
 }
