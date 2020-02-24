@@ -5,10 +5,7 @@ import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.service.SessionService;
-import com.iti.chat.util.Animator;
-import com.iti.chat.util.FileTransfer;
-import com.iti.chat.util.SceneTransition;
-import com.iti.chat.util.Session;
+import com.iti.chat.util.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -90,18 +88,46 @@ public class HomeController implements Initializable {
     }
 
     private void didSetClient() {
-        try {
-            if(client.getUser().getRemoteImagePath() != null) {
-                client.requestImageDownload(client.getUser().getRemoteImagePath());
+        UserInfoDelegate infoDelegate = new UserInfoDelegate(client, userProfileController);
+        userProfileController.setDelegate(infoDelegate);
+        ObservableList<User> userObservableList = FXCollections.observableList(client.getUser().getFriends());
+        listView.setItems(userObservableList);
+        setImage();
+        loadFriendsImages();
+    }
+
+    private void loadFriendsImages() {
+        client.getUser().getFriends().stream().filter(user -> user.getRemoteImagePath() != null)
+                .forEach(user -> {
+                    Image image = ImageCache.getInstance().getImage(user);
+                    if(image == null) {
+                        try {
+                            client.requestImageDownload(user);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (NotBoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    public void setImage() {
+        if(client.getUser().getRemoteImagePath() != null) {
+            Image image = ImageCache.getInstance().getImage(client.getUser());
+            if(image == null) {
+                try {
+                    client.requestImageDownload(client.getUser());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (NotBoundException e) {
+                    e.printStackTrace();
+                }
             }
-            UserInfoDelegate infoDelegate = new UserInfoDelegate(client, userProfileController);
-            userProfileController.setDelegate(infoDelegate);
-            ObservableList<User> userObservableList = FXCollections.observableList(client.getUser().getFriends());
-            listView.setItems(userObservableList);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
+            else {
+                sideBarController.getUserimage().setFill(new ImagePattern(image));
+                userProfileController.setImage(image);
+            }
         }
     }
 
@@ -267,9 +293,18 @@ public class HomeController implements Initializable {
         setContactsImageHandler();
     }
 
-    public void receiveImage(RemoteInputStream remoteInputStream) throws IOException {
+    public void receiveImage(User user, RemoteInputStream remoteInputStream) throws IOException {
         Image image = FileTransfer.downloadImage(remoteInputStream);
-        sideBarController.getUserimage().setImage(image);
+        ImageCache.getInstance().setImage(user, image);
+        if(client.getUser().equals(user)) {
+            sideBarController.getUserimage().setFill(new ImagePattern(image));
+            if(userProfileController != null) {
+                userProfileController.setImage(image);
+            }
+        }
+        else {
+            refresh();
+        }
 
     }
 

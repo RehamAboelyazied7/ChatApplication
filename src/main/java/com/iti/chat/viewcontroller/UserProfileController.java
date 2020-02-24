@@ -4,10 +4,7 @@ import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
-import com.iti.chat.util.ColorUtils;
-import com.iti.chat.util.JFXCountryComboBox;
-import com.iti.chat.util.JFXDialogFactory;
-import com.iti.chat.util.Session;
+import com.iti.chat.util.*;
 import com.iti.chat.validator.RegisterValidation;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
@@ -24,6 +21,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -94,6 +92,7 @@ public class UserProfileController implements Initializable {
     private String country;
 
     User currentUser;
+    File selectedImage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -111,6 +110,10 @@ public class UserProfileController implements Initializable {
             }
         });
 
+    }
+
+    public void setImage(Image image) {
+        userImage.setFill(new ImagePattern(image));
     }
 
     public void setDelegate(UserInfoDelegate delegate) {
@@ -175,11 +178,17 @@ public class UserProfileController implements Initializable {
             currentUser.setCountry(country);
             try {
                 delegate.updateUserInfo(currentUser);
+                if(selectedImage != null) {
+                    delegate.uploadImage(selectedImage, currentUser);
+                    delegate.imageChanged();
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             collectData();
@@ -260,9 +269,10 @@ public class UserProfileController implements Initializable {
     private Image selectImage() {
         Image image = null;
         FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            image = new Image(file.toURI().toString());
+        selectedImage = fileChooser.showOpenDialog(stage);
+        if (selectedImage != null) {
+            image = new Image(selectedImage.toURI().toString());
+            ImageCache.getInstance().setImage(currentUser, image);
         }
         return image;
 

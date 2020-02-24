@@ -106,8 +106,8 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         sessionService.uploadImage(remoteFileData ,this , user);
     }
 
-    public void downloadImage(RemoteInputStream remoteInputStream) throws IOException {
-        controller.receiveImage(remoteInputStream);
+    public void downloadImage(User user, RemoteInputStream remoteInputStream) throws IOException {
+        controller.receiveImage(user, remoteInputStream);
     }
 
     public void requestFileDownload(String remotePath) throws IOException, NotBoundException {
@@ -115,10 +115,14 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         fileTransferService.downloadFile(remotePath, this);
     }
 
+    public void imageChanged() {
+        controller.setImage();
+    }
 
-    public void requestImageDownload(String remotePath) throws IOException, NotBoundException {
+
+    public void requestImageDownload(User user) throws IOException, NotBoundException {
         initFileTransferService();
-        fileTransferService.downloadImage(remotePath, this);
+        fileTransferService.downloadImage(user, this);
     }
 
     @Override
