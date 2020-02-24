@@ -110,7 +110,7 @@ public class SceneTransition {
         }
     }
 
-    public static void goToLoginScreen(Stage stage) throws IOException, RemoteException, SQLException, NotBoundException {
+    public static void goToLoginScreen(Stage stage) throws IOException, SQLException, NotBoundException {
         String phone = null;
         String pass = null;
         
