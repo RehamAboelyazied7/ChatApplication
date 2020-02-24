@@ -25,4 +25,7 @@ public class ImageCache {
     public Image getImage(User user) {
         return images.get(user);
     }
+    public Image getDefaultImage(User user) {
+        return new Image(getClass().getResourceAsStream("/view/userIcon.png"));
+    }
 }

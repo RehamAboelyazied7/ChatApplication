@@ -51,6 +51,9 @@ public class ContactListController implements Initializable {
         if(image != null) {
             userImage.setFill(new ImagePattern(image));
         }
+        else {
+            userImage.setFill(new ImagePattern(ImageCache.getInstance().getDefaultImage(user)));
+        }
     }
 
 }

@@ -116,6 +116,7 @@ public class HomeController implements Initializable {
         if(client.getUser().getRemoteImagePath() != null) {
             Image image = ImageCache.getInstance().getImage(client.getUser());
             if(image == null) {
+
                 try {
                     client.requestImageDownload(client.getUser());
                 } catch (IOException e) {
@@ -128,6 +129,10 @@ public class HomeController implements Initializable {
                 sideBarController.getUserimage().setFill(new ImagePattern(image));
                 userProfileController.setImage(image);
             }
+        }
+        else {
+            sideBarController.getUserimage().setFill(new ImagePattern(ImageCache.getInstance().getDefaultImage(client.getUser())));
+            userProfileController.setImage(ImageCache.getInstance().getDefaultImage(client.getUser()));
         }
     }
 
