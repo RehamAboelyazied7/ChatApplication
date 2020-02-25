@@ -1,10 +1,15 @@
 package com.iti.chat.viewcontroller;
 
+import com.iti.chat.model.User;
+import com.iti.chat.util.ImageCache;
+import com.iti.chat.util.Session;
 import com.iti.chat.util.image.ImageTint;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.net.URL;
@@ -38,30 +43,16 @@ public class SideBarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setImage();
+    }
 
-
-//        ImageTint.setWhiteTint(profileImageView);
-//
-//        profileImageView.setOnMouseClicked(e -> {
-//
-//                ImageTint.setWhiteTint(profileImageView);
-//
-//        });
-//
-//        magnifierImageView.setOnMouseClicked(e -> {
-//
-//            ImageTint.setWhiteTint(magnifierImageView);
-//            ImageTint.removeTint(contactsImageView);
-//
-//        });
-//
-//        contactsImageView.setOnMouseClicked(e -> {
-//
-//            ImageTint.setWhiteTint(contactsImageView);
-//            ImageTint.removeTint(magnifierImageView);
-//
-//        });
-
+    public void setImage() {
+        User currentUser = Session.getInstance().getUser();
+        Image image = ImageCache.getInstance().getImage(currentUser);
+        if(image == null) {
+            image = ImageCache.getInstance().getDefaultImage(currentUser);
+        }
+        userImage.setFill(new ImagePattern(image));
     }
 
     public VBox getSideBarVBox() {

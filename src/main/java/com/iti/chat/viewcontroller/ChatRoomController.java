@@ -119,15 +119,6 @@ public class ChatRoomController implements Initializable {
         });
     }
 
-    public void receiveImage(RemoteInputStream remoteInputStream) {
-        try {
-            Image image = FileTransfer.downloadImage(remoteInputStream);
-            System.out.println("inside receive file");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public Pane createTextMessageNode(Message message) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/ChatPage.fxml"));

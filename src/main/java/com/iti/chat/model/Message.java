@@ -10,10 +10,20 @@ import java.io.Serializable;
 @XmlType(name = "MessageType" , propOrder = {
         "sender",
         "content",
-        "style"
+        "style",
+        "bubbleColor",
+        "inRightDirection"
 })
 public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    //this flag is made only for the purpose of the xml and xslt transformation
+    @XmlElement(name = "inRightDirection")
+    private  boolean inRightDirection;
+
+    //this field is made only for the purpose of the xml and xslt transformation
+    @XmlElement(name = "bubbleColor")
+    private String bubbleColor;
 
     @XmlElement(name = "Content")
     private String content;
@@ -97,5 +107,21 @@ public class Message implements Serializable {
     public void setChatRoom(ChatRoom chatRoom) {
 
         this.chatRoom = chatRoom;
+    }
+
+    public boolean isInRightDirection() {
+        return inRightDirection;
+    }
+
+    public void setInRightDirection(boolean inRightDirection) {
+        this.inRightDirection = inRightDirection;
+    }
+
+    public String getBubbleColor() {
+        return bubbleColor;
+    }
+
+    public void setBubbleColor(String bubbleColor) {
+        this.bubbleColor = bubbleColor;
     }
 }

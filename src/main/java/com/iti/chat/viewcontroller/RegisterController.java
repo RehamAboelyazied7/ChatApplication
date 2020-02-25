@@ -6,6 +6,7 @@ import com.iti.chat.exception.DuplicatePhoneException;
 import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
+import com.iti.chat.util.Hashing;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.validator.RegisterValidation;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -136,7 +137,7 @@ public class RegisterController implements Initializable {
             user.setPhone(phoneTextField.getText());
             user.setEmail("");
             try {
-                delegate.register(user, passwordTextField.getText());
+                delegate.register(user, Hashing.getSecurePassword(passwordTextField.getText()));
                 if (selectedFile != null) {
                     delegate.uploadImage(selectedFile, user);
                 }

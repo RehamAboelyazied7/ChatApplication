@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -46,9 +47,11 @@ public class GroupChatController implements Initializable {
     @FXML
     private JFXButton submitBtn;
 
-    private ListView friendsListView;
+    ListView<ChatRoom> chatRoomListView;
 
     private HomeController homeController;
+
+    private Parent parent;
 
     List<User> groupMembersList;
     List<GroupMemberBox> groupMembersBoxList;
@@ -79,11 +82,12 @@ public class GroupChatController implements Initializable {
 
     @FXML
     public void submitGroup() {
-
         System.out.println(groupMembersList);
         ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room, homeController);
         ChatRoom chatRoom = chatRoomController.createOrGetChatRoom(groupMembersList);
         chatRoomController.loadChatRoom(chatRoom);
+        homeController.getListViewBox().getChildren().clear();
+        homeController.getListViewBox().getChildren().add(chatRoomListView);
     }
 
     public void contactListAction(Event mouseEvent, User user) {
@@ -100,12 +104,7 @@ public class GroupChatController implements Initializable {
         }
     }
 
-    public HomeController getHomeController() {
-        return homeController;
-    }
-
     public void setHomeController(HomeController homeController) {
-
         this.homeController = homeController;
         homeController.getEditableBox().getChildren().clear();
         JFXButton createGroupBtn = new JFXButton("create Group chat");
@@ -114,8 +113,20 @@ public class GroupChatController implements Initializable {
             homeController.getListView().setCellFactory(listView -> new ContactListCell(this));
             homeController.getListViewBox().getChildren().clear();
             homeController.getListViewBox().getChildren().add(homeController.getListView());
-        });
+            loadParent();
 
+        });
+    }
+    public void loadParent(){
+        homeController.getRightVBox().getChildren().clear();
+        homeController.getRightVBox().getChildren().add(parent);
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
+    }
+    public void setChatRoomListView(ListView<ChatRoom> chatRoomListView){
+        this.chatRoomListView = chatRoomListView;
 
     }
 }

@@ -64,6 +64,7 @@ public class ContactListCell extends ListCell<User> {
                     ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room , homeController);
                     ChatRoom chatRoom = chatRoomController.createOrGetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
                     chatRoomController.loadChatRoom(chatRoom);
+                    homeController.setChatRoomController(chatRoomController);
                 }
                 else{
                     groupChatController.contactListAction(mouseEvent,item);
