@@ -1,16 +1,11 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.ChatRoom;
-import com.iti.chat.model.User;
-import com.iti.chat.util.Animator;
 import com.iti.chat.util.SceneTransition;
-import com.iti.chat.util.Session;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
-
 import java.io.IOException;
-import java.util.Arrays;
 
 public class ChatRoomCell extends ListCell<ChatRoom> {
     private GroupChatController groupChatController;
