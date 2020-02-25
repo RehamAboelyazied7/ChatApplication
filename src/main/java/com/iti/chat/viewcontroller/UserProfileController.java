@@ -119,6 +119,18 @@ public class UserProfileController implements Initializable {
          status_combo_box.getSelectionModel().select(3);
          int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
         status_combo_box.getSelectionModel().select(selectedIndex);
+
+
+    }
+
+
+    public void setImage(Image image) {
+        userImage.setFill(new ImagePattern(image));
+    }
+
+    public void setDelegate(UserInfoDelegate delegate) {
+
+        this.delegate = delegate;
         status_combo_box.setOnAction(e->{
             switch (status_combo_box.getValue()){
                 case "offline":
@@ -135,27 +147,17 @@ public class UserProfileController implements Initializable {
                     break;
             }
             try {
-                delegate.updateUserInfo(currentUser);
+                delegate.getClient().updateUserInfo(currentUser);
+                delegate.getClient().sessionService.userInfoDidChange(currentUser);
                 setUserStatus();
             } catch (RemoteException ex) {
                 ex.printStackTrace();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            } catch (NotBoundException ex) {
-                ex.printStackTrace();
+
             }
+
+
         });
 
-    }
-
-
-    public void setImage(Image image) {
-        userImage.setFill(new ImagePattern(image));
-    }
-
-    public void setDelegate(UserInfoDelegate delegate) {
-
-        this.delegate = delegate;
     }
 
     public void setStage(Stage stage) {
@@ -205,8 +207,6 @@ public class UserProfileController implements Initializable {
                 lastName += tempName[i];
             }
 
-
-            //User currentUser = new User();
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
             currentUser.setBio(bio);
@@ -346,10 +346,10 @@ public class UserProfileController implements Initializable {
     private void setUserGender() {
         if (currentUser.getGender() == Gender.FEMALE)
             genderImage.setImage(new Image(getClass().getResource("/view/icons/Female.png").toExternalForm()));
-            //System.out.println("Femlae");
+
         else if (currentUser.getGender() == Gender.MALE)
             genderImage.setImage(new Image(getClass().getResource("/view/icons/Male.png").toExternalForm()));
-        //System.out.println("male");
+
 
     }
 }

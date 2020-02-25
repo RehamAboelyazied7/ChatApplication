@@ -6,6 +6,7 @@ import static com.iti.chat.util.Encryption.encrypt;
 import static com.iti.chat.util.Encryption.decrypt;
 
 import com.iti.chat.model.UserStatus;
+import com.iti.chat.util.Hashing;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
@@ -73,10 +74,11 @@ public class LoginController implements Initializable {
     @FXML
     public void login(ActionEvent ae) throws FileNotFoundException {
         try {
+            //Hashing.getSecurePassword(passwordField.getText())
             User user = delegate.login(phoneTextField.getText(), passwordField.getText());
             if (user != null) {
                 Session.getInstance().setUser(user);
-                /*PrintWriter writer;
+                PrintWriter writer;
                 try {
                     writer = new PrintWriter("rememberMeUserInfo.txt", "UTF-8");
                 } catch (FileNotFoundException | UnsupportedEncodingException ex) {
@@ -105,7 +107,7 @@ public class LoginController implements Initializable {
                     writer1.println(encrypt(passwordField.getText()));
                     writer1.close();
                 }
-                 */
+
                 SceneTransition.goToHomeScene(stage);
             } else {
                 System.out.println("invalid phone or password");

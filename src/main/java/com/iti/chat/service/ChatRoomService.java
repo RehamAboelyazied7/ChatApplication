@@ -16,4 +16,5 @@ public interface ChatRoomService extends Remote {
     void sendFile(Message message, int roomId, RemoteInputStream remoteInputStream) throws IOException;
     void getFile(String path, ClientService clientService) throws IOException;
     ChatRoom getChatRoom(int roomId) throws RemoteException;
+    List<ChatRoom> getGroupChatRooms(User user) throws RemoteException;
 }
