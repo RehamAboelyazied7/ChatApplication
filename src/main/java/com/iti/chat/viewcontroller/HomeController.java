@@ -59,13 +59,9 @@ public class HomeController implements Initializable {
     @FXML
     private VBox listViewBox;
 
-    ListView<ChatRoom> chatRoomListView;
+    private ListView<ChatRoom> chatRoomListView;
 
-    List<ImageView> iconsImageView;
-
-
-//    @FXML
-//    ListView<User> listView;
+    private List<ImageView> iconsImageView;
 
     private ClientServiceProvider client;
     ObservableList<Notification> list;
@@ -111,6 +107,8 @@ public class HomeController implements Initializable {
             ex.printStackTrace();
         }
         chatRoomListView = new ListView<ChatRoom>(chatRooms);
+        chatRoomListView.setPlaceholder(new Label("no groups in list"));
+
     }
 
     private void loadFriendsImages() {
@@ -186,9 +184,7 @@ public class HomeController implements Initializable {
 
     private void setContactsImageHandler() {
         sideBarController.getContactsImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-
             setAnimations(sideBarController.getContactsImageView());
-
             notificationListView.setVisible(false);
             listView.setVisible(true);
             changeList = 1;
@@ -201,8 +197,8 @@ public class HomeController implements Initializable {
                 listViewBox.getChildren().clear();
                 listViewBox.getChildren().add(chatRoomListView);
                 groupChatController.setHomeController(this);
-                rightVBox.getChildren().clear();
-                rightVBox.getChildren().add(parent);
+                groupChatController.setParent(parent);
+                groupChatController.setChatRoomListView(chatRoomListView);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -214,7 +210,6 @@ public class HomeController implements Initializable {
         sideBarController.getChatImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
             setAnimations(sideBarController.getChatImageView());
-
             listView.setCellFactory(listView -> new ContactListCell(this));
             listViewBox.getChildren().clear();
             listViewBox.getChildren().add(listView);
