@@ -124,7 +124,11 @@ public class UserProfileController implements Initializable {
     }
 
 
-    public void setImage(Image image) {
+    public void setImage() {
+        Image image = ImageCache.getInstance().getImage(currentUser);
+        if(image == null) {
+            image = ImageCache.getInstance().getDefaultImage(currentUser);
+        }
         userImage.setFill(new ImagePattern(image));
     }
 
@@ -271,11 +275,20 @@ public class UserProfileController implements Initializable {
     @FXML
     public void enableChatBot() {
         if (chatBot.isSelected()) {
-            currentUser.setChatBotEnabled(true);
             System.out.println("enable chatbot");
         } else {
             currentUser.setChatBotEnabled(false);
             System.out.println("disable chatBot");
+        }
+        currentUser.setChatBotEnabled(true);
+        try {
+            delegate.updateUserInfo(currentUser);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -323,6 +336,7 @@ public class UserProfileController implements Initializable {
         countryField.setValue(currentUser.getCountry());
         setUserGender();
         setUserStatus();
+        setImage();
 
     }
 

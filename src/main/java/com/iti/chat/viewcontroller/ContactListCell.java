@@ -24,11 +24,14 @@ public class ContactListCell extends CustomListCell {
     }
 
     @Override
+
     public void setCellAction(MouseEvent mouseEvent, User item) {
         Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
-        ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room , homeController);
+        ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room, homeController);
         ChatRoom chatRoom = chatRoomController.createOrGetChatRoom(Arrays.asList(Session.getInstance().getUser(), item));
         chatRoomController.loadChatRoom(chatRoom);
+        homeController.setChatRoomController(chatRoomController);
+
     }
 
 

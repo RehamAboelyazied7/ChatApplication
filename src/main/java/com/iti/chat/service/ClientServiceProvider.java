@@ -107,7 +107,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     public void imageChanged() {
-        controller.setImage();
+        controller.imageChanged();
     }
 
 
@@ -251,7 +251,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         if (currentUser.getFriends().contains(user)) {
             currentUser.getFriends().remove(user);
             currentUser.getFriends().add(user);
-            controller.refresh();
+            controller.userInfoDidChange(user);
         }
 
     }

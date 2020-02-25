@@ -1,5 +1,6 @@
 package com.iti.chat.util;
 
+import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
 import javafx.scene.image.Image;
 
@@ -25,4 +26,15 @@ public class ImageCache {
     public Image getImage(User user) {
         return images.get(user);
     }
+    public Image getDefaultImage(User user) {
+        Image image;
+        if(user.getGender() == Gender.MALE) {
+            image = new Image(getClass().getResourceAsStream("/view/icons/Male.png"));
+        }
+        else {
+            image = new Image(getClass().getResourceAsStream("/view/icons/Female.png"));
+        }
+        return image;
+    }
+
 }

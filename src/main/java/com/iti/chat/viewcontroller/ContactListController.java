@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 
@@ -50,6 +51,9 @@ public class ContactListController implements Initializable {
         Image image = ImageCache.getInstance().getImage(user);
         if(image != null) {
             userImage.setFill(new ImagePattern(image));
+        }
+        else {
+            userImage.setFill(new ImagePattern(ImageCache.getInstance().getDefaultImage(user)));
         }
     }
 

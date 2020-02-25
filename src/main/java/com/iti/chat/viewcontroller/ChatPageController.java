@@ -2,6 +2,7 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.*;
 import com.iti.chat.util.ColorUtils;
+import com.iti.chat.util.ImageCache;
 import com.iti.chat.util.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -70,6 +71,11 @@ public class ChatPageController implements Initializable {
 
     public void displayOnLeft(Message message) {
         bubbleColor = LEFT_MESSAGE_BUBBLE_COLOR;
+        Image image = ImageCache.getInstance().getImage(message.getSender());
+        if(image == null) {
+            image = ImageCache.getInstance().getDefaultImage(message.getSender());
+        }
+        CircleImageView.setFill(new ImagePattern(image));
         if (ColorUtils.areSimilarColors(LEFT_MESSAGE_BUBBLE_COLOR, message.getStyle().getColor())) {
             bubbleColor = ColorUtils.invertedColor(message.getStyle().getColor());
         }
