@@ -34,7 +34,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     Registry registry;
 
     public ClientServiceProvider() throws RemoteException {
-        registry = LocateRegistry.getRegistry( "10.145.7.155",4000);
+        registry = LocateRegistry.getRegistry( 4000);
     }
 
     public void setChatRoomDelegate(ChatRoomDelegate chatRoomDelegate) {
@@ -245,7 +245,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         if(currentUser.getFriends().contains(user)) {
             currentUser.getFriends().remove(user);
             currentUser.getFriends().add(user);
-            controller.refresh();
+            controller.userInfoDidChange(user);
         }
 
     }

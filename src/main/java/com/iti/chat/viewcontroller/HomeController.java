@@ -312,17 +312,24 @@ public class HomeController implements Initializable {
     }
 
     public void receiveImage(User user, RemoteInputStream remoteInputStream) throws IOException {
-        Image image = FileTransfer.downloadImage(remoteInputStream);
-        ImageCache.getInstance().setImage(user, image);
-        if(client.getUser().equals(user)) {
-            sideBarController.getUserimage().setFill(new ImagePattern(image));
-            if(userProfileController != null) {
-                userProfileController.setImage(image);
+        Platform.runLater(() -> {
+            Image image = null;
+            try {
+                image = FileTransfer.downloadImage(remoteInputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }
-        else {
-            refresh();
-        }
+            ImageCache.getInstance().setImage(user, image);
+            if(client.getUser().equals(user)) {
+                sideBarController.getUserimage().setFill(new ImagePattern(image));
+                if(userProfileController != null) {
+                    userProfileController.setImage(image);
+                }
+            }
+            else {
+                reloadListView();
+            }
+        });
 
     }
 
@@ -363,14 +370,27 @@ public class HomeController implements Initializable {
 
     }
 
-    public void refresh() {
+    public void userInfoDidChange(User user) {
         User currentUser = Session.getInstance().getUser();
+        if(user.getRemoteImagePath() != null) {
+            try {
+                client.requestImageDownload(user);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            }
+        }
+
         System.out.println("inside refresh");
         System.out.println(currentUser.getFriends());
-        Platform.runLater(() -> {
-            listView.refresh();
-            listView.setItems(FXCollections.observableList(currentUser.getFriends()));
-        });
+
+    }
+
+    private void reloadListView() {
+        //User currentUser = Session.getInstance().getUser();
+        //listView.setItems(FXCollections.observableList(currentUser.getFriends()));
+        listView.refresh();
     }
 
 
