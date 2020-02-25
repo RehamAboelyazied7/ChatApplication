@@ -6,14 +6,30 @@
         <html>
 
             <head>
+
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <meta charset="UTF-8"/>
+                <title><xsl:value-of select="chatRoom/Name"></xsl:value-of> chat room</title>
+
             </head>
 
-            <body>
+            <body style="margin: 0 0 0 0">
 
                 <!--Header for chat room-->
                 <h1>
-                    <span class="head">Chat Room name </span> :
+
+                    <section>
+
+                        <header style="margin-top: 0" class="header">
+
+                            Chat Room
+
+                        </header>
+
+                    </section>
+                    Chat room name :
                     <xsl:value-of select="chatRoom/Name"></xsl:value-of>
+
                 </h1>
 
 
@@ -23,6 +39,7 @@
                 </h1>
 
                 <table>
+
                     <tr>
                         <th>Number</th>
                         <th>Name</th>
@@ -33,17 +50,20 @@
                     <xsl:for-each select="chatRoom/User">
 
                         <tr>
+
                             <td>
                                 <xsl:value-of select="position()"/>
                             </td>
+
                             <td>
                                 <xsl:value-of select="FirstName"> </xsl:value-of> &#160;
-                                <xsl:value-of
-                                        select="LastName"></xsl:value-of>
+                                <xsl:value-of select="LastName"></xsl:value-of>
                             </td>
+
                             <td>
                                 <xsl:value-of select="Email"></xsl:value-of>
                             </td>
+
                             <td>
                                 <xsl:value-of select="Phone"></xsl:value-of>
                             </td>
@@ -53,48 +73,76 @@
                     </xsl:for-each>
                 </table>
 
+                <section>
+                    <header style="margin-bottom:0" class="header">
 
-                <!--Messages in table-->
-                <h1 class="head">Messages in room</h1>
+                        Messages history
 
-                <table>
+                    </header>
+                </section>
 
-                    <tr>
-                        <th>Sender</th>
-                        <th>Content</th>
-                    </tr>
+                <table style="background: white; width:100% ;padding:0 0 0 0 ; margin: 0 0 0 0;">
 
                     <xsl:for-each select="chatRoom/Message">
 
                         <tr>
-
                             <td>
-                                <xsl:value-of select="Sender/FirstName"> </xsl:value-of> &#160;
-                                <xsl:value-of select="Sender/LastName"></xsl:value-of>
-                            </td>
+                                <section style="margin-bottom:15px; margin-right:10px ;margin-left:10px">
 
-                            <td>
+                                    <xsl:choose>
 
-                                <xsl:attribute name="style">
+                                        <xsl:when test="inRightDirection = 'true'">
 
-                                    font-weight :
-                                    <xsl:value-of select="Style/FontWeight"></xsl:value-of>;
+                                            <xsl:attribute name="class">rightDirCallout</xsl:attribute>
 
-                                    color :
-                                    <xsl:value-of select="Style/Color"></xsl:value-of>;
 
-                                    font-style :
-                                    <xsl:value-of select="Style/FontPosture"></xsl:value-of>;
+                                        </xsl:when>
 
-                                    font-size :
-                                    <xsl:value-of select="Style/Size"></xsl:value-of>;
+                                        <xsl:otherwise>
 
-                                    font-family :
-                                    <xsl:value-of select="Style/FontFamily"></xsl:value-of>;
+                                            <xsl:attribute name="class">leftDirCallout</xsl:attribute>
 
-                                </xsl:attribute>
+                                        </xsl:otherwise>
 
-                                <xsl:value-of select="Content"></xsl:value-of>
+                                    </xsl:choose>
+
+                                    <h4 style="color: #a2a2a2; margin-bottom: 5px">
+
+                                        <xsl:value-of select="Sender/FirstName"> </xsl:value-of> &#160;
+
+                                        <xsl:value-of select="Sender/LastName"></xsl:value-of>
+
+                                    </h4>
+
+                                    <span class="messageClass">
+
+                                        <xsl:attribute name="style">
+
+                                            background :
+                                            <xsl:value-of select="bubbleColor"></xsl:value-of>;
+
+                                            font-weight :
+                                            <xsl:value-of select="Style/FontWeight"></xsl:value-of>;
+
+                                            color :
+                                            <xsl:value-of select="Style/Color"></xsl:value-of>;
+
+                                            font-style :
+                                            <xsl:value-of select="Style/FontPosture"></xsl:value-of>;
+
+                                            font-size :
+                                            <xsl:value-of select="Style/Size"></xsl:value-of>;
+
+                                            font-family :
+                                            <xsl:value-of select="Style/FontFamily"></xsl:value-of>;
+
+                                        </xsl:attribute>
+
+                                        <xsl:value-of select="Content"></xsl:value-of>
+
+                                    </span>
+
+                                </section>
 
                             </td>
 
@@ -105,27 +153,93 @@
                 </table>
 
                 <style>
-                    th{
+
+                    [class~="rightDirCallout"] > span{
+
+                        border-radius: 25px 0px 25px 25px;
+                        float: right;
+                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+                    }
+
+                    [class~="leftDirCallout"] > span{
+
+                        border-radius: 0px 25px 25px 25px;
+                        float: left;
+                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+                    }
+
+                    section span{
+
+                        display: block;
+
+                    }
+
+                    .messageClass {
+
+                        width: fit-content;
+                        padding: 20px 30px 20px 30px;
+                        color: white;
+                        max-width: 85%;
+
+                    }
+
+                    .rightDirCallout {
+
+                        text-align:right;
+                        float: right;
+
+                    }
+
+                    .leftDirCallout {
+
+                        text-align: left;
+                        float: left;
+
+                    }
+
+                    .messageClass:hover{
+
+                      opacity: 0.9;
+
+                    }
+
+                    .header {
+
+                        text-align: center;
+                        margin-top: 30px;
+                        margin-bottom: 30px;
+                        width: 100%;
+                        background: #4c84ff;
+                        padding: 20px 0px 20px 0px;
+                        font-size: 30px;
+                        color: #ffffff;
+                        font-weight: bold;
+
+                    }
+
+                    body {
+
+                         cursor: default;
+
+                    }
+
+                    th {
 
                         background: #4c84ff;
                         padding: 10px 10px 10px 10px;
 
                     }
 
-                    td{
-
-                        padding: 10px 10px 10px 10px;
-
-                    }
-
-                    table{
+                    table {
 
                         background-color: #ebebeb;
                         border-radius: 5px;
 
                     }
 
-                    .head{
+                    .head {
 
                         text-decoration: underline;
                         color: #4c84ff;
