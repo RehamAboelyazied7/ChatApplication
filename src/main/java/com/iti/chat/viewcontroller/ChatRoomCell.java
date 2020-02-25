@@ -42,7 +42,6 @@ public class ChatRoomCell extends ListCell<ChatRoom> {
         }
         setOnMouseClicked(mouseEvent -> {
             if (item != null) {
-
                 ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), item, homeController);
                 chatRoomController.loadChatRoom(item);
             }

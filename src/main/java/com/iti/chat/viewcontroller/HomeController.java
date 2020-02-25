@@ -86,6 +86,8 @@ public class HomeController implements Initializable {
     private UserProfileController userProfileController;
     public int click = 0;
 
+    private ObservableList<ChatRoom> chatRooms = null;
+
     public void setClient(ClientServiceProvider client) {
         this.client = client;
         didSetClient();
@@ -98,16 +100,7 @@ public class HomeController implements Initializable {
         listView.setItems(userObservableList);
         setImage();
         loadFriendsImages();
-        ObservableList<ChatRoom> chatRooms = null;
-        try {
-            chatRooms = FXCollections.observableList(client.getGroupChatRooms(client.getUser()));
-        } catch (RemoteException ex) {
-            ex.printStackTrace();
-        } catch (NotBoundException ex) {
-            ex.printStackTrace();
-        }
-        chatRoomListView = new ListView<ChatRoom>(chatRooms);
-        chatRoomListView.setPlaceholder(new Label("no groups in list"));
+
 
     }
 
@@ -193,9 +186,7 @@ public class HomeController implements Initializable {
                 loader.setLocation(SceneTransition.class.getResource("/view/groupChat.fxml"));
                 Parent parent = loader.load();
                 GroupChatController groupChatController = loader.getController();
-                chatRoomListView.setCellFactory(listView -> new ChatRoomCell(groupChatController, this));
-                listViewBox.getChildren().clear();
-                listViewBox.getChildren().add(chatRoomListView);
+                updateChatRooms(groupChatController);
                 groupChatController.setHomeController(this);
                 groupChatController.setParent(parent);
                 groupChatController.setChatRoomListView(chatRoomListView);
@@ -495,5 +486,22 @@ public class HomeController implements Initializable {
         return listViewBox;
     }
 
+    public ListView<ChatRoom> getChatRoomListView() {
+        return chatRoomListView;
+    }
 
+    public void updateChatRooms(GroupChatController groupChatController) {
+        try {
+            chatRooms = FXCollections.observableList(client.getGroupChatRooms(client.getUser()));
+            chatRoomListView = new ListView<ChatRoom>(chatRooms);
+            chatRoomListView.setPlaceholder(new Label("no groups in list"));
+            chatRoomListView.setCellFactory(listView -> new ChatRoomCell(groupChatController, this));
+            listViewBox.getChildren().clear();
+            listViewBox.getChildren().add(chatRoomListView);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        } catch (NotBoundException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
