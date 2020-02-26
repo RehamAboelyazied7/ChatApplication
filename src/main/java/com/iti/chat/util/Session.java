@@ -23,7 +23,7 @@ public class Session {
         this.user = user;
     }
 
-    public static Session getInstance() {
+    public synchronized static Session getInstance() {
         if (instance == null) {
             instance = new Session();
         }

@@ -96,12 +96,10 @@ public class UserProfileController implements Initializable {
     private String phone;
     private String country;
 
-    User currentUser;
     File selectedImage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currentUser = Session.getInstance().getUser();
         setUserInfo();
         validation = new RegisterValidation();
         addCountries();
@@ -125,6 +123,7 @@ public class UserProfileController implements Initializable {
 
 
     public void setImage() {
+        User currentUser = Session.getInstance().getUser();
         Image image = ImageCache.getInstance().getImage(currentUser);
         if(image == null) {
             image = ImageCache.getInstance().getDefaultImage(currentUser);
@@ -133,26 +132,25 @@ public class UserProfileController implements Initializable {
     }
 
     public void setDelegate(UserInfoDelegate delegate) {
-
         this.delegate = delegate;
         status_combo_box.setOnAction(e->{
             switch (status_combo_box.getValue()){
                 case "offline":
-                    currentUser.setStatus(UserStatus.OFFLINE);
+                    Session.getInstance().getUser().setStatus(UserStatus.OFFLINE);
                     break;
                 case "busy":
-                    currentUser.setStatus(UserStatus.BUSY);
+                    Session.getInstance().getUser().setStatus(UserStatus.BUSY);
                     break;
                 case "away":
-                    currentUser.setStatus(UserStatus.AWAY);
+                    Session.getInstance().getUser().setStatus(UserStatus.AWAY);
                     break;
                 default:
-                    currentUser.setStatus(UserStatus.ONLINE);
+                    Session.getInstance().getUser().setStatus(UserStatus.ONLINE);
                     break;
             }
             try {
-                delegate.getClient().updateUserInfo(currentUser);
-                delegate.getClient().sessionService.userInfoDidChange(currentUser);
+                delegate.getClient().updateUserInfo(Session.getInstance().getUser());
+                //delegate.getClient().sessionService.userInfoDidChange(currentUser);
                 setUserStatus();
             } catch (RemoteException ex) {
                 ex.printStackTrace();
@@ -210,7 +208,7 @@ public class UserProfileController implements Initializable {
                 System.out.println(tempName[i]);
                 lastName += tempName[i];
             }
-
+            User currentUser = Session.getInstance().getUser();
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
             currentUser.setBio(bio);
@@ -219,10 +217,6 @@ public class UserProfileController implements Initializable {
             currentUser.setCountry(country);
             try {
                 delegate.updateUserInfo(currentUser);
-                if(selectedImage != null) {
-                    delegate.uploadImage(selectedImage, currentUser);
-                    delegate.imageChanged();
-                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
@@ -252,6 +246,7 @@ public class UserProfileController implements Initializable {
 
     @FXML
     public void changePassword() {
+        User currentUser = Session.getInstance().getUser();
         String password = JFXDialogFactory.changeUserPassWord(profilPane);
         if (password != null) {
             System.out.println(password);
@@ -274,6 +269,7 @@ public class UserProfileController implements Initializable {
 
     @FXML
     public void enableChatBot() {
+        User currentUser = Session.getInstance().getUser();
         if (chatBot.isSelected()) {
             System.out.println("enable chatbot");
         } else {
@@ -318,9 +314,20 @@ public class UserProfileController implements Initializable {
 
     private Image selectImage() {
         Image image = null;
+        User currentUser = Session.getInstance().getUser();
         FileChooser fileChooser = new FileChooser();
         selectedImage = fileChooser.showOpenDialog(stage);
         if (selectedImage != null) {
+            try {
+                delegate.uploadImage(selectedImage, currentUser);
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            delegate.imageChanged();
             image = new Image(selectedImage.toURI().toString());
             ImageCache.getInstance().setImage(currentUser, image);
         }
@@ -329,6 +336,7 @@ public class UserProfileController implements Initializable {
     }
 
     private void setUserInfo() {
+        User currentUser = Session.getInstance().getUser();
         nameField.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
         bioField.setText(currentUser.getBio());
         phoneField.setText(currentUser.getPhone());
@@ -346,6 +354,7 @@ public class UserProfileController implements Initializable {
     }
 
     private void setUserStatus() {
+        User currentUser = Session.getInstance().getUser();
         if (currentUser.getStatus() == UserStatus.BUSY)
             userStatus.setFill(Color.RED);
         else if (currentUser.getStatus() == UserStatus.OFFLINE) {
@@ -358,6 +367,7 @@ public class UserProfileController implements Initializable {
     }
 
     private void setUserGender() {
+        User currentUser = Session.getInstance().getUser();
         if (currentUser.getGender() == Gender.FEMALE)
             genderImage.setImage(new Image(getClass().getResource("/view/icons/Female.png").toExternalForm()));
 

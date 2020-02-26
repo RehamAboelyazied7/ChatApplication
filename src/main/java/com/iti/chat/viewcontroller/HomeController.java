@@ -384,6 +384,9 @@ public class HomeController implements Initializable {
 
     public void userInfoDidChange(User user) {
         User currentUser = Session.getInstance().getUser();
+        if(!user.equals(client.getUser())) {
+            reloadListView();
+        }
         if(user.getRemoteImagePath() != null) {
             try {
                 client.requestImageDownload(user);

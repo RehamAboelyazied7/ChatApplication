@@ -6,6 +6,7 @@ import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.delegate.FriendRequestDelegate;
 import com.iti.chat.model.*;
+import com.iti.chat.util.Session;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
 import com.iti.chat.viewcontroller.NotificationListController;
@@ -66,8 +67,8 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void setUser(User user) {
-
         currentUser = user;
+        Session.getInstance().setUser(currentUser);
     }
 
     @Override
@@ -248,9 +249,14 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     public void userInfoDidChange(User user) {
-        if (currentUser.getFriends().contains(user)) {
+        if(currentUser.equals(user)) {
+            setUser(user);
+        }
+        else if (currentUser.getFriends().contains(user)) {
             currentUser.getFriends().remove(user);
             currentUser.getFriends().add(user);
+        }
+        if(controller != null) {
             controller.userInfoDidChange(user);
         }
 
