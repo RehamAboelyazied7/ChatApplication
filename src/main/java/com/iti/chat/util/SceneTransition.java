@@ -40,7 +40,6 @@ public class SceneTransition {
         }
 
     }
-
     public static void goToHomeScene(Stage stage) {
         stage.setTitle("Chat");
         try {

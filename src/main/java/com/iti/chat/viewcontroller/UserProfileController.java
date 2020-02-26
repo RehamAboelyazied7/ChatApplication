@@ -137,15 +137,23 @@ public class UserProfileController implements Initializable {
             switch (status_combo_box.getValue()){
                 case "offline":
                     Session.getInstance().getUser().setStatus(UserStatus.OFFLINE);
+                    status_combo_box.getSelectionModel().select(UserStatus.OFFLINE);
+
                     break;
                 case "busy":
                     Session.getInstance().getUser().setStatus(UserStatus.BUSY);
+                    status_combo_box.getSelectionModel().select(UserStatus.BUSY);
+
                     break;
                 case "away":
                     Session.getInstance().getUser().setStatus(UserStatus.AWAY);
+                    status_combo_box.getSelectionModel().select(UserStatus.AWAY);
+
                     break;
                 default:
                     Session.getInstance().getUser().setStatus(UserStatus.ONLINE);
+                    status_combo_box.getSelectionModel().select(UserStatus.ONLINE);
+
                     break;
             }
             try {
