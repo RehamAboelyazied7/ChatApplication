@@ -34,10 +34,10 @@ import java.util.List;
 
 public class ContactsSearchBox extends VBox {
     FriendRequestDelegate friendRequestDelegate;
-    AnchorPane anchorPane;
-    private JFXTextField jFXTextField;
-    private HBox hBox;
-    private ImageView imageView;
+    private JFXTextField jFXTextField1;
+    private JFXTextField jFXTextField2;
+    private JFXTextField jFXTextField3;
+    private JFXTextField jFXTextField4;
     private GridPane gridPane;
     private JFXButton jfxButton;
 
@@ -46,53 +46,38 @@ public class ContactsSearchBox extends VBox {
     }
 
     public ContactsSearchBox() {
-        anchorPane = new AnchorPane();
-        jFXTextField = new JFXTextField();
-        hBox = new HBox();
-        imageView = new ImageView();
+        jFXTextField1 = new JFXTextField();
+        jFXTextField2 = new JFXTextField();
+        jFXTextField3 = new JFXTextField();
+        jFXTextField4 = new JFXTextField();
         gridPane = new GridPane();
-        jfxButton = new JFXButton("Add");
+        jfxButton = new JFXButton("Search");
 
         setId("VBox");
         setPrefHeight(132.0);
         setPrefWidth(259.0);
 
-        anchorPane.setPrefHeight(66.0);
-        anchorPane.setPrefWidth(259.0);
-
         gridPane.setPrefHeight(66.0);
         gridPane.setPrefWidth(259.0);
         gridPane.setAlignment(Pos.CENTER);
 
-        jFXTextField.setLayoutX(14.0);
-        jFXTextField.setLayoutY(18.0);
-
-        hBox.setLayoutX(183.0);
-        hBox.setPrefHeight(66.0);
-        hBox.setPrefWidth(30.0);
-
-        imageView.setFitHeight(31.0);
-        imageView.setFitWidth(30.0);
-        imageView.setLayoutX(213.0);
-        imageView.setLayoutY(23.0);
-        imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(this.getClass().getResource("/view/plus.png").toExternalForm()));
-
         jfxButton.setAlignment(Pos.CENTER);
 
-        anchorPane.getChildren().add(jFXTextField);
-        anchorPane.getChildren().add(hBox);
-        anchorPane.getChildren().add(imageView);
+        getChildren().add(jFXTextField1);
+        getChildren().add(jFXTextField2);
+        getChildren().add(jFXTextField3);
+        getChildren().add(jFXTextField4);
 
         gridPane.getChildren().add(jfxButton);
-
-        getChildren().add(anchorPane);
         getChildren().add(gridPane);
         jfxButton.setOnMouseClicked((arg0) -> {
             List<User> userslist = null;
             try {
-                userslist = friendRequestDelegate.searchByPhone(jFXTextField.getText());
+                userslist = friendRequestDelegate.searchByPhone(jFXTextField1.getText());
+                userslist.addAll(friendRequestDelegate.searchByPhone(jFXTextField2.getText()));
+                userslist.addAll(friendRequestDelegate.searchByPhone(jFXTextField3.getText()));
+                userslist.addAll(friendRequestDelegate.searchByPhone(jFXTextField4.getText()));
+
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {

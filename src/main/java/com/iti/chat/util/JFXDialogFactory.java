@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.iti.chat.util.Hashing.getSecurePassword;
 
 
 public class JFXDialogFactory {
@@ -86,7 +87,7 @@ public class JFXDialogFactory {
             } else {
                 System.out.println("here done");
                 warningLabel.setText("DONE");
-                password.set(newPassword.getText());
+                password.set(getSecurePassword(newPassword.getText()));
                 dialog.close();
             }
         });
