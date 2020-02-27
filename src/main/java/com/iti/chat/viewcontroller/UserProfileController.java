@@ -100,7 +100,6 @@ public class UserProfileController implements Initializable {
     private String email;
     private String phone;
     private String country;
-
     File selectedImage;
 
     @Override
@@ -118,10 +117,23 @@ public class UserProfileController implements Initializable {
             }
         });
         status_combo_box.getItems().removeAll(status_combo_box.getItems());
+        //UserStatus.statusToString(0)
+         status_combo_box.getItems().addAll(UserStatus.statusToString(1),UserStatus.statusToString(2),UserStatus.statusToString(3));
+        status_combo_box.setPromptText("Change Status");
+
+        /* if(changeStatus==false) {
+             status_combo_box.getSelectionModel().select(saveStatus);
+         }else{
+             status_combo_box.getSelectionModel().select(saveStatus);
+         }
+
+         */
+     /*    int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
         status_combo_box.getItems().addAll(UserStatus.statusToString(0), UserStatus.statusToString(1), UserStatus.statusToString(2), UserStatus.statusToString(3));
         status_combo_box.getSelectionModel().select(3);
-        int selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
         status_combo_box.getSelectionModel().select(selectedIndex);
+
+      */
 
 
     }
@@ -138,37 +150,39 @@ public class UserProfileController implements Initializable {
 
     public void setDelegate(UserInfoDelegate delegate) {
         this.delegate = delegate;
+        status_combo_box.setOnAction(e->{
+            switch (status_combo_box.getValue()){
+               /* case "offline":
+=======
         status_combo_box.setOnAction(e -> {
             switch (status_combo_box.getValue()) {
                 case "offline":
+>>>>>>> 1d5036286905fbdd83dbe213b2d18136410f236e
                     Session.getInstance().getUser().setStatus(UserStatus.OFFLINE);
-                    status_combo_box.getSelectionModel().select(UserStatus.OFFLINE);
-
+                    saveStatus=UserStatus.OFFLINE;
                     break;
+
+                */
+               
                 case "busy":
                     Session.getInstance().getUser().setStatus(UserStatus.BUSY);
-                    status_combo_box.getSelectionModel().select(UserStatus.BUSY);
+
 
                     break;
                 case "away":
                     Session.getInstance().getUser().setStatus(UserStatus.AWAY);
-                    status_combo_box.getSelectionModel().select(UserStatus.AWAY);
+
 
                     break;
                 default:
                     Session.getInstance().getUser().setStatus(UserStatus.ONLINE);
-                    status_combo_box.getSelectionModel().select(UserStatus.ONLINE);
+
 
                     break;
             }
-            try {
-                delegate.getClient().updateUserInfo(Session.getInstance().getUser());
-                //delegate.getClient().sessionService.userInfoDidChange(currentUser);
-                setUserStatus();
-            } catch (RemoteException ex) {
-                ex.printStackTrace();
-
-            }
+            delegate.getClient().updateStatus(Session.getInstance().getUser());
+            //delegate.getClient().sessionService.userInfoDidChange(currentUser);
+            setUserStatus();
 
 
         });
@@ -233,8 +247,6 @@ public class UserProfileController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
                 e.printStackTrace();
             }
             collectData();

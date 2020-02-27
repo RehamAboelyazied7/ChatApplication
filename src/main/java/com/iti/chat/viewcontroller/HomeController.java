@@ -22,7 +22,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -31,7 +30,6 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -46,6 +44,7 @@ public class HomeController implements Initializable {
     @FXML
     ListView<User> listView;
     //    ListView<Notification> listView;
+
     @FXML
     private GridPane motherGridPane;
     // public  ServerServices serverServices;
@@ -207,18 +206,35 @@ public class HomeController implements Initializable {
         });
     }
 
-    private void setMagnifierImageHandler() { //heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeere
+    private void setMagnifierImageHandler() {
 
 
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             setAnimations(sideBarController.getMagnifierImageView());
 
+//            ObservableList<User> friendRequest = null;
+
+//            try {
+//                List<User> listUser = client.pendingFriendRequests();
+//                friendRequest = FXCollections.observableList(listUser);
+//            } catch (RemoteException e) {
+//                e.printStackTrace();
+//            } catch (NotBoundException e) {
+//                e.printStackTrace();
+//            }
+
             notificationListView.setVisible(false);
+            listViewBox.getChildren().clear();
             listView.setVisible(true);
+
+//            listView.setItems(friendRequest);
+//            listView.setCellFactory((item)-> new RequestContactCell(this));
+
             editableBox.getChildren().clear();
             editableBox.getChildren().add(new Label("Add Friends"));
             ContactsSearchBox contactsSearchBox = new ContactsSearchBox();
             editableBox.getChildren().add(contactsSearchBox);
+            contactsSearchBox.setHomeController(this);
             FriendRequestDelegate friendRequestDelegate = new FriendRequestDelegate(contactsSearchBox, client);
             contactsSearchBox.setFriendRequestDelegate(friendRequestDelegate);
             client.setFriendRequestDelegate(friendRequestDelegate);
@@ -305,7 +321,7 @@ public class HomeController implements Initializable {
 
     public void imageChanged() {
         sideBarController.setImage();
-        if(userProfileController != null) {
+        if (userProfileController != null) {
             userProfileController.setImage();
         }
     }
@@ -319,21 +335,19 @@ public class HomeController implements Initializable {
                 e.printStackTrace();
             }
             ImageCache.getInstance().setImage(user, image);
-            if(client.getUser().equals(user)) {
+            if (client.getUser().equals(user)) {
                 sideBarController.setImage();
-                if(userProfileController != null) {
+                if (userProfileController != null) {
                     userProfileController.setImage();
                 }
             }
             else {
-                reloadListView();
-                if(chatRoomController != null) {
-                    chatRoomController.refresh();
-                }
+                reloadViews();
             }
         });
 
     }
+
 
     public void notificationView() {
         setAnimations(sideBarController.getNotificationImageView());
@@ -376,9 +390,9 @@ public class HomeController implements Initializable {
     public void userInfoDidChange(User user) {
         User currentUser = Session.getInstance().getUser();
         if(!user.equals(client.getUser())) {
-            reloadListView();
+            reloadViews();
         }
-        if(user.getRemoteImagePath() != null) {
+        if (user.getRemoteImagePath() != null) {
             try {
                 client.requestImageDownload(user);
             } catch (IOException e) {
@@ -393,13 +407,16 @@ public class HomeController implements Initializable {
 
     }
 
-    private void reloadListView() {
+    private void reloadViews() {
         //User currentUser = Session.getInstance().getUser();
         //listView.setItems(FXCollections.observableList(currentUser.getFriends()));
         Platform.runLater(() -> {
             ObservableList<User> friends = FXCollections.observableList(Session.getInstance().getUser().getFriends());
             listView.setItems(friends);
             listView.refresh();
+            if(chatRoomController != null) {
+                chatRoomController.refresh();
+            }
         });
     }
 
@@ -482,6 +499,7 @@ public class HomeController implements Initializable {
     public Stage getStage() {
         return stage;
     }
+
 
     public FileTransferProgressController getFileTransferProgressController() {
         return fileTransferProgressController;
