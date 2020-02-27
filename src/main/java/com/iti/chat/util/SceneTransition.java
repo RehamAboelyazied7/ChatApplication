@@ -44,7 +44,6 @@ public class SceneTransition {
     public static void goToHomeScene(Stage stage) {
         stage.setTitle("Chat");
         try {
-            System.out.println("here 3");
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneTransition.class.getResource("/view/home.fxml"));
             Parent parent = loader.load();
@@ -139,6 +138,7 @@ public class SceneTransition {
             }
             User user = delegate.login(phone, pass);
             if (user != null) {
+                System.out.println("logged in");
                 Session.getInstance().setUser(user);
                 SceneTransition.goToHomeScene(stage);
             }

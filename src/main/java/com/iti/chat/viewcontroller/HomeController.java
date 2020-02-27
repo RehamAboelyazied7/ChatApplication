@@ -46,6 +46,7 @@ public class HomeController implements Initializable {
     @FXML
     ListView<User> listView;
     //    ListView<Notification> listView;
+
     @FXML
     private GridPane motherGridPane;
     // public  ServerServices serverServices;
@@ -207,18 +208,20 @@ public class HomeController implements Initializable {
         });
     }
 
-    private void setMagnifierImageHandler() { //heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeere
+    private void setMagnifierImageHandler() {
 
 
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             setAnimations(sideBarController.getMagnifierImageView());
 
             notificationListView.setVisible(false);
+            listViewBox.getChildren().clear();
             listView.setVisible(true);
             editableBox.getChildren().clear();
             editableBox.getChildren().add(new Label("Add Friends"));
             ContactsSearchBox contactsSearchBox = new ContactsSearchBox();
             editableBox.getChildren().add(contactsSearchBox);
+            contactsSearchBox.setHomeController(this);
             FriendRequestDelegate friendRequestDelegate = new FriendRequestDelegate(contactsSearchBox, client);
             contactsSearchBox.setFriendRequestDelegate(friendRequestDelegate);
             client.setFriendRequestDelegate(friendRequestDelegate);
