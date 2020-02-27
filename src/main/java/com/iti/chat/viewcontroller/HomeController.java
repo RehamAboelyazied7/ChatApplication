@@ -22,7 +22,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -31,7 +30,6 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -339,11 +337,9 @@ public class HomeController implements Initializable {
                 if (userProfileController != null) {
                     userProfileController.setImage();
                 }
-            } else {
-                reloadListView();
-                if (chatRoomController != null) {
-                    chatRoomController.refresh();
-                }
+            }
+            else {
+                reloadViews();
             }
         });
 
@@ -390,8 +386,8 @@ public class HomeController implements Initializable {
 
     public void userInfoDidChange(User user) {
         User currentUser = Session.getInstance().getUser();
-        if (!user.equals(client.getUser())) {
-            reloadListView();
+        if(!user.equals(client.getUser())) {
+            reloadViews();
         }
         if (user.getRemoteImagePath() != null) {
             try {
@@ -408,13 +404,16 @@ public class HomeController implements Initializable {
 
     }
 
-    private void reloadListView() {
+    private void reloadViews() {
         //User currentUser = Session.getInstance().getUser();
         //listView.setItems(FXCollections.observableList(currentUser.getFriends()));
         Platform.runLater(() -> {
             ObservableList<User> friends = FXCollections.observableList(Session.getInstance().getUser().getFriends());
             listView.setItems(friends);
             listView.refresh();
+            if(chatRoomController != null) {
+                chatRoomController.refresh();
+            }
         });
     }
 

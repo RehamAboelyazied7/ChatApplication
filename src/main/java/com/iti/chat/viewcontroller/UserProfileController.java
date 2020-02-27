@@ -243,8 +243,6 @@ public class UserProfileController implements Initializable {
                 e.printStackTrace();
             } catch (NotBoundException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
             collectData();
             setEditableFields();
