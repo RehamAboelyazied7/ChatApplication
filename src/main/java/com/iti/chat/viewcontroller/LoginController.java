@@ -21,10 +21,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.rmi.NotBoundException;
@@ -34,7 +35,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
 
 public class LoginController implements Initializable {
 
@@ -52,6 +52,9 @@ public class LoginController implements Initializable {
 
     @FXML
     CheckBox rememberMe;
+
+    @FXML
+    private Label warningLabel;
 
     private Stage stage;
 
@@ -74,10 +77,12 @@ public class LoginController implements Initializable {
     @FXML
     public void login(ActionEvent ae) throws FileNotFoundException {
         try {
-            //Hashing.getSecurePassword(passwordField.getText())
-            User user = delegate.login(phoneTextField.getText(), Hashing.getSecurePassword(passwordField.getText()));
+
+            //User user = delegate.login(phoneTextField.getText(), Hashing.getSecurePassword(passwordField.getText()));
+            User user = delegate.login(phoneTextField.getText(), passwordField.getText());
             if (user != null) {
                 Session.getInstance().setUser(user);
+                System.out.printf("logged in as " + user);
                 PrintWriter writer;
                 try {
                     writer = new PrintWriter("rememberMeUserInfo.txt", "UTF-8");
@@ -110,7 +115,8 @@ public class LoginController implements Initializable {
 
                 SceneTransition.goToHomeScene(stage);
             } else {
-                System.out.println("invalid phone or password");
+                //System.out.println("invalid phone or password");
+                warningLabel.setText("invalid phone or password");
             }
 
         } catch (SQLException | RemoteException | NotBoundException e) {
@@ -135,6 +141,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        warningLabel.setText("");
         File file = new File("rememberMeUserInfo.txt");
         try {
             if (!(file.length() == 0)) {
