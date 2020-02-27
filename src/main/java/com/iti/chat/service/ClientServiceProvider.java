@@ -279,5 +279,13 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         initChatRoomService();
         return chatRoomService.getGroupChatRooms(user);
     }
+
+    public void updateStatus(User user) {
+        try {
+            sessionService.updateStatus(user);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

@@ -127,7 +127,7 @@ public class UserProfileController implements Initializable {
         status_combo_box.getItems().addAll(UserStatus.statusToString(0), UserStatus.statusToString(1), UserStatus.statusToString(2), UserStatus.statusToString(3));
         status_combo_box.getSelectionModel().select(3);
         status_combo_box.getSelectionModel().select(selectedIndex);
-        
+
       */
 
 
@@ -175,14 +175,9 @@ public class UserProfileController implements Initializable {
 
                     break;
             }
-            try {
-                delegate.getClient().updateUserInfo(Session.getInstance().getUser());
-                //delegate.getClient().sessionService.userInfoDidChange(currentUser);
-                setUserStatus();
-            } catch (RemoteException ex) {
-                ex.printStackTrace();
-
-            }
+            delegate.getClient().updateStatus(Session.getInstance().getUser());
+            //delegate.getClient().sessionService.userInfoDidChange(currentUser);
+            setUserStatus();
 
 
         });
