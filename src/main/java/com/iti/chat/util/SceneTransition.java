@@ -13,12 +13,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -53,7 +58,23 @@ public class SceneTransition {
             homeController.setClient(client);
             homeController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    closeStage(stage);
+                }
+            });
+
+
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void closeStage(Stage stage){
+        try {
+            client.sessionService.logout(client.getUser());
+            stage.onCloseRequestProperty();
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
@@ -69,6 +90,7 @@ public class SceneTransition {
             rightVBox.getChildren().clear();
             rightVBox.getChildren().add(parent);
             VBox.setVgrow(parent, Priority.ALWAYS);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,6 +126,13 @@ public class SceneTransition {
         try {
             Parent parent = loader.load();
             stage.setScene(new Scene(parent));
+            stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    closeStage(stage);
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,7 +171,16 @@ public class SceneTransition {
                 SceneTransition.goToHomeScene(stage);
             }
         }
+/*        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                closeStage(stage);
+            }
+        });
+
+ */
     }
+
 
     public static void goToRegisterScene(Stage stage) {
         stage.setTitle("Register");
@@ -155,9 +193,17 @@ public class SceneTransition {
             registerController.setDelegate(delegate);
             registerController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    closeStage(stage);
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
     public static void goToChatScene(Stage stage) {
@@ -192,9 +238,16 @@ public class SceneTransition {
             userProfileController.setDelegate(userInfoDelegate);
             userProfileController.setStage(stage);
             stage.setScene(new Scene(parent));
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    closeStage(stage);
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
   /*  public static void goToNotification(Stage stage) {

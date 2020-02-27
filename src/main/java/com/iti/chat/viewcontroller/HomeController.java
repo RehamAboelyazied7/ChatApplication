@@ -211,8 +211,23 @@ public class HomeController implements Initializable {
         sideBarController.getMagnifierImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             setAnimations(sideBarController.getMagnifierImageView());
 
+//            ObservableList<User> friendRequest = null;
+
+//            try {
+//                List<User> listUser = client.pendingFriendRequests();
+//                friendRequest = FXCollections.observableList(listUser);
+//            } catch (RemoteException e) {
+//                e.printStackTrace();
+//            } catch (NotBoundException e) {
+//                e.printStackTrace();
+//            }
+
             notificationListView.setVisible(false);
             listView.setVisible(true);
+
+//            listView.setItems(friendRequest);
+//            listView.setCellFactory((item)-> new RequestContactCell(this));
+
             editableBox.getChildren().clear();
             editableBox.getChildren().add(new Label("Add Friends"));
             ContactsSearchBox contactsSearchBox = new ContactsSearchBox();
@@ -303,7 +318,7 @@ public class HomeController implements Initializable {
 
     public void imageChanged() {
         sideBarController.setImage();
-        if(userProfileController != null) {
+        if (userProfileController != null) {
             userProfileController.setImage();
         }
     }
@@ -317,19 +332,19 @@ public class HomeController implements Initializable {
                 e.printStackTrace();
             }
             ImageCache.getInstance().setImage(user, image);
-            if(client.getUser().equals(user)) {
+            if (client.getUser().equals(user)) {
                 sideBarController.setImage();
-                if(userProfileController != null) {
+                if (userProfileController != null) {
                     userProfileController.setImage();
                 }
             }
             else {
                 reloadViews();
-
             }
         });
 
     }
+
 
     public void notificationView() {
         setAnimations(sideBarController.getNotificationImageView());
@@ -374,7 +389,7 @@ public class HomeController implements Initializable {
         if(!user.equals(client.getUser())) {
             reloadViews();
         }
-        if(user.getRemoteImagePath() != null) {
+        if (user.getRemoteImagePath() != null) {
             try {
                 client.requestImageDownload(user);
             } catch (IOException e) {
@@ -481,6 +496,7 @@ public class HomeController implements Initializable {
     public Stage getStage() {
         return stage;
     }
+
 
     public FileTransferProgressController getFileTransferProgressController() {
         return fileTransferProgressController;

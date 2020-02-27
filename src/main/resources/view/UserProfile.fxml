@@ -62,7 +62,7 @@
                           </HBox.margin>
                       </JFXButton>
                   <JFXToggleButton fx:id="chatBot" onAction="#enableChatBot" text="ChatBot" textFill="#1a0be1" />
-                  <JFXComboBox id="status_combo_box" fx:id="status_combo_box" blendMode="SRC_ATOP" focusColor="#575757" prefHeight="26.0" prefWidth="148.0" unFocusColor="#1a0be1">
+                  <JFXComboBox id="status_combo_box" fx:id="status_combo_box" blendMode="SRC_ATOP" focusColor="#575757" prefHeight="26.0" prefWidth="148.0" unFocusColor="#1a0bff">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
@@ -79,11 +79,11 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-              <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="650.0">
+              <HBox alignment="CENTER" prefHeight="34.0" prefWidth="650.0" spacing="10.0">
                   <children>
-                  <ImageView fx:id="genderImage" fitHeight="56.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="genderImage" fitHeight="45.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sender.png" />
+                        <Image url="@icons/bio.png" />
                      </image>
                   </ImageView>
                       <JFXTextArea fx:id="bioField" prefHeight="71.0" prefWidth="464.0" text="Bio..............." unFocusColor="WHITE">
@@ -96,12 +96,12 @@
               <HBox prefHeight="27.0" prefWidth="650.0" />
               <HBox alignment="CENTER" prefHeight="54.0" prefWidth="634.0">
                   <children>
-                      <ImageView fitHeight="40.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                      <ImageView fitHeight="29.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                              <Image url="@icons/mail_icon.png" />
+                              <Image url="@icons/mail.png" />
                           </image>
                       </ImageView>
-                      <JFXTextField fx:id="emailField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="admin@gmail.com" unFocusColor="#1e66e4">
+                      <JFXTextField fx:id="emailField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="admin@gmail.com" unFocusColor="#4384ff">
                           <HBox.margin>
                               <Insets bottom="2.0" left="10.0" />
                           </HBox.margin>
@@ -117,10 +117,10 @@
                   <children>
                       <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                              <Image url="@icons/phone_icon.png" />
+                              <Image url="@icons/smartphone.png" />
                           </image>
                       </ImageView>
-                      <JFXTextField fx:id="phoneField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="0111-020-0783" unFocusColor="#1e66e4">
+                      <JFXTextField fx:id="phoneField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="282.0" text="0111-020-0783" unFocusColor="#4384ff">
                           <HBox.margin>
                               <Insets bottom="2.0" left="10.0" />
                           </HBox.margin>
@@ -136,10 +136,10 @@
                   <children>
                       <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                              <Image url="@icons/country_icon.png" />
+                              <Image url="@icons/worldwide.png" />
                           </image>
                       </ImageView>
-                      <JFXComboBox fx:id="countryField" layoutX="307.0" layoutY="113.0" prefHeight="25.0" prefWidth="282.0" unFocusColor="#2d22ff">
+                      <JFXComboBox fx:id="countryField" layoutX="307.0" layoutY="113.0" prefHeight="25.0" prefWidth="282.0" unFocusColor="#4384ff">
                      <HBox.margin>
                         <Insets bottom="2.0" left="9.0" />
                      </HBox.margin>
