@@ -62,6 +62,8 @@ public class SceneTransition {
                 @Override
                 public void handle(WindowEvent windowEvent) {
                     closeStage(stage);
+                    System.exit(0);
+
                 }
             });
 
@@ -131,6 +133,7 @@ public class SceneTransition {
                 @Override
                 public void handle(WindowEvent windowEvent) {
                     closeStage(stage);
+                    System.exit(0);
                 }
             });
         } catch (IOException e) {
@@ -197,6 +200,8 @@ public class SceneTransition {
                 @Override
                 public void handle(WindowEvent windowEvent) {
                     closeStage(stage);
+                    System.exit(0);
+
                 }
             });
         } catch (IOException e) {
@@ -242,6 +247,8 @@ public class SceneTransition {
                 @Override
                 public void handle(WindowEvent windowEvent) {
                     closeStage(stage);
+                    System.exit(0);
+
                 }
             });
         } catch (IOException e) {

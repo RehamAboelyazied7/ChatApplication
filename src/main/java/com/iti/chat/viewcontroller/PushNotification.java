@@ -98,7 +98,7 @@ public class PushNotification {
                         check = 0;
 
                     }
-            PauseTransition delay = new PauseTransition(Duration.millis(500));
+            PauseTransition delay = new PauseTransition(Duration.millis(5000));
             delay.setOnFinished( event -> owner.close() );
             delay.play();
 
