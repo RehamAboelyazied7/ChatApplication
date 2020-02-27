@@ -335,6 +335,7 @@ public class HomeController implements Initializable {
 
     }
 
+
     public void notificationView() {
         setAnimations(sideBarController.getNotificationImageView());
         notificationListView.setPlaceholder(new Label("No Content In List"));
@@ -478,6 +479,7 @@ public class HomeController implements Initializable {
     public Stage getStage() {
         return stage;
     }
+
 
     public FileTransferProgressController getFileTransferProgressController() {
         return fileTransferProgressController;

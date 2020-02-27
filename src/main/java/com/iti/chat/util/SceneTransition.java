@@ -13,12 +13,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -53,7 +58,21 @@ public class SceneTransition {
             homeController.setClient(client);
             homeController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    closeStage(stage);
+                }
+            });
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void closeStage(Stage stage){
+        try {
+            client.sessionService.logout(client.getUser());
+            stage.onCloseRequestProperty();
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }

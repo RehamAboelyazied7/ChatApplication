@@ -95,7 +95,6 @@ public class UserProfileController implements Initializable {
     private String email;
     private String phone;
     private String country;
-
     File selectedImage;
 
     @Override
@@ -113,8 +112,17 @@ public class UserProfileController implements Initializable {
             }
         });
         status_combo_box.getItems().removeAll(status_combo_box.getItems());
-         status_combo_box.getItems().addAll(UserStatus.statusToString(0),UserStatus.statusToString(1),UserStatus.statusToString(2),UserStatus.statusToString(3));
-         status_combo_box.getSelectionModel().select(3);
+        //UserStatus.statusToString(0)
+         status_combo_box.getItems().addAll(UserStatus.statusToString(1),UserStatus.statusToString(2),UserStatus.statusToString(3));
+        status_combo_box.setPromptText("Change Status");
+
+        /* if(changeStatus==false) {
+             status_combo_box.getSelectionModel().select(saveStatus);
+         }else{
+             status_combo_box.getSelectionModel().select(saveStatus);
+         }
+
+         */
          int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
         status_combo_box.getSelectionModel().select(selectedIndex);
 
@@ -135,24 +143,25 @@ public class UserProfileController implements Initializable {
         this.delegate = delegate;
         status_combo_box.setOnAction(e->{
             switch (status_combo_box.getValue()){
-                case "offline":
+               /* case "offline":
                     Session.getInstance().getUser().setStatus(UserStatus.OFFLINE);
-                    status_combo_box.getSelectionModel().select(UserStatus.OFFLINE);
-
+                    saveStatus=UserStatus.OFFLINE;
                     break;
+
+                */
                 case "busy":
                     Session.getInstance().getUser().setStatus(UserStatus.BUSY);
-                    status_combo_box.getSelectionModel().select(UserStatus.BUSY);
+
 
                     break;
                 case "away":
                     Session.getInstance().getUser().setStatus(UserStatus.AWAY);
-                    status_combo_box.getSelectionModel().select(UserStatus.AWAY);
+
 
                     break;
                 default:
                     Session.getInstance().getUser().setStatus(UserStatus.ONLINE);
-                    status_combo_box.getSelectionModel().select(UserStatus.ONLINE);
+
 
                     break;
             }
