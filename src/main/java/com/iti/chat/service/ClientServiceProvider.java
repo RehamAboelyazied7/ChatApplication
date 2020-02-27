@@ -6,6 +6,7 @@ import com.healthmarketscience.rmiio.SimpleRemoteInputStream;
 import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.delegate.FriendRequestDelegate;
 import com.iti.chat.model.*;
+import com.iti.chat.util.Encryption;
 import com.iti.chat.util.Session;
 import com.iti.chat.viewcontroller.ChatRoomController;
 import com.iti.chat.viewcontroller.HomeController;
@@ -74,10 +75,8 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     @Override
     public void sendMessage(Message message, int roomId) throws RemoteException, NotBoundException {
         initChatRoomService();
+        message.setContent(Encryption.encrypt(message.getContent()));
         chatRoomService.sendMessage(message, roomId);
-        System.out.println("recieve");
-
-
     }
 
     public void sendFile(Message message, File file, int roomId) throws IOException, NotBoundException {
@@ -119,12 +118,12 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void receiveMessage(Message message) {
-        //chatRoomController.receiveMessage(message);
-        // PushNotification.createNotify(message);
-        //chatRoomController.receiveMessage(message);
+
         if (chatRoomDelegate != null) {
             chatRoomDelegate.receiveMessage(message);
+            message.setContent(Encryption.decrypt(message.getContent()));
         }
+
     }
 
     public ChatRoom createNewChatRoom(List<User> users) throws RemoteException, NotBoundException {
@@ -229,18 +228,10 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     @Override
     public void recieveAnnouncment(Message announcment) throws RemoteException {
-        System.out.println("inside receive ann");
 
+        announcment.setContent(Encryption.decrypt(announcment.getContent()));
         controller.receiveAnnouncment(announcment);
-      /*  Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                controller.notificationView();
 
-            }
-        });
-
-       */
     }
 
     public List<User> searchByphone(String phone) throws RemoteException, SQLException, NotBoundException {
