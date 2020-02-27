@@ -53,6 +53,8 @@ public class FriendRequestDelegate {
         return client.searchByphone(phone);
     }
 
-
+    public List<User> getPendingSentRequestFriends() throws RemoteException, NotBoundException, SQLException {
+        return client.getPendingSentRequestFriends();
+    }
 
 }

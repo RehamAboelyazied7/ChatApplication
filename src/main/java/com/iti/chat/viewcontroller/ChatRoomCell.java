@@ -44,6 +44,7 @@ public class ChatRoomCell extends ListCell<ChatRoom> {
             if (item != null) {
                 ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), item, homeController);
                 chatRoomController.loadChatRoom(item);
+                homeController.setChatRoomController(chatRoomController);
             }
         });
 
