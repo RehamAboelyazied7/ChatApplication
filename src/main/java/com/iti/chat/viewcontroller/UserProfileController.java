@@ -149,6 +149,7 @@ public class UserProfileController implements Initializable {
                     break;
 
                 */
+               
                 case "busy":
                     Session.getInstance().getUser().setStatus(UserStatus.BUSY);
 

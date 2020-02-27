@@ -28,11 +28,6 @@ import java.sql.SQLException;
 public class App extends Application {
 
     public static Scene scene;
-    HomeController homeController;
-    public void setHomeController(HomeController homeController){
-        this.homeController=homeController;
-    }
-
     @Override
     public void start(Stage stage) throws IOException, RemoteException, SQLException, NotBoundException {
         stage.setMinHeight(700);
