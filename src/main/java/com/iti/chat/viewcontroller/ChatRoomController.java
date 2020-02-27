@@ -121,10 +121,10 @@ public class ChatRoomController implements Initializable {
 
     public Pane createTextMessageNode(Message message) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/ChatPage.fxml"));
+        loader.setLocation(getClass().getResource("/view/message_view.fxml"));
         try {
             Pane pane = loader.load();
-            ChatPageController controller = loader.getController();
+            MessageController controller = loader.getController();
             controller.displayMessage(message);
             return pane;
         } catch (IOException e) {
