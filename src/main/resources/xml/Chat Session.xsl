@@ -159,6 +159,8 @@
                         border-radius: 25px 0px 25px 25px;
                         float: right;
                         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                        overflow-wrap: normal;
+
 
                     }
 
@@ -167,6 +169,7 @@
                         border-radius: 0px 25px 25px 25px;
                         float: left;
                         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                        overflow-wrap: normal;
 
                     }
 
