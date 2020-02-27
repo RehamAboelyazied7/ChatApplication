@@ -348,7 +348,6 @@ public class UserProfileController implements Initializable {
         phoneField.setText(currentUser.getPhone());
         emailField.setText(currentUser.getEmail());
         countryField.setValue(currentUser.getCountry());
-        setUserGender();
         setUserStatus();
         setImage();
 
@@ -369,17 +368,6 @@ public class UserProfileController implements Initializable {
             userStatus.setFill(Color.YELLOW);
         else
             userStatus.setFill(Color.GREEN);
-
-    }
-
-    private void setUserGender() {
-        User currentUser = Session.getInstance().getUser();
-        if (currentUser.getGender() == Gender.FEMALE)
-            genderImage.setImage(new Image(getClass().getResource("/view/icons/Female.png").toExternalForm()));
-
-        else if (currentUser.getGender() == Gender.MALE)
-            genderImage.setImage(new Image(getClass().getResource("/view/icons/Male.png").toExternalForm()));
-
 
     }
 }
