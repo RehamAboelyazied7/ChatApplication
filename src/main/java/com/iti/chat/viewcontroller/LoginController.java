@@ -75,7 +75,7 @@ public class LoginController implements Initializable {
     public void login(ActionEvent ae) throws FileNotFoundException {
         try {
             //Hashing.getSecurePassword(passwordField.getText())
-            User user = delegate.login(phoneTextField.getText(), Hashing.getSecurePassword(passwordField.getText()));
+            User user = delegate.login(phoneTextField.getText(),Hashing.getSecurePassword(passwordField.getText()));
             if (user != null) {
                 Session.getInstance().setUser(user);
                 PrintWriter writer;
