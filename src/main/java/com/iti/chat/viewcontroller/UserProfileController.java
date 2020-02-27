@@ -123,8 +123,12 @@ public class UserProfileController implements Initializable {
          }
 
          */
-         int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
+     /*    int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
+        status_combo_box.getItems().addAll(UserStatus.statusToString(0), UserStatus.statusToString(1), UserStatus.statusToString(2), UserStatus.statusToString(3));
+        status_combo_box.getSelectionModel().select(3);
         status_combo_box.getSelectionModel().select(selectedIndex);
+        
+      */
 
 
     }
@@ -133,7 +137,7 @@ public class UserProfileController implements Initializable {
     public void setImage() {
         User currentUser = Session.getInstance().getUser();
         Image image = ImageCache.getInstance().getImage(currentUser);
-        if(image == null) {
+        if (image == null) {
             image = ImageCache.getInstance().getDefaultImage(currentUser);
         }
         userImage.setFill(new ImagePattern(image));
@@ -144,6 +148,11 @@ public class UserProfileController implements Initializable {
         status_combo_box.setOnAction(e->{
             switch (status_combo_box.getValue()){
                /* case "offline":
+=======
+        status_combo_box.setOnAction(e -> {
+            switch (status_combo_box.getValue()) {
+                case "offline":
+>>>>>>> 1d5036286905fbdd83dbe213b2d18136410f236e
                     Session.getInstance().getUser().setStatus(UserStatus.OFFLINE);
                     saveStatus=UserStatus.OFFLINE;
                     break;
@@ -198,24 +207,22 @@ public class UserProfileController implements Initializable {
         String email = emailField.getText();
         String country = countryField.getValue();
         String bio = bioField.getText();
-        System.out.println(countryField.getValue());
         String firstName = new String();
         String lastName = new String();
         boolean validData = true;
-        if (name.trim().isEmpty()) {
+        if (name.trim().length() == 0) {
             nameWarning.setText("Invalid");
             validData = false;
 
         }
-        // check email is not accurate
-        /*if (validation.checkEmail(email) == -1) {
-            emailWarning.setText("Invalid");
-            System.out.println("email");
-            validData = false;
-        }*/
 
-        if (validation.checkPhone(phone) == -1) {
-            phoneWarning.setText("Invalid");
+        if (validation.checkEmail(email) == RegisterValidation.INVALID) {
+            emailWarning.setText("Invalid Email");
+            validData = false;
+        }
+
+        if (validation.checkPhone(phone) == RegisterValidation.INVALID) {
+            phoneWarning.setText("Invalid number");
             validData = false;
         }
         if (validData) {
@@ -360,7 +367,6 @@ public class UserProfileController implements Initializable {
         phoneField.setText(currentUser.getPhone());
         emailField.setText(currentUser.getEmail());
         countryField.setValue(currentUser.getCountry());
-        setUserGender();
         setUserStatus();
         setImage();
 
@@ -381,17 +387,6 @@ public class UserProfileController implements Initializable {
             userStatus.setFill(Color.YELLOW);
         else
             userStatus.setFill(Color.GREEN);
-
-    }
-
-    private void setUserGender() {
-        User currentUser = Session.getInstance().getUser();
-        if (currentUser.getGender() == Gender.FEMALE)
-            genderImage.setImage(new Image(getClass().getResource("/view/icons/Female.png").toExternalForm()));
-
-        else if (currentUser.getGender() == Gender.MALE)
-            genderImage.setImage(new Image(getClass().getResource("/view/icons/Male.png").toExternalForm()));
-
 
     }
 }
