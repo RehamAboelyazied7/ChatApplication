@@ -396,7 +396,11 @@ public class HomeController implements Initializable {
     private void reloadListView() {
         //User currentUser = Session.getInstance().getUser();
         //listView.setItems(FXCollections.observableList(currentUser.getFriends()));
-        listView.refresh();
+        Platform.runLater(() -> {
+            ObservableList<User> friends = FXCollections.observableList(Session.getInstance().getUser().getFriends());
+            listView.setItems(friends);
+            listView.refresh();
+        });
     }
 
 
