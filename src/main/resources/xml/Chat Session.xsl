@@ -176,6 +176,8 @@
                     section span{
 
                         display: block;
+                        height: fit-content;
+                        word-break: break-word;
 
                     }
 
