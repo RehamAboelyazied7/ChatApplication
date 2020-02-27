@@ -37,6 +37,7 @@ public class User implements Comparable<User>, Serializable {
         friends = new ArrayList<>();
         chatRooms = new ArrayList<>();
         country = "Egypt";
+        bio = "Biooo.......";
         status = UserStatus.OFFLINE;
     }
 

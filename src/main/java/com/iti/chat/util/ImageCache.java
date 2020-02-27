@@ -28,7 +28,10 @@ public class ImageCache {
     }
     public Image getDefaultImage(User user) {
         Image image;
-        if(user.getGender() == Gender.MALE) {
+        if(user == null) {
+            image = new Image(getClass().getResourceAsStream("/view/userIcon.png"));
+        }
+        else if(user.getGender() == Gender.MALE) {
             image = new Image(getClass().getResourceAsStream("/view/icons/Male.png"));
         }
         else {

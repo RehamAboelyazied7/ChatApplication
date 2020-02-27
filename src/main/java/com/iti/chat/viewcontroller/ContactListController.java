@@ -37,6 +37,7 @@ public class ContactListController implements Initializable {
     }
 
     public void setUserData(User user) {
+        System.out.println("loading friend icon " + user);
         userName.setText(user.getFirstName() + " " + user.getLastName());
         int status = user.getStatus();
         if (status == UserStatus.ONLINE) {

@@ -5,8 +5,9 @@ import java.util.regex.Pattern;
 
 public class RegisterValidation {
 
+
     String password = "";
-    static final int INVALID = -1, VALID = 1, EMPTY = 0;
+    public static final int INVALID = -1, VALID = 1, EMPTY = 0;
 
     public int checkPhone(String phone) {
         if (phone.isEmpty()) {
@@ -28,11 +29,10 @@ public class RegisterValidation {
         if (email.isEmpty()) {
             return EMPTY; //enter your Email
         } else {
-
-            Pattern p = Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$");
+            Pattern p = Pattern.compile("^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$");
             Matcher m = p.matcher(email);
-            if (!m.matches())
-                return INVALID;//Enter a valid email address
+            if (m.matches())
+                return INVALID ;//Enter a valid email address
         }
         return VALID;//match
     }
