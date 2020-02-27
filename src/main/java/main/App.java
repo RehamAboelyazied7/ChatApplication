@@ -32,20 +32,6 @@ public class App extends Application {
     public void start(Stage stage) throws IOException, RemoteException, SQLException, NotBoundException {
         stage.setMinHeight(700);
         stage.setMinWidth(900);
-        //   SceneTransition.goToLoginScreen(stage);
-//    SceneTransition.goToNotification(stage);
-//        stage.setOnCloseRequest(event -> {
-//
-//            System.exit(0);
-//
-//        });
-        //SceneTransition.goToChatScene(stage);
-        //SceneTransition.goToLoginScreen(stage);
-
-        stage.setMinHeight(700);
-        stage.setMinWidth(900);
-        //SceneTransition.goToUserProfilerScene(stage);
-        //SceneTransition.goToLoginScreen(stage)
         SceneTransition.goToLoginScreen(stage);
 
         stage.show();

@@ -12,7 +12,10 @@ import com.iti.chat.validator.RegisterValidation;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,7 +25,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -253,24 +258,24 @@ public class UserProfileController implements Initializable {
     @FXML
     public void changePassword() {
         User currentUser = Session.getInstance().getUser();
-        String password = JFXDialogFactory.changeUserPassWord(profilPane);
-        if (password != null) {
-            System.out.println(password);
-            if (password.equals("NOTVALIDPASSWORD")) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/changePassword.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("change password");
+            stage.setScene(new Scene(root));
 
-            } else {
-                try {
-                    currentUser.setPassword(password);
-                    delegate.updateUserPassword(currentUser);
-                    nameWarning.setText("password Updated");
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            ChangePasswordController passwordController = (ChangePasswordController)fxmlLoader.getController();
+            passwordController.setDelegate(delegate);
+            passwordController.setStage(stage);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
 
     @FXML
