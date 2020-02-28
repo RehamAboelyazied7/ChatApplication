@@ -174,9 +174,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void sendFriendRequest(User receiver) throws RemoteException, NotBoundException {
         initFriendRequestService();
         friendRequestsService.sendFriendRequest(this, receiver);
-        PushNotification pushNotification = new PushNotification();
+        //PushNotification pushNotification = new PushNotification();
         Notification notification = new Notification(this.currentUser, receiver, NotificationType.FRIENDSHIP_REQUEST_RECEIVED);
-        pushNotification.initializeNotify(notification);
+      //  pushNotification.initializeNotify(notification);
 
     }
 
@@ -187,17 +187,17 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void acceptFriendRequest(User sender) throws RemoteException, NotBoundException {
         initFriendRequestService();
         friendRequestsService.acceptFriendRequest(this, sender);
-        PushNotification pushNotification = new PushNotification();
+       // PushNotification pushNotification = new PushNotification();
         Notification notification = new Notification(sender, this.currentUser, NotificationType.FRIENDSHIP_ACCEPTED);
-        pushNotification.initializeNotify(notification);
+      //  pushNotification.initializeNotify(notification);
     }
 
     public void rejectFriendRequest(User sender) throws RemoteException, NotBoundException {
         initFriendRequestService();
         friendRequestsService.rejectFriendRequest(this, sender);
-        PushNotification pushNotification = new PushNotification();
+       // PushNotification pushNotification = new PushNotification();
         Notification notification = new Notification(sender, this.currentUser, NotificationType.FRIENDSHIP_REJECTED);
-        pushNotification.initializeNotify(notification);
+       // pushNotification.initializeNotify(notification);
     }
 
     public List<User> getPendingSentRequestFriends() throws RemoteException, NotBoundException {

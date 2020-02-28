@@ -268,9 +268,11 @@ public class HomeController implements Initializable {
             try {
 
                 client.sessionService.logout(client.getUser());
+               // client.setUser(null);
                 System.out.println("LogOut");
                 SceneTransition.goToLoginScreen(stage);
                 //serverServices.
+               // SceneTransition.check=true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -424,7 +426,7 @@ public class HomeController implements Initializable {
     private void friendStatusChangeNotificationBehaviour(Notification notification) {
 
         listView.getItems().filtered(user -> user.getId() == notification.getSource().getId())
-                .get(0).setStatus(notification.source.getStatus());
+                .forEach(user -> {user.setStatus(notification.source.getStatus());});
 
         listView.refresh();
 

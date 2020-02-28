@@ -55,7 +55,7 @@ public class Notification implements Serializable{
                 break;
 
                 case NotificationType.STATUS_UPDATE:
-                message += "is now "  + UserStatus.statusToString(source.getStatus());
+                message += " is now "  + UserStatus.statusToString(source.getStatus());
                 break;
 
             default:

@@ -6,6 +6,7 @@ import com.iti.chat.delegate.RegisterDelegate;
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.User;
+import com.iti.chat.model.UserStatus;
 import com.iti.chat.service.ClientServiceProvider;
 import static com.iti.chat.util.Encryption.decrypt;
 import com.iti.chat.viewcontroller.*;
@@ -73,7 +74,9 @@ public class SceneTransition {
     }
     public static void closeStage(Stage stage){
         try {
-            client.sessionService.logout(client.getUser());
+            if(client.getUser().getStatus()!= UserStatus.OFFLINE) {
+                client.sessionService.logout(client.getUser());
+            }
             stage.onCloseRequestProperty();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -143,7 +146,7 @@ public class SceneTransition {
     public static void goToLoginScreen(Stage stage) throws IOException, SQLException, NotBoundException {
         String phone = null;
         String pass = null;
-        
+
         stage.setTitle("Chat Login");
         
         FXMLLoader loader = new FXMLLoader();
