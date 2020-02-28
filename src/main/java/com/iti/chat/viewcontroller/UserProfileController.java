@@ -10,6 +10,7 @@ import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
 import com.iti.chat.validator.RegisterValidation;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,6 +37,7 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class UserProfileController implements Initializable {
@@ -61,9 +64,6 @@ public class UserProfileController implements Initializable {
     private Button passwordBtn;
 
     @FXML
-    private TextField nameField;
-
-    @FXML
     private TextArea bioField;
 
     @FXML
@@ -71,8 +71,22 @@ public class UserProfileController implements Initializable {
 
     @FXML
     private TextField phoneField;
+
+    @FXML
+    private TextField firstNameField;
+
+    @FXML
+    private TextField lastNameField;
+
+    @FXML
+    private JFXDatePicker birthDateField;
+
+    @FXML
+    private Text nameText;
+
     @FXML
     private JFXComboBox<String> status_combo_box;
+
     @FXML
     private ComboBox<String> countryField;
 
@@ -86,26 +100,24 @@ public class UserProfileController implements Initializable {
     private Label phoneWarning;
 
     @FXML
-    private ImageView genderImage;
+    private Label birthDateWarning;
 
     @FXML
     private JFXToggleButton chatBot;
 
     private Stage stage;
     private UserInfoDelegate delegate;
-
     private RegisterValidation validation;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String bio;
     private String email;
-    private String phone;
     private String country;
     File selectedImage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setUserInfo();
-        validation = new RegisterValidation();
         addCountries();
         setEditableFields();
         collectData();
@@ -118,24 +130,8 @@ public class UserProfileController implements Initializable {
         });
         status_combo_box.getItems().removeAll(status_combo_box.getItems());
         //UserStatus.statusToString(0)
-         status_combo_box.getItems().addAll(UserStatus.statusToString(1),UserStatus.statusToString(2),UserStatus.statusToString(3));
+        status_combo_box.getItems().addAll(UserStatus.statusToString(1), UserStatus.statusToString(2), UserStatus.statusToString(3));
         status_combo_box.setPromptText("Change Status");
-
-        /* if(changeStatus==false) {
-             status_combo_box.getSelectionModel().select(saveStatus);
-         }else{
-             status_combo_box.getSelectionModel().select(saveStatus);
-         }
-
-         */
-     /*    int  selectedIndex = status_combo_box.getSelectionModel().getSelectedIndex();
-        status_combo_box.getItems().addAll(UserStatus.statusToString(0), UserStatus.statusToString(1), UserStatus.statusToString(2), UserStatus.statusToString(3));
-        status_combo_box.getSelectionModel().select(3);
-        status_combo_box.getSelectionModel().select(selectedIndex);
-
-      */
-
-
     }
 
 
@@ -150,121 +146,95 @@ public class UserProfileController implements Initializable {
 
     public void setDelegate(UserInfoDelegate delegate) {
         this.delegate = delegate;
-        status_combo_box.setOnAction(e->{
-            switch (status_combo_box.getValue()){
-               /* case "offline":
-=======
         status_combo_box.setOnAction(e -> {
             switch (status_combo_box.getValue()) {
-                case "offline":
->>>>>>> 1d5036286905fbdd83dbe213b2d18136410f236e
-                    Session.getInstance().getUser().setStatus(UserStatus.OFFLINE);
-                    saveStatus=UserStatus.OFFLINE;
-                    break;
 
-                */
-               
                 case "busy":
                     Session.getInstance().getUser().setStatus(UserStatus.BUSY);
-
-
                     break;
                 case "away":
                     Session.getInstance().getUser().setStatus(UserStatus.AWAY);
-
-
                     break;
                 default:
                     Session.getInstance().getUser().setStatus(UserStatus.ONLINE);
-
-
                     break;
             }
             delegate.getClient().updateStatus(Session.getInstance().getUser());
             //delegate.getClient().sessionService.userInfoDidChange(currentUser);
             setUserStatus();
 
-
         });
 
     }
 
     public void setStage(Stage stage) {
-
         this.stage = stage;
     }
 
 
     @FXML
     public void edit() {
+        validation = new RegisterValidation();
         setEditableFields();
+    }
+
+    private boolean validateUserData() {
+        boolean isValidData = true;
+
+        if (firstNameField.getText().trim().length() == 0 || validation.checkName(firstNameField.getText()) == -1) {
+            nameWarning.setText("Invalid");
+            isValidData = false;
+        }
+
+        if (validation.checkEmail(emailField.getText()) == RegisterValidation.INVALID) {
+            emailWarning.setText("Invalid Email");
+            isValidData = false;
+        }
+
+        if (birthDateField.getValue() == null) {
+            birthDateWarning.setText("invalid date");
+            isValidData = false;
+        }
+        return isValidData;
     }
 
     @FXML
     public void save() {
-        String name = nameField.getText();
-        String phone = phoneField.getText();
-        String email = emailField.getText();
-        String country = countryField.getValue();
-        String bio = bioField.getText();
-        String firstName = new String();
-        String lastName = new String();
-        boolean validData = true;
-        if (name.trim().length() == 0) {
-            nameWarning.setText("Invalid");
-            validData = false;
-
-        }
-
-        if (validation.checkEmail(email) == RegisterValidation.INVALID) {
-            emailWarning.setText("Invalid Email");
-            validData = false;
-        }
-
-        if (validation.checkPhone(phone) == RegisterValidation.INVALID) {
-            phoneWarning.setText("Invalid number");
-            validData = false;
-        }
-        if (validData) {
-            String[] tempName = name.split("\\s");
-            firstName = tempName[0];
-            System.out.println(firstName);
-            for (int i = 1; i < tempName.length; i++) {
-                System.out.println(tempName[i]);
-                lastName += tempName[i];
-            }
+        boolean isValidData = validateUserData();
+        if (isValidData) {
             User currentUser = Session.getInstance().getUser();
-            currentUser.setFirstName(firstName);
-            currentUser.setLastName(lastName);
-            currentUser.setBio(bio);
-            currentUser.setEmail(email);
-            currentUser.setPhone(phone);
-            currentUser.setCountry(country);
+            currentUser.setFirstName(firstNameField.getText());
+            currentUser.setLastName(lastNameField.getText());
+            currentUser.setBio(bioField.getText());
+            currentUser.setEmail(emailField.getText());
+            currentUser.setCountry(countryField.getValue());
             try {
                 delegate.updateUserInfo(currentUser);
+                nameText.setText(firstNameField.getText() + " " + lastNameField.getText());
+                collectData();
+                setEditableFields();
+                clearWarnings();
             } catch (RemoteException e) {
                 e.printStackTrace();
+                nameWarning.setText("can't update your data");
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {
                 e.printStackTrace();
             }
-            collectData();
-            setEditableFields();
-            clearWarnings();
+
         }
     }
 
     @FXML
     public void cancel() {
-        nameField.setText(name);
+        firstNameField.setText(firstName);
+        lastNameField.setText(lastName);
         bioField.setText(bio);
         emailField.setText(email);
-        phoneField.setText(phone);
         countryField.setValue(country);
         setEditableFields();
         clearWarnings();
-
     }
 
     @FXML
@@ -272,15 +242,14 @@ public class UserProfileController implements Initializable {
         User currentUser = Session.getInstance().getUser();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/changePassword.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
+            Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("change password");
             stage.setScene(new Scene(root));
-
-            ChangePasswordController passwordController = (ChangePasswordController)fxmlLoader.getController();
+            ChangePasswordController passwordController = (ChangePasswordController) fxmlLoader.getController();
             passwordController.setDelegate(delegate);
             passwordController.setStage(stage);
             stage.show();
@@ -294,12 +263,13 @@ public class UserProfileController implements Initializable {
     public void enableChatBot() {
         User currentUser = Session.getInstance().getUser();
         if (chatBot.isSelected()) {
-            System.out.println("enable chatbot");
+            //System.out.println("enable chatbot");
+            currentUser.setChatBotEnabled(true);
         } else {
             currentUser.setChatBotEnabled(false);
-            System.out.println("disable chatBot");
+            //System.out.println("disable chatBot");
         }
-        currentUser.setChatBotEnabled(true);
+
         try {
             delegate.updateUserInfo(currentUser);
         } catch (RemoteException e) {
@@ -315,24 +285,27 @@ public class UserProfileController implements Initializable {
         saveBtn.setVisible(!saveBtn.isVisible());
         cancelBtn.setVisible(!cancelBtn.isVisible());
         bioField.setEditable(!bioField.isEditable());
-        nameField.setEditable(!nameField.isEditable());
+        firstNameField.setEditable(!firstNameField.isEditable());
+        lastNameField.setEditable(!lastNameField.isEditable());
         emailField.setEditable(!emailField.isEditable());
-        countryField.setEditable(!countryField.isEditable());
+        countryField.setDisable(!countryField.isDisabled());
+        birthDateField.setDisable(!birthDateField.isDisabled());
+        phoneField.setEditable(false);
 
     }
 
     private void collectData() {
-        name = nameField.getText();
+        firstName = firstNameField.getText();
+        lastName = lastNameField.getText();
         bio = bioField.getText();
         email = emailField.getText();
-        phone = phoneField.getText();
         country = countryField.getValue();
     }
 
     private void clearWarnings() {
         nameWarning.setText("");
         emailWarning.setText("");
-        phoneWarning.setText("");
+        birthDateWarning.setText("");
     }
 
     private Image selectImage() {
@@ -360,11 +333,17 @@ public class UserProfileController implements Initializable {
 
     private void setUserInfo() {
         User currentUser = Session.getInstance().getUser();
-        nameField.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+        nameText.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
         bioField.setText(currentUser.getBio());
+        firstNameField.setText(currentUser.getFirstName());
+        lastNameField.setText(currentUser.getLastName());
         phoneField.setText(currentUser.getPhone());
         emailField.setText(currentUser.getEmail());
         countryField.setValue(currentUser.getCountry());
+        chatBot.setSelected(currentUser.isChatBotEnabled());
+        System.out.println(currentUser.getCountry());
+        //chatBot.setSelected(currentUser.get);
+
         setUserStatus();
         setImage();
 

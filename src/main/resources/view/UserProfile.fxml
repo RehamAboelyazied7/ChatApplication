@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
@@ -15,10 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<StackPane fx:id="profilPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.UserProfileController">
+<StackPane fx:id="profilPane" prefHeight="615.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.UserProfileController">
    <children>
-      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="650.0" styleClass="backGround" stylesheets="@profileScreen.css">
+      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="650.0" styleClass="backGround" stylesheets="@profileScreen.css">
           <children>
               <HBox prefHeight="26.0" prefWidth="650.0" />
               <HBox alignment="BOTTOM_CENTER">
@@ -37,11 +39,11 @@
               </HBox>
               <HBox alignment="CENTER" prefHeight="48.0" prefWidth="650.0">
                   <children>
-                      <JFXTextField fx:id="nameField" alignment="CENTER" prefHeight="53.0" prefWidth="525.0" styleClass="custom-text-field" text="Reham Mohamed" unFocusColor="WHITE">
-                          <font>
-                              <Font name="Arial Black" size="24.0" />
-                          </font>
-                      </JFXTextField>
+                  <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="User name">
+                     <font>
+                        <Font name="Arial Black" size="24.0" />
+                     </font>
+                  </Text>
                   <Label fx:id="nameWarning" textFill="#e12222">
                      <font>
                         <Font size="14.0" />
@@ -79,14 +81,14 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-              <HBox alignment="CENTER" prefHeight="34.0" prefWidth="650.0" spacing="10.0">
+              <HBox alignment="TOP_CENTER" prefHeight="79.0" prefWidth="650.0" spacing="10.0">
                   <children>
                   <ImageView fx:id="genderImage" fitHeight="45.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/bio.png" />
                      </image>
                   </ImageView>
-                      <JFXTextArea fx:id="bioField" prefHeight="71.0" prefWidth="464.0" text="Bio..............." unFocusColor="WHITE">
+                      <JFXTextArea fx:id="bioField" prefHeight="49.0" prefWidth="278.0" text="Bio..............." unFocusColor="WHITE">
                           <font>
                               <Font name="Arial Italic" size="18.0" />
                           </font>
@@ -94,6 +96,44 @@
                   </children>
               </HBox>
               <HBox prefHeight="27.0" prefWidth="650.0" />
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="363.0" prefHeight="46.0" prefWidth="650.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="42.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label text="First name:">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="firstNameField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="100.0" unFocusColor="#4384ff" />
+                        <Label fx:id="emailWarning1" textFill="#f52020">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="42.0" prefWidth="207.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="63.0" text="Last name">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="lastNameField" alignment="TOP_LEFT" focusColor="#678090" prefHeight="25.0" prefWidth="100.0" unFocusColor="#4384ff">
+                           <HBox.margin>
+                              <Insets bottom="2.0" left="10.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <Label fx:id="emailWarning11" textFill="#f52020">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
               <HBox alignment="CENTER" prefHeight="54.0" prefWidth="634.0">
                   <children>
                       <ImageView fitHeight="29.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
@@ -152,6 +192,21 @@
                       </Label>
                   </children>
               </HBox>
+            <HBox fx:id="birtDateField" alignment="CENTER" layoutX="10.0" layoutY="491.0" prefHeight="54.0" prefWidth="634.0" spacing="4.0">
+               <children>
+                  <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/birth%20(1).png" />
+                     </image>
+                  </ImageView>
+                  <JFXDatePicker fx:id="birthDateField" defaultColor="#4c84ff" prefHeight="28.0" prefWidth="285.0" />
+                  <Label fx:id="birthDateWarning" textFill="#f51717">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
               <HBox alignment="CENTER" layoutX="10.0" layoutY="200.0" prefHeight="54.0" prefWidth="634.0">
                   <VBox.margin>
                       <Insets right="10.0" />

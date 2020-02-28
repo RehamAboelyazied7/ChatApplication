@@ -21,28 +21,30 @@ abstract public class CustomListCell extends ListCell<User> {
     @Override
     protected void updateItem(User item, boolean empty) {
         super.updateItem(item, empty);
-        user = item;
-        if (item != null && !empty) {
-            Parent parent = null;
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SceneTransition.class.getResource("/view/contactListCell.fxml"));
-            try {
-                parent = loader.load();
-                ContactListController contactListController = loader.getController();
-                contactListController.setUserData(item);
-                setPrefWidth(200);
-                setGraphic(parent);
-                setPrefHeight(60);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (item != null) {
+            user = item;
+            if (item != null && !empty) {
+                Parent parent = null;
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(SceneTransition.class.getResource("/view/contactListCell.fxml"));
+                try {
+                    parent = loader.load();
+                    ContactListController contactListController = loader.getController();
+                    contactListController.setUserData(item);
+                    setPrefWidth(200);
+                    setGraphic(parent);
+                    setPrefHeight(60);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-        } else {
-            setGraphic(null);
+            } else {
+                setGraphic(null);
+            }
+            setOnMouseClicked(mouseEvent -> {
+                setCellAction(mouseEvent, item);
+            });
         }
-        setOnMouseClicked(mouseEvent -> {
-            setCellAction(mouseEvent, item);
-        });
 
     }
 

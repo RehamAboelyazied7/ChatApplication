@@ -15,7 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -43,18 +42,6 @@ public class ContactsSearchBox extends VBox {
     private GridPane gridPane;
     private JFXButton jfxButton;
 
-    public void setHomeController(HomeController homeController) {
-        this.homeController = homeController;
-    }
-
-    public void setFriendRequestDelegate(FriendRequestDelegate friendRequestDelegate) {
-        this.friendRequestDelegate = friendRequestDelegate;
-    }
-
-    public FriendRequestDelegate getFriendRequestDelegate() {
-        return friendRequestDelegate;
-    }
-
     public ContactsSearchBox() {
         jFXTextField1 = new JFXTextField();
         jFXTextField2 = new JFXTextField();
@@ -64,7 +51,7 @@ public class ContactsSearchBox extends VBox {
         jfxButton = new JFXButton("Search");
 
         setSpacing(12);
-        VBox.setMargin(this,new Insets( 0, 20, 0, 20 ));
+        VBox.setMargin(this, new Insets(0, 20, 0, 20));
         setId("VBox");
         setPrefHeight(132.0);
         setPrefWidth(259.0);
@@ -83,13 +70,35 @@ public class ContactsSearchBox extends VBox {
         gridPane.getChildren().add(jfxButton);
         getChildren().add(gridPane);
         jfxButton.setOnMouseClicked((arg0) -> {
+            homeController.getListViewBox().getChildren().clear();
+            boolean invalid = false;
             Set<User> set = new LinkedHashSet<>();
             List<User> userslist = new ArrayList<User>();
             try {
-                set.addAll(friendRequestDelegate.searchByPhone(jFXTextField1.getText()));
-                set.addAll(friendRequestDelegate.searchByPhone(jFXTextField2.getText()));
-                set.addAll(friendRequestDelegate.searchByPhone(jFXTextField3.getText()));
-                set.addAll(friendRequestDelegate.searchByPhone(jFXTextField4.getText()));
+                if (jFXTextField1.getText().matches("[0-9]+") && jFXTextField1.getText().length() < 11 && jFXTextField1.getText().length() > 0)
+                    set.addAll(friendRequestDelegate.searchByPhone(jFXTextField1.getText()));
+                else
+                    invalid = true;
+
+                if (jFXTextField2.getText().length() <= 11 && jFXTextField2.getText().length() > 0 && invalid==false) {
+                    if (jFXTextField2.getText().matches("[0-9]+"))
+                        set.addAll(friendRequestDelegate.searchByPhone(jFXTextField2.getText()));
+                    else
+                        invalid = true;
+                }
+
+                if (jFXTextField3.getText().length() <= 11 && jFXTextField3.getText().length() > 0&& invalid==false) {
+                    if (jFXTextField3.getText().matches("[0-9]+"))
+                        set.addAll(friendRequestDelegate.searchByPhone(jFXTextField3.getText()));
+                    else
+                        invalid = true;
+                }
+                if (jFXTextField4.getText().length() <= 11 && jFXTextField4.getText().length() > 0 && invalid==false) {
+                    if (jFXTextField4.getText().matches("[0-9]+"))
+                        set.addAll(friendRequestDelegate.searchByPhone(jFXTextField4.getText()));
+                    else
+                        invalid = true;
+                }
 
                 List<User> currentUserFriends = Session.getInstance().getUser().getFriends();
                 List<User> pendingFriends = friendRequestDelegate.getPendingSentRequestFriends();
@@ -98,17 +107,18 @@ public class ContactsSearchBox extends VBox {
                 set.removeAll(pendingFriends);
                 set.remove(Session.getInstance().getUser());
 
-                for(User user:set)
+                for (User user : set)
                     userslist.add(user);
 
                 ObservableList<User> userObservableList = FXCollections.observableList(userslist);
                 ListView<User> userListview = new ListView<User>(userObservableList);
-                userListview.setPlaceholder(new Label("no users match the numbers"));
+                if (invalid)
+                    userListview.setPlaceholder(new Label("Invalid number/numbers!"));
+                else
+                    userListview.setPlaceholder(new Label("no users match the numbers"));
 
-                userListview.setCellFactory(listView -> new AddFriendCell(this,homeController));
-                homeController.getListViewBox().getChildren().clear();
+                userListview.setCellFactory(listView -> new AddFriendCell(this, homeController));
                 homeController.getListViewBox().getChildren().add(userListview);
-
 
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -117,10 +127,23 @@ public class ContactsSearchBox extends VBox {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             System.out.println(userslist);
         });
 
 
+    }
+
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;
+    }
+
+    public FriendRequestDelegate getFriendRequestDelegate() {
+        return friendRequestDelegate;
+    }
+
+    public void setFriendRequestDelegate(FriendRequestDelegate friendRequestDelegate) {
+        this.friendRequestDelegate = friendRequestDelegate;
     }
 }
 

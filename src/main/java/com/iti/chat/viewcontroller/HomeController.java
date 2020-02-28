@@ -426,7 +426,7 @@ public class HomeController implements Initializable {
     private void friendStatusChangeNotificationBehaviour(Notification notification) {
 
         listView.getItems().filtered(user -> user.getId() == notification.getSource().getId())
-                .get(0).setStatus(notification.source.getStatus());
+                .forEach(user -> {user.setStatus(notification.source.getStatus());});
 
         listView.refresh();
 
