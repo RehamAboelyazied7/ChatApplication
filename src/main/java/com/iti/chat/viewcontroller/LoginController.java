@@ -80,6 +80,7 @@ public class LoginController implements Initializable {
 
             //User user = delegate.login(phoneTextField.getText(),));
             User user = delegate.login(phoneTextField.getText(), Hashing.getSecurePassword(passwordField.getText()));
+            //User user = delegate.login(phoneTextField.getText(), passwordField.getText());0100
             if (user != null) {
                 Session.getInstance().setUser(user);
                 System.out.printf("logged in as " + user);
