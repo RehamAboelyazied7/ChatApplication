@@ -136,7 +136,12 @@ public class RegisterController implements Initializable {
             User user = new User();
             user.setFirstName(firstNameTextField.getText());
             user.setLastName(lastNameTextField.getText());
+            if(maleRadioButton.isSelected()){
             user.setGender(Gender.MALE);
+            }else if(femaleRadioButton.isSelected()){
+                user.setGender(Gender.FEMALE);
+            }
+
             user.setPhone(phoneTextField.getText());
             user.setEmail("");
             valid=0;
