@@ -29,10 +29,8 @@ public class RegisterValidation {
         if (email.isEmpty()) {
             return EMPTY; //enter your Email
         } else {
-            Pattern p = Pattern.compile("^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$");
-            Matcher m = p.matcher(email);
-            if (m.matches())
-                return INVALID ;//Enter a valid email address
+            if (!email.matches("^([\\w-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$"))
+                return INVALID;//Enter a valid email address
         }
         return VALID;//match
     }
@@ -79,6 +77,13 @@ public class RegisterValidation {
             return false;//write about your Bio
         else
             return true;
+    }
+
+    public boolean checkBirthDate(String birthdate) {
+        boolean isValid = true;
+        if (!birthdate.matches("^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$"))
+            isValid = false;
+        return isValid;
     }
 
 
