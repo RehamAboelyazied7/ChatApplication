@@ -180,6 +180,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     }
 
+    public List<User> getPendingRequests() throws RemoteException {
+        return friendRequestsService.pendingFriendRequestsSent(this);
+    }
 
     public void acceptFriendRequest(User sender) throws RemoteException, NotBoundException {
         initFriendRequestService();
@@ -197,9 +200,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         pushNotification.initializeNotify(notification);
     }
 
-    public List<User> pendingFriendRequests() throws RemoteException, NotBoundException {
+    public List<User> getPendingSentRequestFriends() throws RemoteException, NotBoundException {
         initFriendRequestService();
-        return friendRequestsService.pendingFriendRequests(this);
+        return friendRequestsService.pendingFriendRequestsSent(this);
     }
 
     public User login(String phone, String password) throws RemoteException, SQLException, NotBoundException {
@@ -240,14 +243,13 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     }
 
     public void userInfoDidChange(User user) {
-        if(currentUser.equals(user)) {
+        if (currentUser.equals(user)) {
             setUser(user);
-        }
-        else if (currentUser.getFriends().contains(user)) {
+        } else if (currentUser.getFriends().contains(user)) {
             currentUser.getFriends().remove(user);
             currentUser.getFriends().add(user);
         }
-        if(controller != null) {
+        if (controller != null) {
             controller.userInfoDidChange(user);
         }
 
@@ -269,6 +271,14 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public List<ChatRoom> getGroupChatRooms(User user) throws RemoteException, NotBoundException {
         initChatRoomService();
         return chatRoomService.getGroupChatRooms(user);
+    }
+
+    public void updateStatus(User user) {
+        try {
+            sessionService.updateStatus(user);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }
 
