@@ -1,7 +1,11 @@
 package com.iti.chat.model;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +36,8 @@ public class User implements Comparable<User>, Serializable {
     private List<ChatRoom> chatRooms;
     private boolean chatBotEnabled;
     private String remoteImagePath;
+    private int isAddedFromServer;
+    private LocalDate birthDate;
 
     {
         friends = new ArrayList<>();
@@ -57,7 +63,6 @@ public class User implements Comparable<User>, Serializable {
         this.phone = phone;
         this.email = email;
     }
-
     public User() {
 
     }
@@ -242,5 +247,21 @@ public class User implements Comparable<User>, Serializable {
     @Override
     public int compareTo(User o) {
         return firstName.compareTo(o.firstName);
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public int getIsAddedFromServer() {
+        return isAddedFromServer;
+    }
+
+    public void setIsAddedFromServer(int isAddedFromServer) {
+        this.isAddedFromServer = isAddedFromServer;
     }
 }

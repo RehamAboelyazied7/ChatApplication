@@ -136,6 +136,7 @@ public class RegisterController implements Initializable {
             user.setGender(Gender.MALE);
             user.setPhone(phoneTextField.getText());
             user.setEmail("");
+            user.setIsAddedFromServer(0);
             try {
                 delegate.register(user, Hashing.getSecurePassword(passwordTextField.getText()));
                 if (selectedFile != null) {
