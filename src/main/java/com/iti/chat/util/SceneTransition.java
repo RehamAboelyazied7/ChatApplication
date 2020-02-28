@@ -199,14 +199,7 @@ public class SceneTransition {
             registerController.setDelegate(delegate);
             registerController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent windowEvent) {
-                    closeStage(stage);
-                    System.exit(0);
 
-                }
-            });
         } catch (IOException e) {
             e.printStackTrace();
         }

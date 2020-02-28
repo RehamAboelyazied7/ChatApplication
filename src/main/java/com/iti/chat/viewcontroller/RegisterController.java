@@ -92,6 +92,9 @@ public class RegisterController implements Initializable {
 
     @FXML
     private Button cancelButton;
+    @FXML
+    private Button submitButton;
+    int valid=0;
 
     File selectedFile;
     //error tooltips to explain what is wrong with data validation
@@ -136,21 +139,26 @@ public class RegisterController implements Initializable {
             user.setGender(Gender.MALE);
             user.setPhone(phoneTextField.getText());
             user.setEmail("");
+            valid=0;
             try {
+
                 delegate.register(user, Hashing.getSecurePassword(passwordTextField.getText()));
                 if (selectedFile != null) {
                     delegate.uploadImage(selectedFile, user);
                 }
-            } catch (RemoteException e) {
+            }catch (DuplicatePhoneException e) {
+                System.out.println("Duplicate Phone Number ");
+                 phoneNumberError.setText("Duplicate Phone Number ");
+                 phoneNumberError.setVisible(true);
+                 valid=1;
+                // submitButton.setDisable(true);
+               // submitButtonHandler(event);
+            } catch (RemoteException |NotBoundException e) {
                 e.printStackTrace();
-            } catch (DuplicatePhoneException e) {
-                e.printStackTrace();
-            } catch (NotBoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            }finally {
+                if(valid!=1)
+                    SceneTransition.goToLoginScreen(stage);
             }
-            SceneTransition.goToLoginScreen(stage);
 
 
         }
