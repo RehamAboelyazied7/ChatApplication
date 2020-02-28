@@ -268,9 +268,11 @@ public class HomeController implements Initializable {
             try {
 
                 client.sessionService.logout(client.getUser());
+               // client.setUser(null);
                 System.out.println("LogOut");
                 SceneTransition.goToLoginScreen(stage);
                 //serverServices.
+               // SceneTransition.check=true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
