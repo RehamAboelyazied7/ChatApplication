@@ -16,7 +16,7 @@
 <AnchorPane fx:id="rootAnchorPane" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.MessageController">
 
     <children>
-        <GridPane hgap="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" fx:id="gridPane">
+        <GridPane hgap="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10" fx:id="gridPane">
             <children>
                 <VBox GridPane.columnIndex="0" fx:id="userDetailsVBox">
                     <children>
@@ -25,7 +25,7 @@
                         </Circle>
                         <Label fx:id="userName" maxWidth="180.0" text="Shimaa">
                             <font>
-                                <Font name="System Bold" size="14.0" />
+                                <Font name="System Bold" size="10.0" />
                             </font>
                         </Label>
                     </children>

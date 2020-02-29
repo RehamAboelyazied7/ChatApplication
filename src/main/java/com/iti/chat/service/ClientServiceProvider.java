@@ -81,6 +81,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     public void sendFile(Message message, File file, int roomId) throws IOException, NotBoundException {
         initChatRoomService();
+        message.setContent(Encryption.encrypt(message.getContent()));
         InputStream inputStream = new FileInputStream(file.getAbsolutePath());
         RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
         chatRoomService.sendFile(message, roomId, remoteFileData);

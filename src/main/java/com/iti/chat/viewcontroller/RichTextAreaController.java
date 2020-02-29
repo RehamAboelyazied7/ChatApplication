@@ -3,6 +3,7 @@ package com.iti.chat.viewcontroller;
 import com.iti.chat.model.Message;
 import com.iti.chat.model.MessageStyle;
 import com.iti.chat.util.ColorUtils;
+import com.iti.chat.util.FileReceiver;
 import com.iti.chat.util.Session;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
