@@ -82,8 +82,8 @@ public class LoginController implements Initializable {
     @FXML
     public void login(ActionEvent ae) throws FileNotFoundException {
         try {
-            User user = delegate.login(phoneTextField.getText(), getSecurePassword(passwordField.getText()));
             //User user = delegate.login(phoneTextField.getText(), passwordField.getText());
+            User user = delegate.login(phoneTextField.getText(), getSecurePassword(passwordField.getText()));
             if (user != null) {
                 Session.getInstance().setUser(user);
                 //System.out.printf("logged in as " + user);

@@ -48,9 +48,8 @@ public class MessageController implements Initializable {
 
     public void displayOnRight(Message message) {
         bubbleColor = RIGHT_MESSAGE_BUBBLE_COLOR;
-        AnchorPane.clearConstraints(gridPane);
         AnchorPane.setRightAnchor(gridPane, 10.0);
-        AnchorPane.setTopAnchor(gridPane, 10.0);
+        AnchorPane.setLeftAnchor(gridPane, null);
         gridPane.getChildren().remove(0);
         if (ColorUtils.areSimilarColors(RIGHT_MESSAGE_BUBBLE_COLOR, message.getStyle().getColor())) {
             bubbleColor = ColorUtils.invertedColor(message.getStyle().getColor());
@@ -58,15 +57,7 @@ public class MessageController implements Initializable {
     }
 
     public void displayOnLeft(Message message) {
-        ChatRoom chatRoom = message.getChatRoom();
         bubbleColor = LEFT_MESSAGE_BUBBLE_COLOR;
-        int messageId = chatRoom.getMessages().indexOf(message);
-        if(messageId > 0) {
-            Message lastMessage = chatRoom.getMessages().get(messageId - 1);
-            if(message.getSender().equals(lastMessage.getSender())) {
-                gridPane.getChildren().get(0).setVisible(false);
-            }
-        }
         Image image = ImageCache.getInstance().getImage(message.getSender());
         if(image == null) {
             image = ImageCache.getInstance().getDefaultImage(message.getSender());
@@ -82,6 +73,7 @@ public class MessageController implements Initializable {
         userName.setText(message.getSender().getFirstName());
         messageContent.setText(message.getContent());
         messageContent.setStyle(message.getStyle().toString());
+        indentMessage(message);
         if (Session.getInstance().getUser().equals(message.getSender())) {
             displayOnRight(message);
             message.setInRightDirection(true);
@@ -91,5 +83,21 @@ public class MessageController implements Initializable {
         }
         messageVBox.setStyle("-fx-border-color: #ffff;-fx-background-radius:2em;-fx-background-color: " + bubbleColor);
         userImageView.setStroke(Color.web(bubbleColor));
+    }
+
+    private void indentMessage(Message message) {
+        ChatRoom chatRoom = message.getChatRoom();
+        int messageId = chatRoom.getMessages().indexOf(message);
+        if(messageId > 0) {
+            Message lastMessage = chatRoom.getMessages().get(messageId - 1);
+            if(message.getSender().equals(lastMessage.getSender())) {
+                gridPane.getChildren().get(0).setVisible(false);
+                AnchorPane.setTopAnchor(gridPane, -10.0);
+                if(!Session.getInstance().getUser().equals(message.getSender())) {
+                    // displayed on left
+                    userDetailsVBox.getChildren().remove(userName);
+                }
+            }
+        }
     }
 }

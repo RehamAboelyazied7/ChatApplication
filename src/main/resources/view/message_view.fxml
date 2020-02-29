@@ -10,7 +10,7 @@
 <AnchorPane fx:id="rootAnchorPane" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.MessageController">
 
     <children>
-        <GridPane fx:id="gridPane" hgap="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10">
+        <GridPane hgap="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10" fx:id="gridPane">
             <children>
                 <VBox fx:id="userDetailsVBox" GridPane.columnIndex="0">
                     <children>
@@ -19,14 +19,14 @@
                         </Circle>
                         <Label fx:id="userName" maxWidth="180.0" text="Shimaa">
                             <font>
-                                <Font name="System Bold" size="14.0" />
+                                <Font name="System Bold" size="10.0" />
                             </font>
                         </Label>
                     </children>
                 </VBox>
                 <Group GridPane.columnIndex="1" GridPane.valignment="TOP">
                     <children>
-                        <VBox fx:id="messageVBox" maxWidth="400" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" styleClass="vbox_size">
+                        <VBox fx:id="messageVBox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" styleClass="vbox_size">
                             <children>
                                 <Label fx:id="messageContent" ellipsisString="" graphicTextGap="0.0" style="-fx-background-radius: 20%;" text="Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you" textFill="#f2f0f0" wrapText="true" VBox.vgrow="ALWAYS">
                                     <padding>
