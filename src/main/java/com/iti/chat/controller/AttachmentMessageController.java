@@ -50,7 +50,7 @@ public class AttachmentMessageController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userImageView.setFill(Color.TRANSPARENT);
-        Image image = new Image(getClass().getResource("/view/sender.png").toExternalForm());
+        Image image = new Image(getClass().getResource("/view/icons/sender.png").toExternalForm());
         userImageView.setFill(new ImagePattern(image));
     }
 
