@@ -160,6 +160,7 @@ public class HomeController implements Initializable {
         notificationListView.setPlaceholder(new Label("No notification In List"));
         userListView.setMinWidth(250);
         notificationListView.setMinWidth(250);
+        chatRoomListView.setMinWidth(200);
         userListView.setCellFactory(listView -> new ContactListCell(this));
         notificationVbox.getChildren().addAll(notificationListView);
         notificationVbox.getChildren().addAll(userListView);
