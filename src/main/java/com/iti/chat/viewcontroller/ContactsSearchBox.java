@@ -7,6 +7,7 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.delegate.FriendRequestDelegate;
 import com.iti.chat.model.User;
+import com.iti.chat.util.Animator;
 import com.iti.chat.util.Session;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -70,7 +71,7 @@ public class ContactsSearchBox extends VBox {
         gridPane.getChildren().add(jfxButton);
         getChildren().add(gridPane);
         jfxButton.setOnMouseClicked((arg0) -> {
-            homeController.getListViewBox().getChildren().clear();
+            Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
             boolean invalid = false;
             Set<User> set = new LinkedHashSet<>();
             List<User> userslist = new ArrayList<User>();
@@ -80,20 +81,20 @@ public class ContactsSearchBox extends VBox {
                 else
                     invalid = true;
 
-                if (jFXTextField2.getText().length() <= 11 && jFXTextField2.getText().length() > 0 && invalid==false) {
+                if (jFXTextField2.getText().length() <= 11 && jFXTextField2.getText().length() > 0 && invalid == false) {
                     if (jFXTextField2.getText().matches("[0-9]+"))
                         set.addAll(friendRequestDelegate.searchByPhone(jFXTextField2.getText()));
                     else
                         invalid = true;
                 }
 
-                if (jFXTextField3.getText().length() <= 11 && jFXTextField3.getText().length() > 0&& invalid==false) {
+                if (jFXTextField3.getText().length() <= 11 && jFXTextField3.getText().length() > 0 && invalid == false) {
                     if (jFXTextField3.getText().matches("[0-9]+"))
                         set.addAll(friendRequestDelegate.searchByPhone(jFXTextField3.getText()));
                     else
                         invalid = true;
                 }
-                if (jFXTextField4.getText().length() <= 11 && jFXTextField4.getText().length() > 0 && invalid==false) {
+                if (jFXTextField4.getText().length() <= 11 && jFXTextField4.getText().length() > 0 && invalid == false) {
                     if (jFXTextField4.getText().matches("[0-9]+"))
                         set.addAll(friendRequestDelegate.searchByPhone(jFXTextField4.getText()));
                     else
@@ -111,14 +112,13 @@ public class ContactsSearchBox extends VBox {
                     userslist.add(user);
 
                 ObservableList<User> userObservableList = FXCollections.observableList(userslist);
-                ListView<User> userListview = new ListView<User>(userObservableList);
+                homeController.getUserListView().setItems(userObservableList);
                 if (invalid)
-                    userListview.setPlaceholder(new Label("Invalid number/numbers!"));
+                    homeController.getUserListView().setPlaceholder(new Label("Invalid number/numbers!"));
                 else
-                    userListview.setPlaceholder(new Label("no users match the numbers"));
+                    homeController.getUserListView().setPlaceholder(new Label("no users match the numbers"));
 
-                userListview.setCellFactory(listView -> new AddFriendCell(this, homeController));
-                homeController.getListViewBox().getChildren().add(userListview);
+                homeController.getUserListView().setCellFactory(listView -> new AddFriendCell(this, homeController));
 
             } catch (RemoteException e) {
                 e.printStackTrace();
