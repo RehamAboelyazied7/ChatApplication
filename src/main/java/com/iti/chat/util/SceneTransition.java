@@ -49,6 +49,7 @@ public class SceneTransition {
             client.setController(homeController);
             client.setUser(Session.getInstance().getUser());
             homeController.setClient(client);
+            homeController.instantiateContactsList();
             homeController.setStage(stage);
             stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

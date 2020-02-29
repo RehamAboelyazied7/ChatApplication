@@ -114,7 +114,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.main.Main</mainClass>
+                            <mainClass>main.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -125,13 +125,13 @@
                 <version>3.2.0</version>
                 <configuration>
                     <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                        <descriptorRef>Client Chat</descriptorRef>
                     </descriptorRefs>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.main.Main</mainClass>
+                            <mainClass>main.Main</mainClass>
 
                         </manifest>
                     </archive>
@@ -180,7 +180,7 @@
                     <release>11</release>
                     <jlinkImageName>hellofx</jlinkImageName>
                     <launcher>launcher</launcher>
-                    <mainClass>com.main.Main</mainClass>
+                    <mainClass>main.Main</mainClass>
                 </configuration>
 
             </plugin>
