@@ -50,10 +50,10 @@ public class ContactBarController implements Initializable {
             FileChooser fileChooser = new FileChooser();
 
             File file = fileChooser.showSaveDialog(saveImageView.getScene().getWindow());
-            file = new File(file.getAbsolutePath() + ".html");
 
             if (file != null) {
 
+                file = new File(file.getAbsolutePath() + ".html");
                 ChatRoom chatRoom = chatRoomController.getCurrentChatRoom();
                 for (Message message : chatRoom.getMessages()) {
 

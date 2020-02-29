@@ -81,6 +81,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     public void sendFile(Message message, File file, int roomId) throws IOException, NotBoundException {
         initChatRoomService();
+        message.setContent(Encryption.encrypt(message.getContent()));
         InputStream inputStream = new FileInputStream(file.getAbsolutePath());
         RemoteInputStreamServer remoteFileData = new SimpleRemoteInputStream(inputStream);
         chatRoomService.sendFile(message, roomId, remoteFileData);
@@ -135,7 +136,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void receiveNotification(Notification notification) {
         System.out.println("sender" + notification.getSource() + "reciever" + notification.getReceiver());
         controller.receiveNotification(notification);
-        controller.notificationView();
+       // controller.notificationView();
      /*   notificationListController.setNotifications(notification);
         Platform.runLater(new Runnable() {
             @Override
@@ -203,7 +204,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     public List<User> getPendingSentRequestFriends() throws RemoteException, NotBoundException {
         initFriendRequestService();
-        return friendRequestsService.pendingFriendRequestsSent(this);
+        return friendRequestsService.pendingFriendRequests(this);
     }
 
     public User login(String phone, String password) throws RemoteException, SQLException, NotBoundException {
@@ -235,7 +236,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
         announcment.setContent(Encryption.decrypt(announcment.getContent()));
         controller.receiveAnnouncment(announcment);
-        controller.notificationView();
+        //controller.notificationView();
 
     }
 

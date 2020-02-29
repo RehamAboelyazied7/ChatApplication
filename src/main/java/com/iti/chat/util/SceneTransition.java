@@ -5,15 +5,7 @@ import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
 import com.iti.chat.service.ClientServiceProvider;
-import static com.iti.chat.util.Encryption.decrypt;
 import com.iti.chat.viewcontroller.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,12 +15,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.io.IOException;
+import java.io.*;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.iti.chat.util.Encryption.decrypt;
+import static com.iti.chat.util.Hashing.getSecurePassword;
 
 public class SceneTransition {
 
@@ -43,6 +38,7 @@ public class SceneTransition {
         }
 
     }
+
     public static void goToHomeScene(Stage stage) {
         stage.setTitle("Chat");
         try {
@@ -69,9 +65,10 @@ public class SceneTransition {
             e.printStackTrace();
         }
     }
-    public static void closeStage(Stage stage){
+
+    public static void closeStage(Stage stage) {
         try {
-            if(client.getUser().getStatus()!= UserStatus.OFFLINE) {
+            if (client.getUser().getStatus() != UserStatus.OFFLINE) {
                 client.sessionService.logout(client.getUser());
             }
             stage.onCloseRequestProperty();
@@ -97,7 +94,7 @@ public class SceneTransition {
         }
     }
 
-    public static ChatRoomController loadChatRoom(VBox rightVBox , ChatRoom room , HomeController homeController) {
+    public static ChatRoomController loadChatRoom(VBox rightVBox, ChatRoom room, HomeController homeController) {
 
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -145,7 +142,7 @@ public class SceneTransition {
         String pass = null;
 
         stage.setTitle("Chat Login");
-        
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(SceneTransition.class.getResource("/view/LogIn.fxml"));
         Parent parent = loader.load();
@@ -160,7 +157,7 @@ public class SceneTransition {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file1));
                 phone = decrypt(reader.readLine());
-                pass = decrypt(reader.readLine());
+                pass = getSecurePassword(decrypt(reader.readLine()));
                 reader.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
