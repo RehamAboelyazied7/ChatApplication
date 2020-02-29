@@ -344,7 +344,6 @@ public class UserProfileController implements Initializable {
         countryField.setValue(currentUser.getCountry());
         birthDateField.setValue(currentUser.getBirthDate());
         chatBot.setSelected(currentUser.isChatBotEnabled());
-        System.out.println(currentUser.getCountry());
         //chatBot.setSelected(currentUser.get);
 
         setUserStatus();

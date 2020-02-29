@@ -1,9 +1,6 @@
 package com.iti.chat.util;
 
-import com.iti.chat.delegate.ChatRoomDelegate;
-import com.iti.chat.delegate.LoginDelegate;
-import com.iti.chat.delegate.RegisterDelegate;
-import com.iti.chat.delegate.UserInfoDelegate;
+import com.iti.chat.delegate.*;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
@@ -251,6 +248,23 @@ public class SceneTransition {
             e.printStackTrace();
         }
 
+    }
+
+    public static void goToChangePasswordScene(Stage stage) {
+        stage.setTitle("Change password");
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SceneTransition.class.getResource("/view/changePassword.fxml"));
+            Parent parent = loader.load();
+            ChangePasswordController changePasswordController = loader.getController();
+            changePasswordController.setStage(stage);
+            UserPasswordDelegate userPasswordDelegate = new UserPasswordDelegate(client, changePasswordController);
+            changePasswordController.setPasswordDelegate(userPasswordDelegate);
+            stage.setScene(new Scene(parent, stage.getWidth(), stage.getHeight()));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
   /*  public static void goToNotification(Stage stage) {
