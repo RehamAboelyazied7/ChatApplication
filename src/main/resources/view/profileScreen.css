@@ -12,12 +12,11 @@
 }
 
 .blue_btn {
-    -fx-background-color: linear-gradient(#4c84ff, #4c84ff);
-    -fx-background-insets: 0, 1, 2, 3;
-    -fx-background-radius: 3, 2, 2, 2;
-    -fx-padding: 12 30 12 30;
-    -fx-text-fill: white;
-    -fx-font-size: 12px;
+    -fx-font:bold 15px "Calibri";
+    -fx-background-color:#4c84ff;
+    -fx-background-radius:8,7,6;
+    -fx-text-alignment:center;
+    -fx-text-fill:#ffffff;"
 }
 .password_btn {
     -fx-graphic: url('icons/rsz_lock1.png');

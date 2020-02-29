@@ -93,6 +93,7 @@
                               <Font name="Arial Italic" size="18.0" />
                           </font>
                       </JFXTextArea>
+                  <Label fx:id="bioWarning" textFill="#d71919" />
                   </children>
               </HBox>
               <HBox prefHeight="27.0" prefWidth="650.0" />

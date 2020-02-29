@@ -182,8 +182,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     }
 
-    public List<User> getPendingRequests() throws RemoteException {
-        return friendRequestsService.pendingFriendRequestsSent(this);
+    public List<User> getPendingRequests() throws RemoteException, NotBoundException {
+        initFriendRequestService();
+        return friendRequestsService.pendingFriendRequests(this);
     }
 
     public void acceptFriendRequest(User sender) throws RemoteException, NotBoundException {
@@ -204,7 +205,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     public List<User> getPendingSentRequestFriends() throws RemoteException, NotBoundException {
         initFriendRequestService();
-        return friendRequestsService.pendingFriendRequests(this);
+        return friendRequestsService.pendingFriendRequestsSent(this);
     }
 
     public User login(String phone, String password) throws RemoteException, SQLException, NotBoundException {
