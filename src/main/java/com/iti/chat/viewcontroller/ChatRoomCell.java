@@ -22,7 +22,7 @@ public class ChatRoomCell extends ListCell<ChatRoom> {
     @Override
     protected void updateItem(ChatRoom item, boolean empty) {
         super.updateItem(item, empty);
-        chatRoom = item;
+        //chatRoom = item;
         if (item != null && !empty) {
             Parent parent = null;
             FXMLLoader loader = new FXMLLoader();
@@ -30,7 +30,7 @@ public class ChatRoomCell extends ListCell<ChatRoom> {
             try {
                 parent = loader.load();
                 ChatRoomListController chatRoomListController = loader.getController();
-                chatRoomListController.setChatRoomData(groupChatController.getGroupName());
+                chatRoomListController.setChatRoomData(item);
                 setPrefWidth(200);
                 setGraphic(parent);
                 setPrefHeight(60);
