@@ -107,7 +107,8 @@ public class GroupChatController implements Initializable {
 
     private void updateHomeListView() {
         homeController.getEditableBox().getChildren().clear();
-        JFXButton createGroupBtn = new JFXButton("create Group chat");
+        JFXButton createGroupBtn = new JFXButton("Create Group Chat");
+        createGroupBtn.setStyle("-fx-font:bold 15px \"Calibri\";-fx-background-color:#4c84ff; -fx-background-radius:8,7,6; -fx-text-alignment:center; -fx-text-fill:#ffffff;");
         homeController.getEditableBox().getChildren().add(createGroupBtn);
         createGroupBtn.setOnAction((event) -> {
             Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());

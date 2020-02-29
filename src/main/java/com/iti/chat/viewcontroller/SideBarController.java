@@ -172,7 +172,7 @@ public class SideBarController implements Initializable {
 
             try {
 
-                friendRequest = FXCollections.observableList(homeController.getClient().getPendingSentRequestFriends());
+                friendRequest = FXCollections.observableList(homeController.getClient().getPendingRequests());
 
             } catch (RemoteException | NotBoundException e) {
                 e.printStackTrace();

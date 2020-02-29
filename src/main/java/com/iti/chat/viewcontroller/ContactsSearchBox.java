@@ -62,6 +62,7 @@ public class ContactsSearchBox extends VBox {
         gridPane.setAlignment(Pos.CENTER);
 
         jfxButton.setAlignment(Pos.CENTER);
+        jfxButton.setStyle("-fx-font:bold 15px \"Calibri\";-fx-background-color:#4c84ff; -fx-background-radius:8,7,6; -fx-text-alignment:center; -fx-text-fill:#ffffff;");
 
         getChildren().add(jFXTextField1);
         getChildren().add(jFXTextField2);
@@ -105,7 +106,9 @@ public class ContactsSearchBox extends VBox {
                 List<User> pendingFriends = friendRequestDelegate.getPendingSentRequestFriends();
 
                 set.removeAll(currentUserFriends);
+                System.out.println(currentUserFriends);
                 set.removeAll(pendingFriends);
+                System.out.println(pendingFriends);
                 set.remove(Session.getInstance().getUser());
 
                 for (User user : set)
