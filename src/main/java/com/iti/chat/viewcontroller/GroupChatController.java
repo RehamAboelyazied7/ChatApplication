@@ -2,10 +2,7 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.User;
-import com.iti.chat.util.Animator;
-import com.iti.chat.util.GroupMemberBox;
-import com.iti.chat.util.SceneTransition;
-import com.iti.chat.util.Session;
+import com.iti.chat.util.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.Event;
@@ -17,11 +14,17 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -74,15 +77,24 @@ public class GroupChatController implements Initializable {
         nameLabel.setText(Session.getInstance().getUser().getFirstName());
         groupMembersBoxList = new ArrayList<>();
         membersBox.getChildren().clear();
+        groupName.setVisible(false);
+        /*groupImage.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            Image image = selectImage();
+            if (image != null) {
+                groupImage.setFill(new ImagePattern(image));
+            }
+        });*/
     }
 
 
     @FXML
     public void submitGroup() {
         ChatRoom room = new ChatRoom();
+
         ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), room, homeController);
         ChatRoom chatRoom = chatRoomController.createOrGetChatRoom(groupMembersList);
         chatRoomController.loadChatRoom(chatRoom);
+        //chatRoom.setName(groupName.getText());
         homeController.getListViewBox().getChildren().clear();
         homeController.getListViewBox().getChildren().add(chatRoomListView);
         homeController.updateChatRooms(this);
@@ -136,6 +148,20 @@ public class GroupChatController implements Initializable {
         this.chatRoomListView = chatRoomListView;
 
     }
+
+
+    /*private Image selectImage() {
+        Image image = null;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
+        File selectedImage = fileChooser.showOpenDialog(homeController.getStage());
+        if (selectedImage != null) {
+            image = new Image(selectedImage.toURI().toString());
+        }
+        return image;
+
+    }*/
 
 
 }

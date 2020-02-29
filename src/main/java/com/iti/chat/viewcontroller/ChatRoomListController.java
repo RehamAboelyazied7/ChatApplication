@@ -23,8 +23,8 @@ public class ChatRoomListController implements Initializable {
 
     }
 
-    public void setChatRoomData(String item) {
+    public void setChatRoomData(ChatRoom item) {
         groupChatCircle.setFill(new ImagePattern(new Image(getClass().getResource("/view/dialogue.png").toExternalForm())));
-        groupChatName.setText(item);
+        groupChatName.setText(item.getName());
     }
 }
