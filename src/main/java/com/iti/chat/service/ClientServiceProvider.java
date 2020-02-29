@@ -135,6 +135,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void receiveNotification(Notification notification) {
         System.out.println("sender" + notification.getSource() + "reciever" + notification.getReceiver());
         controller.receiveNotification(notification);
+        controller.notificationView();
      /*   notificationListController.setNotifications(notification);
         Platform.runLater(new Runnable() {
             @Override
@@ -234,6 +235,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
         announcment.setContent(Encryption.decrypt(announcment.getContent()));
         controller.receiveAnnouncment(announcment);
+        controller.notificationView();
 
     }
 

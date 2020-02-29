@@ -10,6 +10,7 @@ import com.iti.chat.util.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -151,7 +152,7 @@ public class HomeController implements Initializable {
                 setAnimations(sideBarController.getProfileImageView());
                 notificationListView.setVisible(false);
                 listView.setVisible(true);
-                changeList = 1;
+                //changeList = 1;
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(SceneTransition.class.getResource("/view/UserProfile.fxml"));
                 Parent parent = loader.load();
@@ -195,7 +196,7 @@ public class HomeController implements Initializable {
 
     private void setChatRoomHandler() {
         sideBarController.getChatImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-
+            changeList=1;
             setAnimations(sideBarController.getChatImageView());
             listView.setCellFactory(listView -> new ContactListCell(this));
             listViewBox.getChildren().clear();
@@ -356,19 +357,28 @@ public class HomeController implements Initializable {
         notificationListView.setPlaceholder(new Label("No Content In List"));
         //NotificationListController notificationListController = new NotificationListController();
         list = FXCollections.observableList(notificationListController.addList().getItems());
-        //System.out.println("size"+notificationListController.getNotifications().size());
+        System.out.println("size"+notificationListController.getNotifications().size());
         notificationListView.setCellFactory(new Callback<ListView<Notification>, ListCell<Notification>>() {
             @Override
             public ListCell<Notification> call(ListView<Notification> notificationListView) {
                 return new NotificationListCell();
             }
         });
-       /* notificationListView.setItems(list);
-//        NotificationListController.notifications.clear();
-        check++;
+        notificationListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                 notificationListController.getNotifications().remove(notificationListView.getSelectionModel());
+               // notificationListView.setItems(list);
+                notificationListView.refresh();
+            }
+        });
+        notificationListView.setItems(list);
+        notificationListView.refresh();
+       //NotificationListController.notifications.clear();
+        //check++;
         System.out.println("add items"+notificationListController.addList().getItems().size());
 
-        */
+
     }
 
     public void didSendNBytes(long n) {
@@ -377,7 +387,10 @@ public class HomeController implements Initializable {
 
     public void receiveNotification(Notification notification) {
         PushNotification pushNotification = new PushNotification();
-        // notificationView();
+
+        notificationListController.setNotifications(notification);
+        System.out.println("recieve notification :"+NotificationListController.notifications.size());
+        notificationView();
         pushNotification.initializeNotify(notification);
         System.out.println("recieve Notification" + "source " + notification.getSource() + "reciever" + notification.getReceiver());
 

@@ -15,6 +15,7 @@ import javafx.scene.shape.StrokeLineCap;
 public class NotificationListCell extends ListCell<Notification> {
 
     private HomeController homeController;
+    private Image image;
     public NotificationListCell(HomeController homeController) {
         super();
         this.homeController = homeController;
@@ -23,7 +24,9 @@ public class NotificationListCell extends ListCell<Notification> {
     public NotificationListCell() {
 
     }
-
+    public void setImage(Image image){
+        this.image=image;
+    }
     @Override
     protected void updateItem(Notification notification, boolean empty) {
         super.updateItem(notification, empty);
