@@ -180,6 +180,10 @@ public class SideBarController implements Initializable {
 
             homeController.showUserListView();
 
+            //set the header of the friend list
+            homeController.getEditableBox().getChildren().clear();
+            homeController.getEditableBox().getChildren().add(new Label("Friend requests"));
+
             homeController.getUserListView().setItems(friendRequest);
             homeController.getUserListView().setCellFactory((item) -> new RequestContactCell(homeController));
 
@@ -200,7 +204,7 @@ public class SideBarController implements Initializable {
             homeController.getEditableBox().getChildren().clear();
             homeController.getEditableBox().getChildren().add(new Label("Notification List"));
             homeController.getNotificationListView().setItems(homeController.getNotificationObservableList());
-            System.out.println("Notification"+homeController.getNotificationListView().getItems().size());
+            System.out.println("Notification" + homeController.getNotificationListView().getItems().size());
             homeController.getNotificationListView().setCellFactory(notificationListView -> new NotificationListCell());
             homeController.getNotificationListView().refresh();
         });
