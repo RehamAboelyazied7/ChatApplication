@@ -5,6 +5,7 @@ import com.iti.chat.model.User;
 
 import static com.iti.chat.util.Encryption.encrypt;
 import static com.iti.chat.util.Encryption.decrypt;
+import static com.iti.chat.util.Hashing.getSecurePassword;
 
 import com.iti.chat.model.UserStatus;
 import com.iti.chat.util.Hashing;
@@ -81,7 +82,7 @@ public class LoginController implements Initializable {
     @FXML
     public void login(ActionEvent ae) throws FileNotFoundException {
         try {
-            User user = delegate.login(phoneTextField.getText(), Hashing.getSecurePassword(passwordField.getText()));
+            User user = delegate.login(phoneTextField.getText(), getSecurePassword(passwordField.getText()));
             //User user = delegate.login(phoneTextField.getText(), passwordField.getText());
             if (user != null) {
                 Session.getInstance().setUser(user);
