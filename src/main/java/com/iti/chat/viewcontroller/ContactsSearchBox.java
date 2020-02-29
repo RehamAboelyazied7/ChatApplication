@@ -76,7 +76,7 @@ public class ContactsSearchBox extends VBox {
             Set<User> set = new LinkedHashSet<>();
             List<User> userslist = new ArrayList<User>();
             try {
-                if (jFXTextField1.getText().matches("[0-9]+") && jFXTextField1.getText().length() < 11 && jFXTextField1.getText().length() > 0)
+                if (jFXTextField1.getText().matches("[0-9]+") && jFXTextField1.getText().length() <= 11 && jFXTextField1.getText().length() > 0)
                     set.addAll(friendRequestDelegate.searchByPhone(jFXTextField1.getText()));
                 else
                     invalid = true;
