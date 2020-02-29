@@ -197,7 +197,7 @@
                <children>
                   <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/birth%20(1).png" />
+                        <Image url="@icons/birth (1).png" />
                      </image>
                   </ImageView>
                   <JFXDatePicker fx:id="birthDateField" defaultColor="#4c84ff" prefHeight="28.0" prefWidth="285.0" />
