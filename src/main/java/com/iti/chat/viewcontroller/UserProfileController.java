@@ -193,6 +193,7 @@ public class UserProfileController implements Initializable {
 
         if (birthDateField.getValue() == null) {
             birthDateWarning.setText("invalid date");
+            System.out.println(birthDateField.getValue().toString());
             isValidData = false;
         }
         return isValidData;
@@ -208,6 +209,7 @@ public class UserProfileController implements Initializable {
             currentUser.setBio(bioField.getText());
             currentUser.setEmail(emailField.getText());
             currentUser.setCountry(countryField.getValue());
+            currentUser.setBirthDate(birthDateField.getValue());
             try {
                 delegate.updateUserInfo(currentUser);
                 nameText.setText(firstNameField.getText() + " " + lastNameField.getText());
@@ -340,8 +342,8 @@ public class UserProfileController implements Initializable {
         phoneField.setText(currentUser.getPhone());
         emailField.setText(currentUser.getEmail());
         countryField.setValue(currentUser.getCountry());
+        birthDateField.setValue(currentUser.getBirthDate());
         chatBot.setSelected(currentUser.isChatBotEnabled());
-        System.out.println(currentUser.getCountry());
         //chatBot.setSelected(currentUser.get);
 
         setUserStatus();

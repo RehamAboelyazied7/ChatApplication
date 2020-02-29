@@ -33,6 +33,7 @@ public class AddFriendCell extends ListCell<User> {
                 parent = loader.load();
                 AddFriendListController addFriendListController = loader.getController();
                 addFriendListController.setUserData(item);
+                addFriendListController.setAddFriendCell(this);
                 addFriendListController.setFriendRequestDelegate(contactsSearchBox.getFriendRequestDelegate());
                 //setPrefWidth(200);
                 setGraphic(parent);

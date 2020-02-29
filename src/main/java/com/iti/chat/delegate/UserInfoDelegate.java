@@ -11,8 +11,8 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 
 public class UserInfoDelegate {
-    UserProfileController viewController;
-    ClientServiceProvider client;
+    private UserProfileController viewController;
+    private ClientServiceProvider client;
 
     public UserInfoDelegate(ClientServiceProvider client, UserProfileController viewController) {
         this.client = client;

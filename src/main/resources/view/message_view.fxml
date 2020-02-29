@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.Group?>
-<AnchorPane fx:id="rootAnchorPane" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.MessageController">
+<AnchorPane fx:id="rootAnchorPane" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.MessageController">
 
     <children>
+<<<<<<< HEAD
         <GridPane hgap="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10" fx:id="gridPane">
+=======
+        <GridPane fx:id="gridPane" hgap="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10">
+>>>>>>> eea3338abe3b5f42df392db36d9d999b1df38e69
             <children>
-                <VBox GridPane.columnIndex="0" fx:id="userDetailsVBox">
+                <VBox fx:id="userDetailsVBox" GridPane.columnIndex="0">
                     <children>
-                        <Circle fx:id="userImageView" fill="WHITE" radius="20.0" stroke="#4c84ff" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="5.0">
+                        <Circle fx:id="userImageView" fill="WHITE" radius="20.0" stroke="#4c84ff" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0">
 
                         </Circle>
                         <Label fx:id="userName" maxWidth="180.0" text="Shimaa">
@@ -30,9 +28,9 @@
                         </Label>
                     </children>
                 </VBox>
-                <Group GridPane.columnIndex="1" GridPane.valignment="TOP" >
+                <Group GridPane.columnIndex="1" GridPane.valignment="TOP">
                     <children>
-                        <VBox fx:id="messageVBox" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" styleClass="vbox_size" maxWidth="400">
+                        <VBox fx:id="messageVBox" maxWidth="400" style="-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #4c84ff;" styleClass="vbox_size">
                             <children>
                                 <Label fx:id="messageContent" ellipsisString="" graphicTextGap="0.0" style="-fx-background-radius: 20%;" text="Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you Hi Shimaa,How are you" textFill="#f2f0f0" wrapText="true" VBox.vgrow="ALWAYS">
                                     <padding>
@@ -45,6 +43,13 @@
                 </Group>
 
             </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
     </children>
 

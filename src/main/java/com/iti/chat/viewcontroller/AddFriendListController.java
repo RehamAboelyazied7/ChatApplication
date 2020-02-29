@@ -2,9 +2,9 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.delegate.FriendRequestDelegate;
 import com.iti.chat.model.User;
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -27,7 +27,11 @@ public class AddFriendListController implements Initializable {
 
     private User user;
     private FriendRequestDelegate friendRequestDelegate;
-    private boolean added = false;
+    private AddFriendCell addFriendCell;
+
+    public void setAddFriendCell(AddFriendCell addFriendCell) {
+        this.addFriendCell = addFriendCell;
+    }
 
     public void setFriendRequestDelegate(FriendRequestDelegate friendRequestDelegate) {
         this.friendRequestDelegate = friendRequestDelegate;
@@ -35,19 +39,21 @@ public class AddFriendListController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        plus.setOnMouseClicked((e) -> {
+        plus.setOnMouseClicked((e)->{
             try {
+                plus.setVisible(false);
+                //friendRequestDelegate.getViewController().homeController.getListViewBox().getChildren().remove(addFriendCell);
                 friendRequestDelegate.sendFriendRequest(user);
-                plus.setDisable(true);
+
             } catch (RemoteException ex) {
                 ex.printStackTrace();
             } catch (NotBoundException ex) {
                 ex.printStackTrace();
             }
             System.out.println("plus clicked");
-
         });
     }
+
 
     public void setUserData(User item) {
         user = item;
