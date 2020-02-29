@@ -12,7 +12,7 @@
 <VBox fx:id="sideBarVBox" alignment="TOP_CENTER" minWidth="64.0" prefHeight="389.0" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
    <children>
       <StackPane>
-         <Circle fill="white" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0" fx:id="userImage">
+         <Circle fx:id="userImage" fill="white" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0">
             <VBox.margin>
                <Insets top="15.0" />
             </VBox.margin>
@@ -29,12 +29,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="chatImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="contactsImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/speech.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="contactsImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="groupChatImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/group.png" />
          </image>
