@@ -191,7 +191,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         initFriendRequestService();
         friendRequestsService.acceptFriendRequest(this, sender);
        // PushNotification pushNotification = new PushNotification();
-        Notification notification = new Notification(sender, this.currentUser, NotificationType.FRIENDSHIP_ACCEPTED);
+        Notification notification = new Notification(this.currentUser, sender, NotificationType.FRIENDSHIP_ACCEPTED);
       //  pushNotification.initializeNotify(notification);
     }
 
@@ -199,7 +199,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
         initFriendRequestService();
         friendRequestsService.rejectFriendRequest(this, sender);
        // PushNotification pushNotification = new PushNotification();
-        Notification notification = new Notification(sender, this.currentUser, NotificationType.FRIENDSHIP_REJECTED);
+        Notification notification = new Notification( this.currentUser,sender, NotificationType.FRIENDSHIP_REJECTED);
        // pushNotification.initializeNotify(notification);
     }
 

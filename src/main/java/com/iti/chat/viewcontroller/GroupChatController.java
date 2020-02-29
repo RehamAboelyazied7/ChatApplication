@@ -11,6 +11,8 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -108,6 +110,7 @@ public class GroupChatController implements Initializable {
     private void updateHomeListView() {
         homeController.getEditableBox().getChildren().clear();
         JFXButton createGroupBtn = new JFXButton("Create Group Chat");
+        createGroupBtn.setWrapText(true);
         createGroupBtn.setStyle("-fx-font:bold 15px \"Calibri\";-fx-background-color:#4c84ff; -fx-background-radius:8,7,6; -fx-text-alignment:center; -fx-text-fill:#ffffff;");
         homeController.getEditableBox().getChildren().add(createGroupBtn);
         createGroupBtn.setOnAction((event) -> {
