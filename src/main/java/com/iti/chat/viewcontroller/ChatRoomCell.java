@@ -1,6 +1,7 @@
 package com.iti.chat.viewcontroller;
 
 import com.iti.chat.model.ChatRoom;
+import com.iti.chat.util.Animator;
 import com.iti.chat.util.SceneTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,6 +42,7 @@ public class ChatRoomCell extends ListCell<ChatRoom> {
             setGraphic(null);
         }
         setOnMouseClicked(mouseEvent -> {
+            Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
             if (item != null) {
                 ChatRoomController chatRoomController = SceneTransition.loadChatRoom(homeController.getRightVBox(), item, homeController);
                 chatRoomController.loadChatRoom(item);

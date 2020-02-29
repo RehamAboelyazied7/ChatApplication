@@ -146,6 +146,11 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+//        ObservableList<User> userObservableList = FXCollections.observableList(client.getUser().getFriends());
+//        userListView.setItems(userObservableList);
+//        userListView.setCellFactory(userListView -> new ContactListCell(this));
+
         VBox notificationVbox=new VBox(5);
         notificationVbox.setPadding(new Insets(10));
         notificationVbox.setAlignment(Pos.CENTER);
