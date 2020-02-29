@@ -57,8 +57,8 @@ public class GroupChatController implements Initializable {
         return groupImage;
     }
 
-    public JFXTextField getGroupName() {
-        return groupName;
+    public String getGroupName() {
+        return groupName.getText();
     }
 
     public HBox getMembersBox() {
@@ -136,4 +136,6 @@ public class GroupChatController implements Initializable {
         this.chatRoomListView = chatRoomListView;
 
     }
+
+
 }
