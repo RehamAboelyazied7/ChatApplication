@@ -21,7 +21,8 @@ public class NotificationListController  {
     public NotificationListController(){
          notifications=new ArrayList<>();
     }
-    ObservableList<Notification> notificationObservableList;
+    ListView<Notification> notificationListView = new ListView<Notification>();
+   // ObservableList<Notification> notificationObservableList;
     public List<Notification> getNotifications() {
         return notifications;
     }
@@ -33,26 +34,28 @@ public class NotificationListController  {
     public ListView<Notification> addList()//List<Notification> notificationList){
 
     {
-        System.out.println(notifications.size());
+        System.out.println("size"+notifications.size());
         VBox notificationVbox=new VBox(5);
         notificationVbox.setPadding(new Insets(10));
         notificationVbox.setAlignment(Pos.CENTER);
-        ObservableList<Notification> notificationObservableList=FXCollections.observableArrayList();
+        ObservableList<Notification> notificationObservableList=FXCollections.observableList(notifications);
         for (int i=0;i<notifications.size();i++){
             System.out.println("size of list "+notifications.size());
             notificationObservableList.add(notifications.get(i));
         }
 
-        ListView<Notification> notificationListView = new ListView<Notification>();
+
         notificationListView.setCellFactory(new Callback<ListView<Notification>, ListCell<Notification>>() {
             @Override
             public ListCell<Notification> call(ListView<Notification> notificationListView) {
                 return new NotificationListCell();
             }
         });
+
+
         //notificationVbox.setStyle("-fx-background: #4c84ff");
 
-        notificationListView.setItems(notificationObservableList);
+        //notificationListView.setItems(notificationObservableList);
         notificationVbox.getChildren().addAll(notificationListView);
         return notificationListView;
     }

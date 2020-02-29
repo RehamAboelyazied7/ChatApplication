@@ -15,6 +15,7 @@ import javafx.scene.shape.StrokeLineCap;
 public class NotificationListCell extends ListCell<Notification> {
 
     private HomeController homeController;
+    private Image image;
     public NotificationListCell(HomeController homeController) {
         super();
         this.homeController = homeController;
@@ -23,32 +24,36 @@ public class NotificationListCell extends ListCell<Notification> {
     public NotificationListCell() {
 
     }
-
+    public void setImage(Image image){
+        this.image=image;
+    }
     @Override
     protected void updateItem(Notification notification, boolean empty) {
         super.updateItem(notification, empty);
+
         if (notification == null || empty) {
             setGraphic(null);
         } else {
             HBox hBox = new HBox(2);
             hBox.setAlignment(Pos.TOP_LEFT);
-            Circle CircleImageView = new Circle(27.0, Color.TRANSPARENT);
+            //Circle CircleImageView = new Circle(27.0, Color.TRANSPARENT);
             // CircleImageView.setRadius(27.0);
-            CircleImageView.setFill(Color.TRANSPARENT);
+            //CircleImageView.setFill(Color.TRANSPARENT);
             //  CircleImageView.setEffect(new Lighting());
             //  CircleImageView.setStroke(Color.BLUEVIOLET);
-            CircleImageView.setStrokeLineCap(StrokeLineCap.ROUND);
-            CircleImageView.setStrokeWidth(4.0);
-            Image image = new Image(getClass().getResource("/view/sender.png").toExternalForm());
-            CircleImageView.setFill(new ImagePattern(image));
-            Label notificationTitle = new Label("");
+            //CircleImageView.setStrokeLineCap(StrokeLineCap.ROUND);
+            //CircleImageView.setStrokeWidth(4.0);
+            //Image image = new Image(getClass().getResource("/view/sender.png").toExternalForm());
+            //CircleImageView.setFill(new ImagePattern(image));
+            Label notificationTitle = new Label(notification.toString());
             notificationTitle.setAlignment(Pos.CENTER);
             notificationTitle.setWrapText(true);
             hBox.setStyle("-fx-font-size: 10;-fx-alignment:  center");
-            hBox.getChildren().addAll(CircleImageView, new Label(notification.toString()));
+            hBox.getChildren().addAll(notificationTitle);
             setGraphic(hBox);
 
         }
+
 
     }
 

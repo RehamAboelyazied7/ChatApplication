@@ -48,11 +48,8 @@ public class AddFriendListController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         plus.setOnMouseClicked((e)->{
             try {
-                homeController.getUserListView().getItems().remove(user);
-//                motherHBox.getChildren().remove(plus);
-                //friendRequestDelegate.getViewController().homeController.getListViewBox().getChildren().remove(addFriendCell);
                 friendRequestDelegate.sendFriendRequest(user);
-
+                homeController.getUserListView().getItems().remove(user);
             } catch (RemoteException ex) {
                 ex.printStackTrace();
             } catch (NotBoundException ex) {

@@ -136,6 +136,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
     public void receiveNotification(Notification notification) {
         System.out.println("sender" + notification.getSource() + "reciever" + notification.getReceiver());
         controller.receiveNotification(notification);
+       // controller.notificationView();
      /*   notificationListController.setNotifications(notification);
         Platform.runLater(new Runnable() {
             @Override
@@ -181,8 +182,9 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     }
 
-    public List<User> getPendingRequests() throws RemoteException {
-        return friendRequestsService.pendingFriendRequestsSent(this);
+    public List<User> getPendingRequests() throws RemoteException, NotBoundException {
+        initFriendRequestService();
+        return friendRequestsService.pendingFriendRequests(this);
     }
 
     public void acceptFriendRequest(User sender) throws RemoteException, NotBoundException {
@@ -203,7 +205,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
     public List<User> getPendingSentRequestFriends() throws RemoteException, NotBoundException {
         initFriendRequestService();
-        return friendRequestsService.pendingFriendRequests(this);
+        return friendRequestsService.pendingFriendRequestsSent(this);
     }
 
     public User login(String phone, String password) throws RemoteException, SQLException, NotBoundException {
@@ -235,6 +237,7 @@ public class ClientServiceProvider extends UnicastRemoteObject implements Client
 
         announcment.setContent(Encryption.decrypt(announcment.getContent()));
         controller.receiveAnnouncment(announcment);
+        //controller.notificationView();
 
     }
 

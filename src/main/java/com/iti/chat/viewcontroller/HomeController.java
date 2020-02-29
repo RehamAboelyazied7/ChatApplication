@@ -9,12 +9,16 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -34,6 +38,8 @@ public class HomeController implements Initializable {
     private ListView<User> userListView = new ListView<>();
     private ListView<ChatRoom> chatRoomListView = new ListView<>();
     private ListView<Notification> notificationListView = new ListView<>();
+
+    private ObservableList<Notification> notificationObservableList;
 
     @FXML
     private GridPane motherGridPane;
@@ -80,6 +86,11 @@ public class HomeController implements Initializable {
 
         listViewBox.getChildren().clear();
         listViewBox.getChildren().add(notificationListView);
+        notificationListView.setOnMouseClicked((EventHandler<MouseEvent>) mouseEvent -> {
+            if (mouseEvent.getClickCount() == 1) {
+                notificationObservableList.remove(notificationListView.getSelectionModel().getSelectedIndex());
+
+            }});
 
     }
 
@@ -135,14 +146,24 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        VBox notificationVbox=new VBox(5);
+        notificationVbox.setPadding(new Insets(10));
+        notificationVbox.setAlignment(Pos.CENTER);
+        notificationVbox.setMinWidth(250);
+        notificationVbox.setMaxWidth(250);
+        notificationVbox.setMinHeight(250);
+        notificationVbox.setMaxHeight(250);
+        notificationObservableList = FXCollections.observableArrayList();
         sideBarController.setHomeController(this);
         userListView.setPlaceholder(new Label("No Content In List"));
         chatRoomListView.setPlaceholder(new Label("no groups in list"));
-        notificationListView.setPlaceholder(new Label("No Content In List"));
-        userListView.setMinWidth(200);
+        notificationListView.setPlaceholder(new Label("No notification In List"));
+        userListView.setMinWidth(250);
+        notificationListView.setMinWidth(250);
         userListView.setCellFactory(listView -> new ContactListCell(this));
-
+        notificationVbox.getChildren().addAll(notificationListView);
+        notificationVbox.getChildren().addAll(userListView);
+        notificationVbox.getChildren().addAll(chatRoomListView);
     }
 
     public void imageChanged() {
@@ -181,8 +202,10 @@ public class HomeController implements Initializable {
 
     public void receiveNotification(Notification notification) {
         PushNotification pushNotification = new PushNotification();
-        // notificationView();
+        notificationObservableList.add(notification);
+        System.out.println("size Of Notification"+notificationObservableList.size());
         pushNotification.initializeNotify(notification);
+        //notificationObservableList.add(notification);
         System.out.println("recieve Notification" + "source " + notification.getSource() + "reciever" + notification.getReceiver());
 
         if (notification.notificationType == NotificationType.STATUS_UPDATE) {
@@ -367,5 +390,13 @@ public class HomeController implements Initializable {
         } catch (NotBoundException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public ObservableList<Notification> getNotificationObservableList() {
+        return notificationObservableList;
+    }
+
+    public void setNotificationObservableList(ObservableList<Notification> notificationObservableList) {
+        this.notificationObservableList = notificationObservableList;
     }
 }

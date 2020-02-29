@@ -91,6 +91,9 @@ public class UserProfileController implements Initializable {
     private ComboBox<String> countryField;
 
     @FXML
+    private Label bioWarning;
+
+    @FXML
     private Label nameWarning;
 
     @FXML
@@ -181,6 +184,12 @@ public class UserProfileController implements Initializable {
     private boolean validateUserData() {
         boolean isValidData = true;
 
+        if (!validation.writeBio(bioField.getText())) {
+            bioWarning.setText("Invalid to be empty or too much");
+            isValidData = false;
+        }
+
+
         if (firstNameField.getText().trim().length() == 0 || validation.checkName(firstNameField.getText()) == -1) {
             nameWarning.setText("Invalid");
             isValidData = false;
@@ -193,7 +202,6 @@ public class UserProfileController implements Initializable {
 
         if (birthDateField.getValue() == null) {
             birthDateWarning.setText("invalid date");
-            System.out.println(birthDateField.getValue().toString());
             isValidData = false;
         }
         return isValidData;
@@ -308,6 +316,7 @@ public class UserProfileController implements Initializable {
         nameWarning.setText("");
         emailWarning.setText("");
         birthDateWarning.setText("");
+        bioWarning.setText("");
     }
 
     private Image selectImage() {

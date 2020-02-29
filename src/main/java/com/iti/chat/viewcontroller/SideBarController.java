@@ -172,7 +172,7 @@ public class SideBarController implements Initializable {
 
             try {
 
-                friendRequest = FXCollections.observableList(homeController.getClient().getPendingSentRequestFriends());
+                friendRequest = FXCollections.observableList(homeController.getClient().getPendingRequests());
 
             } catch (RemoteException | NotBoundException e) {
                 e.printStackTrace();
@@ -195,17 +195,14 @@ public class SideBarController implements Initializable {
 
     private void setNotificationsHandler() {
         notificationImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-
             setAnimations(notificationImageView);
-            homeController.showUserListView();
-
+            homeController.showNotificationListView();
             homeController.getEditableBox().getChildren().clear();
             homeController.getEditableBox().getChildren().add(new Label("Notification List"));
-
-            homeController.showNotificationListView();
-            homeController.getNotificationListView().setItems(new NotificationListController().addList().getItems());
+            homeController.getNotificationListView().setItems(homeController.getNotificationObservableList());
+            System.out.println("Notification"+homeController.getNotificationListView().getItems().size());
             homeController.getNotificationListView().setCellFactory(notificationListView -> new NotificationListCell());
-
+            homeController.getNotificationListView().refresh();
         });
     }
 
