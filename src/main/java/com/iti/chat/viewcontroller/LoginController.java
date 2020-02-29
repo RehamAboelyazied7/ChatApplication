@@ -2,14 +2,17 @@ package com.iti.chat.viewcontroller;
 
 import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.model.User;
+
 import static com.iti.chat.util.Encryption.encrypt;
 import static com.iti.chat.util.Encryption.decrypt;
+import static com.iti.chat.util.Hashing.getSecurePassword;
 
 import com.iti.chat.model.UserStatus;
 import com.iti.chat.util.Hashing;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +22,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -34,6 +38,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.fxml.Initializable;
 
 public class LoginController implements Initializable {
@@ -77,13 +82,11 @@ public class LoginController implements Initializable {
     @FXML
     public void login(ActionEvent ae) throws FileNotFoundException {
         try {
-
-            //User user = delegate.login(phoneTextField.getText(),));
-            User user = delegate.login(phoneTextField.getText(), Hashing.getSecurePassword(passwordField.getText()));
+            User user = delegate.login(phoneTextField.getText(), getSecurePassword(passwordField.getText()));
             //User user = delegate.login(phoneTextField.getText(), passwordField.getText());
             if (user != null) {
                 Session.getInstance().setUser(user);
-                System.out.printf("logged in as " + user);
+                //System.out.printf("logged in as " + user);
                 PrintWriter writer;
                 try {
                     writer = new PrintWriter("rememberMeUserInfo.txt", "UTF-8");
@@ -107,14 +110,22 @@ public class LoginController implements Initializable {
 
                 }
 
-                try ( PrintWriter writer1 = new PrintWriter("userAuthenticationInfo.txt")) {
+                try (PrintWriter writer1 = new PrintWriter("userAuthenticationInfo.txt")) {
                     writer1.print("");
                     writer1.println(encrypt(phoneTextField.getText()));
                     writer1.println(encrypt(passwordField.getText()));
                     writer1.close();
                 }
+                if (user.getIsAddedFromServer() == 0){
+                    SceneTransition.goToHomeScene(stage);
+                    System.out.println(user.getIsAddedFromServer());
+                }
+                else if(user.getIsAddedFromServer() == 1)
+                {
+                    SceneTransition.goToChangePasswordScene(stage);
+                    System.out.println("else " + user.getIsAddedFromServer());
+                }
 
-                SceneTransition.goToHomeScene(stage);
             } else {
                 //System.out.println("invalid phone or password");
                 warningLabel.setText("invalid phone or password");

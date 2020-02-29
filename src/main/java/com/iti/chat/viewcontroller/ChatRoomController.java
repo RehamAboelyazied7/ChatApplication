@@ -79,8 +79,11 @@ public class ChatRoomController implements Initializable {
         });
         richTextAreaController.getSendButton().setOnAction(as -> {
             try {
-                delegate.sendMessage(getRichTextAreaController().getMessage(), roomId);
-                getRichTextAreaController().clearText();
+                if(!(getRichTextAreaController().getMessage().getContent().trim().length()==0)){
+                    delegate.sendMessage(getRichTextAreaController().getMessage(), roomId);
+                    getRichTextAreaController().clearText();
+                }
+
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {
