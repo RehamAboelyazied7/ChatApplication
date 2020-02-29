@@ -36,7 +36,7 @@ public class RequestContactCell extends ListCell<User> {
 
                 PendingFriendRequestCellDelegate pendingFriendRequestCellDelegate =
                         new PendingFriendRequestCellDelegate( homeController.getClient() , requestContactCellController );
-                requestContactCellController.setContainerList(homeController.listView.getItems());
+                requestContactCellController.setContainerList(homeController.getUserListView().getItems());
                 requestContactCellController.setPendingFriendRequestCellDelegate(pendingFriendRequestCellDelegate);
 
 

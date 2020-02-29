@@ -21,7 +21,7 @@
             </VBox>
             <VBox fx:id="listViewBox" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                <children>
-                    <ListView fx:id="listView" minWidth="220.0" prefHeight="523.0" prefWidth="220.0">
+                    <ListView fx:id="userListView" minWidth="220.0" prefHeight="523.0" prefWidth="220.0">
         </ListView>
                </children>
             </VBox>

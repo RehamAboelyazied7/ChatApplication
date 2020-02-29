@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -16,6 +17,10 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class AddFriendListController implements Initializable {
+
+    @FXML
+    private HBox motherHBox;
+
     @FXML
     private Circle userImage;
 
@@ -29,6 +34,8 @@ public class AddFriendListController implements Initializable {
     private FriendRequestDelegate friendRequestDelegate;
     private AddFriendCell addFriendCell;
 
+    private HomeController homeController;
+
     public void setAddFriendCell(AddFriendCell addFriendCell) {
         this.addFriendCell = addFriendCell;
     }
@@ -41,7 +48,8 @@ public class AddFriendListController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         plus.setOnMouseClicked((e)->{
             try {
-                plus.setVisible(false);
+                homeController.getUserListView().getItems().remove(user);
+//                motherHBox.getChildren().remove(plus);
                 //friendRequestDelegate.getViewController().homeController.getListViewBox().getChildren().remove(addFriendCell);
                 friendRequestDelegate.sendFriendRequest(user);
 
@@ -50,10 +58,8 @@ public class AddFriendListController implements Initializable {
             } catch (NotBoundException ex) {
                 ex.printStackTrace();
             }
-            System.out.println("plus clicked");
         });
     }
-
 
     public void setUserData(User item) {
         user = item;
@@ -65,4 +71,11 @@ public class AddFriendListController implements Initializable {
             userImage.setFill(new ImagePattern(image));*/
     }
 
+    public HomeController getHomeController() {
+        return homeController;
+    }
+
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;
+    }
 }

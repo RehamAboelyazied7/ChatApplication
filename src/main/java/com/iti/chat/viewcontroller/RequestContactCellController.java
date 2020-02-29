@@ -6,6 +6,7 @@ import com.iti.chat.model.UserStatus;
 import com.iti.chat.service.ClientServiceProvider;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.paint.Color;
@@ -43,7 +44,7 @@ public class RequestContactCellController implements Initializable {
     }
 
     @FXML
-    public void acceptFriend() {
+    public void acceptFriend(ActionEvent event) {
 
         pendingFriendRequestCellDelegate.acceptFriendRequest(user);
         containerList.remove(user);
@@ -51,7 +52,7 @@ public class RequestContactCellController implements Initializable {
     }
 
     @FXML
-    public void rejectFriend() {
+    public void rejectFriend(ActionEvent event) {
 
         pendingFriendRequestCellDelegate.rejectFriendRequest(user);
         containerList.remove(user);
