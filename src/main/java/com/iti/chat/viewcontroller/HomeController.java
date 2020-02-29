@@ -218,7 +218,10 @@ public class HomeController implements Initializable {
         //listView.setItems(FXCollections.observableList(currentUser.getFriends()));
         Platform.runLater(() -> {
             ObservableList<User> friends = FXCollections.observableList(Session.getInstance().getUser().getFriends());
-            userListView.setItems(friends);
+            //userListView.setItems(friends);
+            if(userListView.getItems().containsAll(friends)) {
+                userListView.setItems(friends);
+            }
             userListView.refresh();
             if(chatRoomController != null) {
                 chatRoomController.refresh();

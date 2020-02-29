@@ -3,6 +3,7 @@ package com.iti.chat.viewcontroller;
 import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
+import com.iti.chat.model.MessageStyle;
 import com.iti.chat.util.ColorUtils;
 import com.iti.chat.util.FileReceiver;
 import com.iti.chat.util.ImageCache;
@@ -59,6 +60,7 @@ public class AttachmentMessageController implements Initializable{
     public void displayMessage(Message message) {
         this.message = message;
         indentMessage(message);
+        message.setStyle(new MessageStyle());
         userName.setText(message.getSender().getFirstName());
         fileName.setText(message.getContent());
         if(Session.getInstance().getUser().equals(message.getSender())) {
@@ -77,12 +79,14 @@ public class AttachmentMessageController implements Initializable{
             image = ImageCache.getInstance().getDefaultImage(message.getSender());
         }
         userImageView.setFill(new ImagePattern(image));
+        message.setBubbleColor(MessageController.LEFT_MESSAGE_BUBBLE_COLOR);
     }
     public void displayOnRight() {
         AnchorPane.setRightAnchor(gridPane, 10.0);
         AnchorPane.setLeftAnchor(gridPane, null);
         gridPane.getChildren().remove(0);
         messageVBox.setStyle("-fx-border-color: #ffff; -fx-background-radius: 2em; -fx-background-color: #DCDCDC;");
+        message.setBubbleColor(MessageController.RIGHT_MESSAGE_BUBBLE_COLOR);
     }
 
     private void indentMessage(Message message) {

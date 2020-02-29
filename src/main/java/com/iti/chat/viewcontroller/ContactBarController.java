@@ -60,26 +60,26 @@ public class ContactBarController implements Initializable {
                     if (message.getSender().equals(Session.getInstance().getUser())) {
 
                         message.setInRightDirection(true);
-                        if (ColorUtils.areSimilarColors(message.getStyle().getColor(), ChatPageController.RIGHT_MESSAGE_BUBBLE_COLOR)) {
+                        if (ColorUtils.areSimilarColors(message.getStyle().getColor(), MessageController.RIGHT_MESSAGE_BUBBLE_COLOR)) {
 
-                            message.setBubbleColor(ColorUtils.invertedColor(ChatPageController.RIGHT_MESSAGE_BUBBLE_COLOR));
+                            message.setBubbleColor(ColorUtils.invertedColor(MessageController.RIGHT_MESSAGE_BUBBLE_COLOR));
 
                         } else {
 
-                            message.setBubbleColor(ChatPageController.RIGHT_MESSAGE_BUBBLE_COLOR);
+                            message.setBubbleColor(MessageController.RIGHT_MESSAGE_BUBBLE_COLOR);
 
                         }
 
                     } else {
 
                         message.setInRightDirection(false);
-                        if (ColorUtils.areSimilarColors(message.getStyle().getColor(), ChatPageController.LEFT_MESSAGE_BUBBLE_COLOR)) {
+                        if (ColorUtils.areSimilarColors(message.getStyle().getColor(), MessageController.LEFT_MESSAGE_BUBBLE_COLOR)) {
 
-                            message.setBubbleColor(ColorUtils.invertedColor(ChatPageController.LEFT_MESSAGE_BUBBLE_COLOR));
+                            message.setBubbleColor(ColorUtils.invertedColor(MessageController.LEFT_MESSAGE_BUBBLE_COLOR));
 
                         } else {
 
-                            message.setBubbleColor(ChatPageController.LEFT_MESSAGE_BUBBLE_COLOR);
+                            message.setBubbleColor(MessageController.LEFT_MESSAGE_BUBBLE_COLOR);
 
                         }
 
