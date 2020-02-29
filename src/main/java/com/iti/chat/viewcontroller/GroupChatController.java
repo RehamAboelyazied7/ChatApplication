@@ -8,6 +8,7 @@ import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -117,8 +118,8 @@ public class GroupChatController implements Initializable {
             Animator.setIconAnimation(homeController.getSideBarController().getProfileImageView());
             membersBox.getChildren().clear();
             homeController.getUserListView().setCellFactory(listView -> new GroupContactList(this));
-            homeController.getListViewBox().getChildren().clear();
-            homeController.getListViewBox().getChildren().add(homeController.getUserListView());
+            homeController.getUserListView().setItems(FXCollections.observableList(homeController.getClient().getUser().getFriends()));
+            homeController.showUserListView();
             loadParent();
         });
     }
