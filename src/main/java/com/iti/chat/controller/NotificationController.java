@@ -1,4 +1,4 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.model.Notification;
 import javafx.application.Platform;

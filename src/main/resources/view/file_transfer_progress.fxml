@@ -6,7 +6,7 @@
 
 
 <VBox maxHeight="70" maxWidth="120.0" xmlns="http://javafx.com/javafx/11.0.1"
-      xmlns:fx="http://javafx.com/fxml/1" spacing="10" fx:controller="com.iti.chat.viewcontroller.FileTransferProgressController" fx:id="rootVBox">
+      xmlns:fx="http://javafx.com/fxml/1" spacing="10" fx:controller="com.iti.chat.controller.FileTransferProgressController" fx:id="rootVBox">
     <children>
         <JFXSpinner fx:id="spinner"/>
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1 MB out of 990 MB" textAlignment="CENTER" fx:id="progressText"/>

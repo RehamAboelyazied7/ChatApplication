@@ -1,7 +1,7 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
+import com.iti.chat.listcell.NotificationListCell;
 import com.iti.chat.model.Notification;
-import com.iti.chat.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

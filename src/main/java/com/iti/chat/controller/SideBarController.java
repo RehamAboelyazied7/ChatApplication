@@ -1,9 +1,10 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.delegate.FriendRequestDelegate;
 import com.iti.chat.delegate.UserInfoDelegate;
-import com.iti.chat.model.ChatRoom;
-import com.iti.chat.model.Notification;
+import com.iti.chat.listcell.ContactListCell;
+import com.iti.chat.listcell.NotificationListCell;
+import com.iti.chat.listcell.RequestContactCell;
 import com.iti.chat.model.User;
 import com.iti.chat.util.Animator;
 import com.iti.chat.util.ImageCache;
@@ -16,15 +17,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,15 +1,12 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.listcell;
 
+import com.iti.chat.controller.HomeController;
 import com.iti.chat.model.Notification;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.StrokeLineCap;
 
 
 public class NotificationListCell extends ListCell<Notification> {
@@ -43,7 +40,7 @@ public class NotificationListCell extends ListCell<Notification> {
             //  CircleImageView.setStroke(Color.BLUEVIOLET);
             //CircleImageView.setStrokeLineCap(StrokeLineCap.ROUND);
             //CircleImageView.setStrokeWidth(4.0);
-            //Image image = new Image(getClass().getResource("/view/sender.png").toExternalForm());
+            //Image image = new Image(getClass().getResource("/fxml/sender.png").toExternalForm());
             //CircleImageView.setFill(new ImagePattern(image));
             Label notificationTitle = new Label(notification.toString());
             notificationTitle.setAlignment(Pos.CENTER);

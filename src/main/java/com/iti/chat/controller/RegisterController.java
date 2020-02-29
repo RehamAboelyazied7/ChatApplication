@@ -1,11 +1,9 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
-import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.delegate.RegisterDelegate;
 import com.iti.chat.exception.DuplicatePhoneException;
 import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
-import com.iti.chat.model.UserStatus;
 import com.iti.chat.util.Hashing;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.validator.RegisterValidation;

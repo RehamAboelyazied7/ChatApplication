@@ -1,12 +1,10 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.delegate.UserInfoDelegate;
-import com.iti.chat.model.Gender;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
 import com.iti.chat.util.ImageCache;
 import com.iti.chat.util.JFXCountryComboBox;
-import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.Session;
 import com.iti.chat.validator.RegisterValidation;
 import com.jfoenix.controls.JFXComboBox;
@@ -19,7 +17,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -29,7 +26,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +33,6 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class UserProfileController implements Initializable {

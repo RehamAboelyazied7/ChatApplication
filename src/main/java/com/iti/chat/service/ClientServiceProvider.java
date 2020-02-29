@@ -8,10 +8,9 @@ import com.iti.chat.delegate.FriendRequestDelegate;
 import com.iti.chat.model.*;
 import com.iti.chat.util.Encryption;
 import com.iti.chat.util.Session;
-import com.iti.chat.viewcontroller.ChatRoomController;
-import com.iti.chat.viewcontroller.HomeController;
-import com.iti.chat.viewcontroller.NotificationListController;
-import com.iti.chat.viewcontroller.PushNotification;
+import com.iti.chat.controller.ChatRoomController;
+import com.iti.chat.controller.HomeController;
+import com.iti.chat.controller.NotificationListController;
 
 import java.io.File;
 import java.io.FileInputStream;

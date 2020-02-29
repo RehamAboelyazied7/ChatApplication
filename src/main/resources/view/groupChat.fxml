@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="505.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.GroupChatController">
+<StackPane prefHeight="505.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.GroupChatController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
          <children>
@@ -79,7 +79,7 @@
             </VBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="424.0">
                <children>
-                  <JFXButton fx:id="submitBtn" onAction="#submitGroup" styleClass="blue_btn" stylesheets="@profileScreen.css" text="Done">
+                  <JFXButton fx:id="submitBtn" onAction="#submitGroup" styleClass="blue_btn" stylesheets="@../css/profileScreen.css" text="Done">
                      <HBox.margin>
                         <Insets top="4.0" />
                      </HBox.margin>

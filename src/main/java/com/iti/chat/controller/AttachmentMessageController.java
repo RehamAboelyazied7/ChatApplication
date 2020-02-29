@@ -1,11 +1,9 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.delegate.ChatRoomDelegate;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
 import com.iti.chat.model.MessageStyle;
-import com.iti.chat.util.ColorUtils;
-import com.iti.chat.util.FileReceiver;
 import com.iti.chat.util.ImageCache;
 import com.iti.chat.util.Session;
 import com.jfoenix.controls.JFXButton;
@@ -13,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;

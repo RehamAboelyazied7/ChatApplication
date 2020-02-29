@@ -1,5 +1,7 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.listcell;
 
+import com.iti.chat.controller.HomeController;
+import com.iti.chat.controller.RequestContactCellController;
 import com.iti.chat.delegate.PendingFriendRequestCellDelegate;
 import com.iti.chat.model.User;
 import com.iti.chat.util.SceneTransition;

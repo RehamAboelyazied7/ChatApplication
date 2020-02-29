@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="root" alignment="CENTER" prefHeight="510.0" prefWidth="670.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.LoginController">
+<StackPane fx:id="root" alignment="CENTER" prefHeight="510.0" prefWidth="670.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.LoginController">
     <children>
         <VBox alignment="CENTER">
             <children>
@@ -31,7 +31,7 @@
                 </HBox>
             <HBox alignment="CENTER" prefHeight="257.0" prefWidth="670.0">
                <children>
-                  <VBox alignment="CENTER" styleClass="login_container" stylesheets="@RegisterScreen.css">
+                  <VBox alignment="CENTER" styleClass="login_container" stylesheets="@../css/RegisterScreen.css">
                      <children>
                             <TextField fx:id="phoneTextField" maxHeight="45.0" maxWidth="300.0" minHeight="45.0" minWidth="300.0" prefHeight="45.0" prefWidth="300.0" promptText="Phone number" styleClass="text-field">
                            <VBox.margin>
@@ -85,7 +85,7 @@
 
     </children>
     <stylesheets>
-        <URL value="@RegisterScreen.css">
+        <URL value="@../css/RegisterScreen.css">
 
         </URL>
     </stylesheets>

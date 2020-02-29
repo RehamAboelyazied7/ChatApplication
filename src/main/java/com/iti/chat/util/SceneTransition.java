@@ -5,7 +5,7 @@ import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.viewcontroller.*;
+import com.iti.chat.controller.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

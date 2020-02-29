@@ -1,7 +1,7 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.listcell;
 
+import com.iti.chat.controller.GroupChatController;
 import com.iti.chat.model.User;
-import com.iti.chat.util.CustomListCell;
 import javafx.scene.input.MouseEvent;
 
 public class GroupContactList extends CustomListCell {

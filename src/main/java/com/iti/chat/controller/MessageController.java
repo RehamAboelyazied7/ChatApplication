@@ -1,4 +1,4 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
@@ -41,7 +41,7 @@ public class MessageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userImageView.setFill(Color.TRANSPARENT);
-        Image image = new Image(getClass().getResource("/view/sender.png").toExternalForm());
+        Image image = new Image(getClass().getResource("/view/icons/sender.png").toExternalForm());
         userImageView.setFill(new ImagePattern(image));
         messageVBox.maxWidthProperty().bind(rootAnchorPane.widthProperty().multiply(0.8));
     }

@@ -2,8 +2,7 @@ package com.iti.chat.delegate;
 
 import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.viewcontroller.LoginController;
-import com.iti.chat.viewcontroller.RegisterController;
+import com.iti.chat.controller.RegisterController;
 
 import java.io.File;
 import java.io.IOException;

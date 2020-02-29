@@ -1,18 +1,7 @@
 package main;
 
-import com.iti.chat.model.User;
-import com.iti.chat.service.ChatRoomService;
-import com.iti.chat.service.SessionService;
 import com.iti.chat.util.SceneTransition;
-import com.iti.chat.util.Session;
-import com.iti.chat.viewcontroller.HomeController;
-import com.iti.chat.viewcontroller.LoginController;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

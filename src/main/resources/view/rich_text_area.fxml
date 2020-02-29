@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="motherGridPane" prefHeight="135.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.RichTextAreaController">
+<GridPane fx:id="motherGridPane" prefHeight="135.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.RichTextAreaController">
     <children>
         <HBox alignment="CENTER" spacing="20" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
             <children>
@@ -28,7 +28,7 @@
                <graphic>
                   <ImageView fx:id="paperClipImageView" fitHeight="73.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@paperclip.png" />
+                        <Image url="@icons/paperclip.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -67,7 +67,7 @@
                     <graphic>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@right-arrow.png" />
+                                <Image url="@icons/right-arrow.png" />
                             </image>
                             <cursor>
                                 <Cursor fx:constant="HAND" />
@@ -80,7 +80,7 @@
         </HBox>
     </children>
     <stylesheets>
-        <URL value="@chatroom_stylesheet.css">
+        <URL value="@../css/chatroom_stylesheet.css">
 
         </URL>
     </stylesheets>

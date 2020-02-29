@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane id="mainPane" alignment="CENTER" prefHeight="491.0" prefWidth="868.0" styleClass="background" stylesheets="@RegisterScreen.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.RegisterController">
+<StackPane id="mainPane" alignment="CENTER" prefHeight="491.0" prefWidth="868.0" styleClass="background" stylesheets="@../css/RegisterScreen.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.RegisterController">
    <BorderPane>
       <padding>
          <Insets top="20" />
@@ -132,7 +132,7 @@
                      <Circle fx:id="imageCircle" fill="DODGERBLUE" radius="71.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
                      <ImageView fx:id="tempImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
                         <image>
-                           <Image url="@userIcon.png" />
+                           <Image url="@icons/userIcon.png" />
                         </image>
                      </ImageView>
                   </children>

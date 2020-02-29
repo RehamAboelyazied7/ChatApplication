@@ -1,8 +1,9 @@
-package com.iti.chat.util;
+package com.iti.chat.listcell;
 
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.User;
-import com.iti.chat.viewcontroller.ContactListController;
+import com.iti.chat.controller.ContactListController;
+import com.iti.chat.util.SceneTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;

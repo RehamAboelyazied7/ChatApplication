@@ -1,6 +1,8 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.delegate.UserInfoDelegate;
+import com.iti.chat.listcell.ChatRoomCell;
+import com.iti.chat.listcell.ContactListCell;
 import com.iti.chat.model.*;
 import com.iti.chat.service.ClientServiceProvider;
 import com.iti.chat.util.*;

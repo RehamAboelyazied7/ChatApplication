@@ -1,4 +1,4 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.delegate.UserInfoDelegate;
 import com.iti.chat.delegate.UserPasswordDelegate;
@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.Buffer;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;

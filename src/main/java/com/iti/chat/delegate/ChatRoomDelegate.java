@@ -5,7 +5,7 @@ import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;
 import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.viewcontroller.ChatRoomController;
+import com.iti.chat.controller.ChatRoomController;
 
 import java.io.File;
 import java.io.IOException;

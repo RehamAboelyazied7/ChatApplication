@@ -1,9 +1,8 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.model.Message;
 import com.iti.chat.model.MessageStyle;
 import com.iti.chat.util.ColorUtils;
-import com.iti.chat.util.FileReceiver;
 import com.iti.chat.util.Session;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
@@ -15,10 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;

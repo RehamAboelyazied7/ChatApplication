@@ -4,7 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <HBox xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" maxHeight="180"
-      fx:controller="com.iti.chat.viewcontroller.MessageTextAreaController" spacing="10" stylesheets="@messageStyle.css"
+      fx:controller="com.iti.chat.controller.MessageTextAreaController" spacing="10" stylesheets="@../css/messageStyle.css"
       fx:id="rootHBox" alignment="CENTER">
     <children>
         <JFXTextArea HBox.hgrow="ALWAYS" fx:id="messageTextArea" styleClass="text-field-with-margin">

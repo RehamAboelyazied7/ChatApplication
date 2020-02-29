@@ -1,4 +1,4 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.Message;

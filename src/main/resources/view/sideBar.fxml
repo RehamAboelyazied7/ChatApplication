@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<VBox fx:id="sideBarVBox" alignment="TOP_CENTER" minWidth="64.0" prefHeight="389.0" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.SideBarController">
+<VBox fx:id="sideBarVBox" alignment="TOP_CENTER" minWidth="64.0" prefHeight="389.0" prefWidth="64.0" spacing="15.0" styleClass="sideBar" stylesheets="@../css/sideBar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.SideBarController">
    <children>
       <StackPane>
          <Circle fx:id="userImage" fill="white" radius="20.0" stroke="#4d85ff00" strokeType="INSIDE" strokeWidth="4.0">

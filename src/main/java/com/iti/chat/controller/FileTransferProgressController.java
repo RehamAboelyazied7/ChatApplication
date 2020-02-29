@@ -1,4 +1,4 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;

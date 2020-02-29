@@ -1,11 +1,10 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.model.Message;
 import com.iti.chat.model.Notification;
 import com.iti.chat.model.NotificationType;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -29,7 +28,7 @@ public class PushNotification {
     }
 
     public void createNotify(Message message,int notificationType){
-        ImageView imageView=new ImageView(new Image(getClass().getResource("/view/sender.png").toExternalForm()));
+        ImageView imageView=new ImageView(new Image(getClass().getResource("/view/icons/sender.png").toExternalForm()));
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
 

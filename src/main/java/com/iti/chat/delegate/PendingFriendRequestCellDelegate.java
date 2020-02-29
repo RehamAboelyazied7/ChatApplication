@@ -2,7 +2,7 @@ package com.iti.chat.delegate;
 
 import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.viewcontroller.RequestContactCellController;
+import com.iti.chat.controller.RequestContactCellController;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

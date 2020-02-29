@@ -1,21 +1,17 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
 import com.iti.chat.util.ImageCache;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 

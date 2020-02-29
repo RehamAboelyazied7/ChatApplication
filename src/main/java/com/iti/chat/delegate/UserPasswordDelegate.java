@@ -2,8 +2,7 @@ package com.iti.chat.delegate;
 
 import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.viewcontroller.ChangePasswordController;
-import com.iti.chat.viewcontroller.UserProfileController;
+import com.iti.chat.controller.ChangePasswordController;
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;

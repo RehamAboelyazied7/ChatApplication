@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.Group?>
 <AnchorPane fx:id="rootAnchorPane" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/8.0.60"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.AttachmentMessageController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.AttachmentMessageController">
 
     <children>
         <GridPane hgap="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10"
@@ -43,7 +43,7 @@
                                             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true"
                                                        preserveRatio="true">
                                                 <image>
-                                                    <Image url="@download.png"/>
+                                                    <Image url="@icons/download.png"/>
                                                 </image>
                                                 <cursor>
                                                     <Cursor fx:constant="HAND"/>

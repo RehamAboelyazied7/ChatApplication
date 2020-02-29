@@ -2,7 +2,7 @@ package com.iti.chat.delegate;
 
 import com.iti.chat.model.User;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.viewcontroller.LoginController;
+import com.iti.chat.controller.LoginController;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

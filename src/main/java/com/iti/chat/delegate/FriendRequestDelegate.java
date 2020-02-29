@@ -6,16 +6,11 @@
 package com.iti.chat.delegate;
 
 import com.iti.chat.model.User;
-import com.iti.chat.service.ClientService;
 import com.iti.chat.service.ClientServiceProvider;
-import com.iti.chat.service.FriendRequestsService;
-import com.iti.chat.viewcontroller.ContactsSearchBox;
-import com.iti.chat.viewcontroller.HomeController;
-import com.iti.chat.viewcontroller.UserProfileController;
+import com.iti.chat.controller.ContactsSearchBox;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.List;
 

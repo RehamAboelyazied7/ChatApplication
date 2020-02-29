@@ -1,5 +1,6 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
+import com.iti.chat.listcell.GroupContactList;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.User;
 import com.iti.chat.util.Animator;
@@ -11,8 +12,6 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -68,7 +67,7 @@ public class GroupChatController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        groupImage.setFill(new ImagePattern(new Image(getClass().getResource("/view/dialogue.png").toExternalForm())));
+        groupImage.setFill(new ImagePattern(new Image(getClass().getResource("/view/icons/dialogue.png").toExternalForm())));
         groupMembersList = new ArrayList();
         groupMembersList.add(Session.getInstance().getUser());
         nameLabel.setText(Session.getInstance().getUser().getFirstName());

@@ -13,14 +13,14 @@ module com.jets {
     requires jakarta.activation;
     requires java.xml.bind;
 
-    //opens view to javafx.fxml;
-    opens com.iti.chat.viewcontroller to javafx.fxml;
+    //opens fxml to javafx.fxml;
+    opens com.iti.chat.controller to javafx.fxml;
 
     //opens model for JAXB API
     opens com.iti.chat.model to java.xml.bind;
 
     exports com.iti.chat.service to java.rmi;
-    exports com.iti.chat.viewcontroller;
+    exports com.iti.chat.controller;
     exports main;
     exports com.iti.chat.exception;
     exports com.iti.chat.model;

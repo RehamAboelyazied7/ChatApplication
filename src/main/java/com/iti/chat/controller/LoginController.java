@@ -1,4 +1,4 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.delegate.LoginDelegate;
 import com.iti.chat.model.User;
@@ -7,8 +7,6 @@ import static com.iti.chat.util.Encryption.encrypt;
 import static com.iti.chat.util.Encryption.decrypt;
 import static com.iti.chat.util.Hashing.getSecurePassword;
 
-import com.iti.chat.model.UserStatus;
-import com.iti.chat.util.Hashing;
 import com.iti.chat.util.JFXDialogFactory;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
@@ -17,7 +15,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -26,10 +23,7 @@ import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.rmi.NotBoundException;

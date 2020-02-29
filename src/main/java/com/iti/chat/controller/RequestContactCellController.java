@@ -1,9 +1,8 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.delegate.PendingFriendRequestCellDelegate;
 import com.iti.chat.model.User;
 import com.iti.chat.model.UserStatus;
-import com.iti.chat.service.ClientServiceProvider;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -74,7 +73,7 @@ public class RequestContactCellController implements Initializable {
     }
 
     /**
-     * view current user data in the corresponding GUI node
+     * fxml current user data in the corresponding GUI node
      */
     public void setUserData() {
 

@@ -1,9 +1,10 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.listcell;
 
+import com.iti.chat.controller.ChatRoomController;
+import com.iti.chat.controller.HomeController;
 import com.iti.chat.model.ChatRoom;
 import com.iti.chat.model.User;
 import com.iti.chat.util.Animator;
-import com.iti.chat.util.CustomListCell;
 import com.iti.chat.util.SceneTransition;
 import com.iti.chat.util.Session;
 import javafx.scene.input.MouseEvent;

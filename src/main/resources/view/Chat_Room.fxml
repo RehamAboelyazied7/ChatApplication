@@ -3,7 +3,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="motherVBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.ChatRoomController">
+<VBox fx:id="motherVBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.ChatRoomController">
    <children>
       <fx:include fx:id="contactBar" source="contactbar.fxml" />
       <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="1.0" pannable="false" VBox.vgrow="ALWAYS">

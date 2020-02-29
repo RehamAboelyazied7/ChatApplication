@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
 import com.iti.chat.delegate.FriendRequestDelegate;
+import com.iti.chat.listcell.AddFriendCell;
 import com.iti.chat.model.User;
 import com.iti.chat.util.Animator;
 import com.iti.chat.util.Session;
@@ -16,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 

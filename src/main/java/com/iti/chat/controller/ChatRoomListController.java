@@ -1,6 +1,5 @@
-package com.iti.chat.viewcontroller;
+package com.iti.chat.controller;
 
-import com.iti.chat.model.ChatRoom;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -24,7 +23,7 @@ public class ChatRoomListController implements Initializable {
     }
 
     public void setChatRoomData(String item) {
-        groupChatCircle.setFill(new ImagePattern(new Image(getClass().getResource("/view/dialogue.png").toExternalForm())));
+        groupChatCircle.setFill(new ImagePattern(new Image(getClass().getResource("/view/icons/dialogue.png").toExternalForm())));
         groupChatName.setText(item);
     }
 }

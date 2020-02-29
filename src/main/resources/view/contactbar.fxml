@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="motherHBox" alignment="CENTER_LEFT" maxHeight="70.0" minHeight="70.0" style="-fx-background-color: #4c84ff;" stylesheets="@chatroom_stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.viewcontroller.ContactBarController">
+<HBox fx:id="motherHBox" alignment="CENTER_LEFT" maxHeight="70.0" minHeight="70.0" style="-fx-background-color: #4c84ff;" stylesheets="@../css/chatroom_stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iti.chat.controller.ContactBarController">
    <children>
       <StackPane>
          <HBox.margin>
