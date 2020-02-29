@@ -29,7 +29,7 @@ public class ChatRoomCell extends ListCell<ChatRoom> {
             try {
                 parent = loader.load();
                 ChatRoomListController chatRoomListController = loader.getController();
-                chatRoomListController.setChatRoomData(item);
+                chatRoomListController.setChatRoomData(groupChatController.getGroupName());
                 setPrefWidth(200);
                 setGraphic(parent);
                 setPrefHeight(60);
