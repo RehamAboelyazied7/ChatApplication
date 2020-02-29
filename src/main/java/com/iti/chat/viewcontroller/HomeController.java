@@ -144,12 +144,23 @@ public class HomeController implements Initializable {
         this.stage = stage;
     }
 
+
+    /**
+     * This method populate the friends list just for the first load of the home screen,
+     * this method should be called only once after loading the fxml after initialize method
+     * and after a clientServiceProvider is set
+     * */
+    public void instantiateContactsList(){
+
+        ObservableList<User> userObservableList = FXCollections.observableList(client.getUser().getFriends());
+        userListView.setItems(userObservableList);
+        userListView.setCellFactory(userListView -> new ContactListCell(this));
+        showUserListView();
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-//        ObservableList<User> userObservableList = FXCollections.observableList(client.getUser().getFriends());
-//        userListView.setItems(userObservableList);
-//        userListView.setCellFactory(userListView -> new ContactListCell(this));
 
         VBox notificationVbox=new VBox(5);
         notificationVbox.setPadding(new Insets(10));
