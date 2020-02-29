@@ -29,7 +29,7 @@ public class RegisterValidation {
         if (email.isEmpty()) {
             return EMPTY; //enter your Email
         } else {
-            if (!email.matches("^([\\w-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$"))
+            if (!email.matches("^([\\w-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$") || email.length()>29)
                 return INVALID;//Enter a valid email address
         }
         return VALID;//match
@@ -38,7 +38,7 @@ public class RegisterValidation {
     public int checkName(String name) {
         if (name.isEmpty()) {
             return 0;//empty name
-        } else if (!name.matches("([a-zA-Z]*)")) {
+        } else if (!name.matches("([a-zA-Z]{2,20})")) {
             return -1;
         } else {
             return 1;
@@ -73,10 +73,12 @@ public class RegisterValidation {
     }
 
     public boolean writeBio(String bio) {
-        if (bio.isEmpty())
-            return false;//write about your Bio
+        boolean isValidData;
+        if (bio.length()>240 ||bio.trim().length()<5 )
+            isValidData = false;//write about your Bio
         else
-            return true;
+            isValidData =  true;
+        return isValidData;
     }
 
     public boolean checkBirthDate(String birthdate) {
