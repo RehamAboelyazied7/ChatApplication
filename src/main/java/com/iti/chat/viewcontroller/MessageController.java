@@ -93,10 +93,6 @@ public class MessageController implements Initializable {
             if(message.getSender().equals(lastMessage.getSender())) {
                 gridPane.getChildren().get(0).setVisible(false);
                 AnchorPane.setTopAnchor(gridPane, -10.0);
-                if(!Session.getInstance().getUser().equals(message.getSender())) {
-                    // displayed on left
-                    userDetailsVBox.getChildren().remove(userName);
-                }
             }
         }
     }

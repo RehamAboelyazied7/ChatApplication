@@ -323,6 +323,8 @@ public class UserProfileController implements Initializable {
         Image image = null;
         User currentUser = Session.getInstance().getUser();
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
         selectedImage = fileChooser.showOpenDialog(stage);
         if (selectedImage != null) {
             try {
