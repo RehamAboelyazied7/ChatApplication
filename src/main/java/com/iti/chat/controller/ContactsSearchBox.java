@@ -79,27 +79,27 @@ public class ContactsSearchBox extends VBox {
             try {
                 if (jFXTextField1.getText().matches("[0-9]+") && jFXTextField1.getText().length() <= 11 && jFXTextField1.getText().length() > 0)
                     set.addAll(friendRequestDelegate.searchByPhone(jFXTextField1.getText()));
-                else
-                    invalid = true;
+                else{}
+//                    invalid = true;
 
                 if (jFXTextField2.getText().length() <= 11 && jFXTextField2.getText().length() > 0 && invalid == false) {
                     if (jFXTextField2.getText().matches("[0-9]+"))
                         set.addAll(friendRequestDelegate.searchByPhone(jFXTextField2.getText()));
-                    else
-                        invalid = true;
+                    else{}
+//                        invalid = true;
                 }
 
                 if (jFXTextField3.getText().length() <= 11 && jFXTextField3.getText().length() > 0 && invalid == false) {
                     if (jFXTextField3.getText().matches("[0-9]+"))
                         set.addAll(friendRequestDelegate.searchByPhone(jFXTextField3.getText()));
-                    else
-                        invalid = true;
+                    else{}
+//                        invalid = true;
                 }
                 if (jFXTextField4.getText().length() <= 11 && jFXTextField4.getText().length() > 0 && invalid == false) {
                     if (jFXTextField4.getText().matches("[0-9]+"))
                         set.addAll(friendRequestDelegate.searchByPhone(jFXTextField4.getText()));
-                    else
-                        invalid = true;
+                    else{}
+//                        invalid = true;
                 }
 
                 List<User> currentUserFriends = Session.getInstance().getUser().getFriends();
