@@ -125,7 +125,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <descriptorRefs>
-                        <descriptorRef>Client Chat</descriptorRef>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
                         <manifest>
